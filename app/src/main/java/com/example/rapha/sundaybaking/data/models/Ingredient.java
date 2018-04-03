@@ -1,15 +1,43 @@
 package com.example.rapha.sundaybaking.data.models;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
+@Entity(foreignKeys = @ForeignKey(
+        entity = Recipe.class,
+        parentColumns = "id",
+        childColumns = "recipe_id",
+        onDelete = CASCADE))
 public class Ingredient {
 
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     @SerializedName("quantity")
-    public Integer quantity;
+    private Integer quantity;
     @SerializedName("measure")
-    public String measure;
+    private String measure;
     @SerializedName("ingredient")
-    public String ingredient;
+    private String ingredient;
+    @ColumnInfo(name = "recipe_id")
+    private int recipeId;
+
+    public int getRecipeId() {
+        return recipeId;
+    }
+
+    public void setRecipeId(int recipeId) {
+        this.recipeId = recipeId;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public Integer getQuantity() {
         return quantity;
@@ -21,5 +49,21 @@ public class Ingredient {
 
     public String getIngredient() {
         return ingredient;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setMeasure(String measure) {
+        this.measure = measure;
+    }
+
+    public void setIngredient(String ingredient) {
+        this.ingredient = ingredient;
     }
 }

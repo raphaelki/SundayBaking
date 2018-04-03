@@ -1,23 +1,28 @@
 package com.example.rapha.sundaybaking.data.models;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+@Entity(tableName = "recipes")
 public class Recipe {
 
     @SerializedName("id")
-    public Integer id;
+    @PrimaryKey
+    private Integer id;
     @SerializedName("name")
-    public String name;
+    private String name;
     @SerializedName("ingredients")
-    public List<Ingredient> ingredients = null;
+    private List<Ingredient> ingredients = null;
     @SerializedName("steps")
-    public List<InstructionStep> steps = null;
+    private List<InstructionStep> steps = null;
     @SerializedName("servings")
-    public Integer servings;
+    private Integer servings;
     @SerializedName("image")
-    public String image;
+    private String image;
 
     public Integer getId() {
         return id;
@@ -41,5 +46,29 @@ public class Recipe {
 
     public String getImage() {
         return image;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public void setSteps(List<InstructionStep> steps) {
+        this.steps = steps;
+    }
+
+    public void setServings(Integer servings) {
+        this.servings = servings;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

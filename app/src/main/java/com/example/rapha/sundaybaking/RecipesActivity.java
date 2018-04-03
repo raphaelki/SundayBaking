@@ -3,7 +3,7 @@ package com.example.rapha.sundaybaking;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class recipesActivity extends AppCompatActivity {
+public class RecipesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

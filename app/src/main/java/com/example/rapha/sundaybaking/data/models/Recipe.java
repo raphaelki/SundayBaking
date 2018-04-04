@@ -1,6 +1,7 @@
 package com.example.rapha.sundaybaking.data.models;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
@@ -16,8 +17,10 @@ public class Recipe {
     @SerializedName("name")
     private String name;
     @SerializedName("ingredients")
+    @Ignore
     private List<Ingredient> ingredients = null;
     @SerializedName("steps")
+    @Ignore
     private List<InstructionStep> steps = null;
     @SerializedName("servings")
     private Integer servings;

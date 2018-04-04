@@ -13,7 +13,8 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
         entity = Recipe.class,
         parentColumns = "id",
         childColumns = "recipe_id",
-        onDelete = CASCADE))
+        onDelete = CASCADE),
+        tableName = "instruction_steps")
 public class InstructionStep {
 
     @SerializedName("id")

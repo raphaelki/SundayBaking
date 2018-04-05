@@ -1,43 +1,66 @@
 package com.example.rapha.sundaybaking.data;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 
+import com.example.rapha.sundaybaking.AppExecutors;
+import com.example.rapha.sundaybaking.data.local.RecipeDatabase;
+import com.example.rapha.sundaybaking.data.local.RecipesDao;
 import com.example.rapha.sundaybaking.data.models.Recipe;
 import com.example.rapha.sundaybaking.data.remote.RecipesRemoteAPI;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.Executor;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
+import timber.log.Timber;
 
-@Singleton
-public class RecipeRepository {
+public class RecipeRepository implements RecipeDataSource {
 
     private RecipesRemoteAPI recipesRemoteAPI;
+    private AppExecutors appExecutors;
+    private RecipeDatabase recipeDatabase;
 
-    @Inject
-    public RecipeRepository(RecipesRemoteAPI recipesRemoteAPI) {
+    private static RecipeRepository INSTANCE;
+
+    private RecipeRepository(RecipesRemoteAPI recipesRemoteAPI, RecipeDatabase recipeDatabase, AppExecutors appExecutors) {
         this.recipesRemoteAPI = recipesRemoteAPI;
+        this.recipeDatabase = recipeDatabase;
+        this.appExecutors = appExecutors;
+    }
+
+    public static RecipeRepository getInstance(final AppExecutors appExecutors, final RecipesRemoteAPI recipesRemoteAPI, final RecipeDatabase recipeDatabase) {
+        if (INSTANCE == null){
+            synchronized (RecipeRepository.class){
+                if (INSTANCE == null){
+                    INSTANCE = new RecipeRepository(recipesRemoteAPI, recipeDatabase, appExecutors);
+                }
+            }
+        }
+        return INSTANCE;
     }
 
     public LiveData<List<Recipe>> getRecipes(){
-        final MutableLiveData<List<Recipe>> recipes = new MutableLiveData<>();
-        recipesRemoteAPI.getRecipes().enqueue(new Callback<List<Recipe>>() {
-            @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                recipes.setValue(response.body());
-            }
+        fetchRecipes();
+        return recipeDatabase.recipesDao().getRecipes();
+    }
 
-            @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
-
+    private void fetchRecipes(){
+        appExecutors.diskIO().execute(() -> {
+            Response<List<Recipe>> response;
+            try {
+               response = recipesRemoteAPI.getRecipes().execute();
+               List<Recipe> recipes = response.body();
+               if (recipes != null){
+                   recipeDatabase.recipesDao().insertRecipes(recipes);
+                   for (Recipe recipe : recipes) {
+                       recipeDatabase.ingredientsDao().insertIngredients(recipe.getIngredients());
+                       recipeDatabase.instructionStepsDao().insertInstructionSteps(recipe.getSteps());
+                   }
+               }
+            } catch (IOException e) {
+                Timber.e(e, "error fetching recipe data from remote source");
             }
         });
-        return recipes;
     }
 }

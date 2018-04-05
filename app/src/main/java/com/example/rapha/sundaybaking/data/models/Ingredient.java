@@ -9,18 +9,19 @@ import com.google.gson.annotations.SerializedName;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
-@Entity(foreignKeys = @ForeignKey(
-        entity = Recipe.class,
-        parentColumns = "id",
-        childColumns = "recipe_id",
-        onDelete = CASCADE),
+@Entity(
+//        foreignKeys = @ForeignKey(
+//        entity = Recipe.class,
+//        parentColumns = "id",
+//        childColumns = "recipe_id",
+//        onDelete = CASCADE),
         tableName = "ingredients")
 public class Ingredient {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
     @SerializedName("quantity")
-    private Integer quantity;
+    private Double quantity;
     @SerializedName("measure")
     private String measure;
     @SerializedName("ingredient")
@@ -40,7 +41,7 @@ public class Ingredient {
         return id;
     }
 
-    public Integer getQuantity() {
+    public Double getQuantity() {
         return quantity;
     }
 
@@ -56,7 +57,7 @@ public class Ingredient {
         this.id = id;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(Double quantity) {
         this.quantity = quantity;
     }
 

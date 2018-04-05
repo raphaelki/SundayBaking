@@ -9,11 +9,12 @@ import com.google.gson.annotations.SerializedName;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
-@Entity(foreignKeys = @ForeignKey(
-        entity = Recipe.class,
-        parentColumns = "id",
-        childColumns = "recipe_id",
-        onDelete = CASCADE),
+@Entity(
+//        foreignKeys = @ForeignKey(
+//        entity = Recipe.class,
+//        parentColumns = "id",
+//        childColumns = "recipe_id",
+//        onDelete = CASCADE),
         tableName = "instruction_steps")
 public class InstructionStep {
 

@@ -21,6 +21,7 @@ public class RecipesActivity extends AppCompatActivity {
 
         viewModel = ViewModelProviders.of(this).get(RecipesViewModel.class);
         viewModel.getRecipes().observe(this, recipes -> {
+            Timber.d("Observed recipes changed");
             if (recipes != null) {
                 for (Recipe recipe : recipes) {
                     Timber.d("Recipe: " + recipe.getName());

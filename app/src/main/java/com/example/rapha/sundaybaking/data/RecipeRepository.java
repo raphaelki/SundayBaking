@@ -1,16 +1,15 @@
 package com.example.rapha.sundaybaking.data;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 
 import com.example.rapha.sundaybaking.AppExecutors;
 import com.example.rapha.sundaybaking.data.local.RecipeDatabase;
-import com.example.rapha.sundaybaking.data.local.RecipesDao;
 import com.example.rapha.sundaybaking.data.models.Recipe;
 import com.example.rapha.sundaybaking.data.remote.RecipesRemoteAPI;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.Executor;
 
 import retrofit2.Response;
 import timber.log.Timber;
@@ -20,6 +19,8 @@ public class RecipeRepository implements RecipeDataSource {
     private RecipesRemoteAPI recipesRemoteAPI;
     private AppExecutors appExecutors;
     private RecipeDatabase recipeDatabase;
+
+    private final MediatorLiveData<List<Recipe>> observedRecipes = new MediatorLiveData<>();
 
     private static RecipeRepository INSTANCE;
 
@@ -41,11 +42,24 @@ public class RecipeRepository implements RecipeDataSource {
     }
 
     public LiveData<List<Recipe>> getRecipes(){
-        fetchRecipes();
+        LiveData<List<Recipe>> recipesInDatabase = getDatabaseSource();
+        observedRecipes.addSource(recipesInDatabase, recipes -> {
+            if (recipes == null || recipes.size() == 0){
+                fetchRecipes();
+                observedRecipes.removeSource(recipesInDatabase);
+                observedRecipes.addSource(getDatabaseSource(), observedRecipes::setValue);
+            }
+            else observedRecipes.setValue(recipes);
+        });
+        return observedRecipes;
+    }
+
+    private LiveData<List<Recipe>> getDatabaseSource(){
         return recipeDatabase.recipesDao().getRecipes();
     }
 
     private void fetchRecipes(){
+        Timber.d("Fetching recipes");
         appExecutors.diskIO().execute(() -> {
             Response<List<Recipe>> response;
             try {

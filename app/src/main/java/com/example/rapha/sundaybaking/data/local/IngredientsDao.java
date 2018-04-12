@@ -16,8 +16,8 @@ public interface IngredientsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertIngredients(List<Ingredient> ingredients);
 
-    @Query("SELECT * FROM ingredients WHERE recipe_id = :recipeId")
-    LiveData<List<Ingredient>> getIngredients(int recipeId);
+    @Query("SELECT * FROM ingredients WHERE recipe_name = :recipeName")
+    LiveData<List<Ingredient>> getIngredients(String recipeName);
 
     @Query("SELECT * FROM ingredients WHERE id = :id")
     LiveData<Ingredient> getIngredient(int id);

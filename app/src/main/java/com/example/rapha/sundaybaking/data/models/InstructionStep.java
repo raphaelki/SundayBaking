@@ -10,17 +10,19 @@ import com.google.gson.annotations.SerializedName;
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity(
-//        foreignKeys = @ForeignKey(
-//        entity = Recipe.class,
-//        parentColumns = "id",
-//        childColumns = "recipe_id",
-//        onDelete = CASCADE),
+        foreignKeys = @ForeignKey(
+                entity = Recipe.class,
+                parentColumns = "name",
+                childColumns = "recipe_name",
+                onDelete = CASCADE),
         tableName = "instruction_steps")
 public class InstructionStep {
 
+    @PrimaryKey(autoGenerate = true)
+    private Integer dbId;
     @SerializedName("id")
-    @PrimaryKey
-    private Integer id;
+    @ColumnInfo(name = "step_no")
+    private Integer stepNo;
     @SerializedName("shortDescription")
     @ColumnInfo(name = "short_description")
     private String shortDescription;
@@ -32,19 +34,37 @@ public class InstructionStep {
     @SerializedName("thumbnailURL")
     @ColumnInfo(name = "thumbnail_url")
     private String thumbnailURL;
-    @ColumnInfo(name = "recipe_id")
-    private int recipeId;
+    @ColumnInfo(name = "recipe_name")
+    private String recipeName;
 
-    public int getRecipeId() {
-        return recipeId;
+    public InstructionStep(Integer dbId, Integer stepNo, String shortDescription, String description, String videoURL, String thumbnailURL, String recipeName) {
+        this.dbId = dbId;
+        this.stepNo = stepNo;
+        this.shortDescription = shortDescription;
+        this.description = description;
+        this.videoURL = videoURL;
+        this.thumbnailURL = thumbnailURL;
+        this.recipeName = recipeName;
     }
 
-    public void setRecipeId(int recipeId) {
-        this.recipeId = recipeId;
+    public Integer getStepNo() {
+        return stepNo;
     }
 
-    public Integer getId() {
-        return id;
+    //    public void setStepNo(Integer stepNo) {
+//        this.stepNo = stepNo;
+//    }
+
+    public String getRecipeName() {
+        return recipeName;
+    }
+
+//    public void setRecipeName(String recipeName) {
+//        this.recipeName = recipeName;
+//    }
+
+    public Integer getDbId() {
+        return dbId;
     }
 
     public String getShortDescription() {
@@ -63,23 +83,23 @@ public class InstructionStep {
         return thumbnailURL;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setVideoURL(String videoURL) {
-        this.videoURL = videoURL;
-    }
-
-    public void setThumbnailURL(String thumbnailURL) {
-        this.thumbnailURL = thumbnailURL;
-    }
+//    public void setDbId(Integer id) {
+//        this.dbId = id;
+//    }
+//
+//    public void setShortDescription(String shortDescription) {
+//        this.shortDescription = shortDescription;
+//    }
+//
+//    public void setDescription(String description) {
+//        this.description = description;
+//    }
+//
+//    public void setVideoURL(String videoURL) {
+//        this.videoURL = videoURL;
+//    }
+//
+//    public void setThumbnailURL(String thumbnailURL) {
+//        this.thumbnailURL = thumbnailURL;
+//    }
 }

@@ -9,7 +9,7 @@ import com.example.rapha.sundaybaking.data.models.Ingredient;
 import com.example.rapha.sundaybaking.data.models.InstructionStep;
 import com.example.rapha.sundaybaking.data.models.Recipe;
 
-@Database(entities = {Recipe.class, Ingredient.class, InstructionStep.class}, version = 1)
+@Database(entities = {Recipe.class, Ingredient.class, InstructionStep.class}, version = 2)
 public abstract class RecipeDatabase extends RoomDatabase {
     public abstract RecipesDao recipesDao();
     public abstract InstructionStepsDao instructionStepsDao();
@@ -22,7 +22,10 @@ public abstract class RecipeDatabase extends RoomDatabase {
         if (INSTANCE == null){
             synchronized (RecipeDatabase.class){
                 if (INSTANCE == null){
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),RecipeDatabase.class, NAME).build();
+                    INSTANCE = Room
+                            .databaseBuilder(context.getApplicationContext(), RecipeDatabase.class, NAME)
+                            .fallbackToDestructiveMigration()
+                            .build();
                 }
             }
         }

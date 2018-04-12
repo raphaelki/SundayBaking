@@ -10,11 +10,11 @@ import com.google.gson.annotations.SerializedName;
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity(
-//        foreignKeys = @ForeignKey(
-//        entity = Recipe.class,
-//        parentColumns = "id",
-//        childColumns = "recipe_id",
-//        onDelete = CASCADE),
+        foreignKeys = @ForeignKey(
+                entity = Recipe.class,
+                parentColumns = "name",
+                childColumns = "recipe_name",
+                onDelete = CASCADE),
         tableName = "ingredients")
 public class Ingredient {
 
@@ -26,15 +26,19 @@ public class Ingredient {
     private String measure;
     @SerializedName("ingredient")
     private String ingredient;
-    @ColumnInfo(name = "recipe_id")
-    private int recipeId;
+    @ColumnInfo(name = "recipe_name")
+    private String recipeName;
 
-    public int getRecipeId() {
-        return recipeId;
+    public Ingredient(int id, Double quantity, String measure, String ingredient, String recipeName) {
+        this.id = id;
+        this.quantity = quantity;
+        this.measure = measure;
+        this.ingredient = ingredient;
+        this.recipeName = recipeName;
     }
 
-    public void setRecipeId(int recipeId) {
-        this.recipeId = recipeId;
+    public String getRecipeName() {
+        return recipeName;
     }
 
     public int getId() {
@@ -53,19 +57,24 @@ public class Ingredient {
         return ingredient;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+//        public void setRecipeName(String recipeName) {
+//        this.recipeName = recipeName;
+//    }
 
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
 
-    public void setMeasure(String measure) {
-        this.measure = measure;
-    }
-
-    public void setIngredient(String ingredient) {
-        this.ingredient = ingredient;
-    }
+//    public void setId(int id) {
+//        this.id = id;
+//    }
+//
+//    public void setQuantity(Double quantity) {
+//        this.quantity = quantity;
+//    }
+//
+//    public void setMeasure(String measure) {
+//        this.measure = measure;
+//    }
+//
+//    public void setIngredient(String ingredient) {
+//        this.ingredient = ingredient;
+//    }
 }

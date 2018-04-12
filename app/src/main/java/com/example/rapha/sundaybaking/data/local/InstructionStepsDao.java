@@ -16,9 +16,9 @@ public interface InstructionStepsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertInstructionSteps(List<InstructionStep> instructionSteps);
 
-    @Query("SELECT * FROM instruction_steps WHERE recipe_id = :recipeId")
-    LiveData<List<InstructionStep>> getInstructionSteps(int recipeId);
+    @Query("SELECT * FROM instruction_steps WHERE recipe_name = :recipeName")
+    LiveData<List<InstructionStep>> getInstructionSteps(String recipeName);
 
-    @Query("SELECT * FROM instruction_steps WHERE id = :id")
+    @Query("SELECT * FROM instruction_steps WHERE dbId = :id")
     LiveData<InstructionStep> getInstructionStep(int id);
 }

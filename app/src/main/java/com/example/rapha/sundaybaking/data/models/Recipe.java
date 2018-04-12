@@ -3,6 +3,7 @@ package com.example.rapha.sundaybaking.data.models;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -12,9 +13,10 @@ import java.util.List;
 public class Recipe {
 
     @SerializedName("id")
-    @PrimaryKey
     private Integer id;
     @SerializedName("name")
+    @PrimaryKey
+    @NonNull
     private String name;
     @SerializedName("ingredients")
     @Ignore
@@ -27,10 +29,18 @@ public class Recipe {
     @SerializedName("image")
     private String image;
 
+    public Recipe(Integer id, @NonNull String name, Integer servings, String image) {
+        this.id = id;
+        this.name = name;
+        this.servings = servings;
+        this.image = image;
+    }
+
     public Integer getId() {
         return id;
     }
 
+    @NonNull
     public String getName() {
         return name;
     }
@@ -51,27 +61,27 @@ public class Recipe {
         return image;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+//    public void setName(@NonNull String name) {
+//        this.name = name;
+//    }
 
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
+//    public void setIngredients(List<Ingredient> ingredients) {
+//        this.ingredients = ingredients;
+//    }
 
-    public void setSteps(List<InstructionStep> steps) {
-        this.steps = steps;
-    }
+//    public void setSteps(List<InstructionStep> steps) {
+//        this.steps = steps;
+//    }
 
-    public void setServings(Integer servings) {
-        this.servings = servings;
-    }
+//    public void setServings(Integer servings) {
+//        this.servings = servings;
+//    }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
+//    public void setImage(String image) {
+//        this.image = image;
+//    }
 }

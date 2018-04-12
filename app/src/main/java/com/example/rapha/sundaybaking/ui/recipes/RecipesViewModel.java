@@ -3,7 +3,6 @@ package com.example.rapha.sundaybaking.ui.recipes;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MediatorLiveData;
 
 import com.example.rapha.sundaybaking.SundayBakingApp;
 import com.example.rapha.sundaybaking.data.RecipeRepository;

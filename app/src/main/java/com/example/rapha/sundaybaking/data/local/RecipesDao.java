@@ -21,10 +21,4 @@ public interface RecipesDao {
 
     @Query("SELECT * FROM recipes WHERE name = :recipeName")
     LiveData<Recipe> getRecipe(String recipeName);
-
-    @Query("SELECT * FROM recipes r " +
-            "INNER JOIN instruction_steps ins ON r.name = ins.recipe_name " +
-            "INNER JOIN ingredients ing ON r.name = ing.recipe_name " +
-            "WHERE r.name = :recipeName")
-    LiveData<Recipe> getRecipeWithAllDetails(String recipeName);
 }

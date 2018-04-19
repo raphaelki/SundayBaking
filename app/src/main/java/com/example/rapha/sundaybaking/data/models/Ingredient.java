@@ -37,6 +37,10 @@ public class Ingredient {
         this.recipeName = recipeName;
     }
 
+    public void setRecipeName(String recipeName) {
+        this.recipeName = recipeName;
+    }
+
     public String getRecipeName() {
         return recipeName;
     }
@@ -56,25 +60,4 @@ public class Ingredient {
     public String getIngredient() {
         return ingredient;
     }
-
-//        public void setRecipeName(String recipeName) {
-//        this.recipeName = recipeName;
-//    }
-
-
-//    public void setId(int id) {
-//        this.id = id;
-//    }
-//
-//    public void setQuantity(Double quantity) {
-//        this.quantity = quantity;
-//    }
-//
-//    public void setMeasure(String measure) {
-//        this.measure = measure;
-//    }
-//
-//    public void setIngredient(String ingredient) {
-//        this.ingredient = ingredient;
-//    }
 }

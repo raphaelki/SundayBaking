@@ -5,6 +5,8 @@ import android.arch.lifecycle.MediatorLiveData;
 
 import com.example.rapha.sundaybaking.AppExecutors;
 import com.example.rapha.sundaybaking.data.local.RecipeDatabase;
+import com.example.rapha.sundaybaking.data.models.Ingredient;
+import com.example.rapha.sundaybaking.data.models.InstructionStep;
 import com.example.rapha.sundaybaking.data.models.Recipe;
 import com.example.rapha.sundaybaking.data.remote.RecipesRemoteAPI;
 
@@ -31,9 +33,9 @@ public class RecipeRepository implements RecipeDataSource {
     }
 
     public static RecipeRepository getInstance(final AppExecutors appExecutors, final RecipesRemoteAPI recipesRemoteAPI, final RecipeDatabase recipeDatabase) {
-        if (INSTANCE == null){
-            synchronized (RecipeRepository.class){
-                if (INSTANCE == null){
+        if (INSTANCE == null) {
+            synchronized (RecipeRepository.class) {
+                if (INSTANCE == null) {
                     INSTANCE = new RecipeRepository(recipesRemoteAPI, recipeDatabase, appExecutors);
                 }
             }
@@ -41,37 +43,60 @@ public class RecipeRepository implements RecipeDataSource {
         return INSTANCE;
     }
 
-    public LiveData<List<Recipe>> getRecipes(){
+    public LiveData<List<Recipe>> getRecipes() {
         LiveData<List<Recipe>> recipesInDatabase = getDatabaseSource();
         observedRecipes.addSource(recipesInDatabase, recipes -> {
-            if (recipes == null || recipes.size() == 0){
+            if (recipes == null || recipes.size() == 0) {
                 fetchRecipes();
                 observedRecipes.removeSource(recipesInDatabase);
                 observedRecipes.addSource(getDatabaseSource(), observedRecipes::setValue);
-            }
-            else observedRecipes.setValue(recipes);
+            } else observedRecipes.setValue(recipes);
         });
         return observedRecipes;
     }
 
-    private LiveData<List<Recipe>> getDatabaseSource(){
+    private LiveData<List<Recipe>> getDatabaseSource() {
         return recipeDatabase.recipesDao().getRecipes();
     }
 
-    private void fetchRecipes(){
+    public LiveData<List<Ingredient>> getIngredients(String recipeName) {
+        return recipeDatabase.ingredientsDao().getIngredients(recipeName);
+    }
+
+    public LiveData<List<InstructionStep>> getInstructionSteps(String recipeName) {
+        return recipeDatabase.instructionStepsDao().getInstructionSteps(recipeName);
+    }
+
+    public LiveData<InstructionStep> getInstructionStep(int stepId) {
+        return recipeDatabase.instructionStepsDao().getInstructionStep(stepId);
+    }
+
+    public LiveData<InstructionStep> getFirstInstructionStep(String recipeName) {
+        return recipeDatabase.instructionStepsDao().getFirstInstructionStep(recipeName);
+    }
+
+    private void fetchRecipes() {
         Timber.d("Fetching recipes");
         appExecutors.diskIO().execute(() -> {
             Response<List<Recipe>> response;
             try {
-               response = recipesRemoteAPI.getRecipes().execute();
-               List<Recipe> recipes = response.body();
-               if (recipes != null){
-                   recipeDatabase.recipesDao().insertRecipes(recipes);
-                   for (Recipe recipe : recipes) {
-                       recipeDatabase.ingredientsDao().insertIngredients(recipe.getIngredients());
-                       recipeDatabase.instructionStepsDao().insertInstructionSteps(recipe.getSteps());
-                   }
-               }
+                response = recipesRemoteAPI.getRecipes().execute();
+                List<Recipe> recipes = response.body();
+                if (recipes != null) {
+                    recipeDatabase.recipesDao().insertRecipes(recipes);
+                    for (Recipe recipe : recipes) {
+                        List<Ingredient> ingredients = recipe.getIngredients();
+                        for (Ingredient ingredient : ingredients) {
+                            ingredient.setRecipeName(recipe.getName());
+                        }
+                        recipeDatabase.ingredientsDao().insertIngredients(ingredients);
+                        List<InstructionStep> instructionSteps = recipe.getSteps();
+                        for (InstructionStep step : instructionSteps) {
+                            step.setRecipeName(recipe.getName());
+                        }
+                        recipeDatabase.instructionStepsDao().insertInstructionSteps(instructionSteps);
+                    }
+                }
             } catch (IOException e) {
                 Timber.e(e, "error fetching recipe data from remote source");
             }

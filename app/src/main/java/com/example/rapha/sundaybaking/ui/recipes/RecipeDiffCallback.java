@@ -1,4 +1,4 @@
-package com.example.rapha.sundaybaking.util;
+package com.example.rapha.sundaybaking.ui.recipes;
 
 import android.support.v7.util.DiffUtil;
 

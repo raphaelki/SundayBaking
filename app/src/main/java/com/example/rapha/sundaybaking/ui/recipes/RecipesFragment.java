@@ -1,6 +1,7 @@
 package com.example.rapha.sundaybaking.ui.recipes;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,10 +13,12 @@ import android.view.ViewGroup;
 
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.databinding.FragmentRecipesBinding;
+import com.example.rapha.sundaybaking.ui.details.RecipesDetailsActivity;
+import com.example.rapha.sundaybaking.util.Constants;
 
 import timber.log.Timber;
 
-public class RecipesFragment extends Fragment {
+public class RecipesFragment extends Fragment implements RecipeClickCallback {
 
     public static final String TAG = "ProductListViewModel";
 
@@ -30,7 +33,7 @@ public class RecipesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_recipes, container, false);
-        recipesAdapter = new RecipesAdapter();
+        recipesAdapter = new RecipesAdapter(this);
         binding.recipesRc.setAdapter(recipesAdapter);
         return binding.getRoot();
     }
@@ -45,5 +48,12 @@ public class RecipesFragment extends Fragment {
                 recipesAdapter.setRecipeList(recipes);
             }
         });
+    }
+
+    @Override
+    public void onClick(String recipeName) {
+        Intent intent = new Intent(getContext(), RecipesDetailsActivity.class);
+        intent.putExtra(Constants.RECIPE_NAME_KEY, recipeName);
+        startActivity(intent);
     }
 }

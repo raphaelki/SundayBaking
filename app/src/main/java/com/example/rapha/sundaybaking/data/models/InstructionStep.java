@@ -47,21 +47,17 @@ public class InstructionStep {
         this.recipeName = recipeName;
     }
 
+    public void setRecipeName(String recipeName) {
+        this.recipeName = recipeName;
+    }
+
     public Integer getStepNo() {
         return stepNo;
     }
 
-    //    public void setStepNo(Integer stepNo) {
-//        this.stepNo = stepNo;
-//    }
-
     public String getRecipeName() {
         return recipeName;
     }
-
-//    public void setRecipeName(String recipeName) {
-//        this.recipeName = recipeName;
-//    }
 
     public Integer getDbId() {
         return dbId;
@@ -82,24 +78,4 @@ public class InstructionStep {
     public String getThumbnailURL() {
         return thumbnailURL;
     }
-
-//    public void setDbId(Integer id) {
-//        this.dbId = id;
-//    }
-//
-//    public void setShortDescription(String shortDescription) {
-//        this.shortDescription = shortDescription;
-//    }
-//
-//    public void setDescription(String description) {
-//        this.description = description;
-//    }
-//
-//    public void setVideoURL(String videoURL) {
-//        this.videoURL = videoURL;
-//    }
-//
-//    public void setThumbnailURL(String thumbnailURL) {
-//        this.thumbnailURL = thumbnailURL;
-//    }
 }

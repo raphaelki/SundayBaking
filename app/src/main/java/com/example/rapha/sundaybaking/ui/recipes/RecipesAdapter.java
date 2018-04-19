@@ -9,26 +9,33 @@ import android.view.ViewGroup;
 
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.data.models.Recipe;
-import com.example.rapha.sundaybaking.databinding.RcItemRecipeBinding;
-import com.example.rapha.sundaybaking.util.RecipeDiffCallback;
+import com.example.rapha.sundaybaking.databinding.RvItemRecipeBinding;
+import com.example.rapha.sundaybaking.ui.BindingViewHolder;
 
 import java.util.List;
 
-public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeViewHolder> {
+public class RecipesAdapter extends RecyclerView.Adapter<BindingViewHolder<RvItemRecipeBinding>> {
 
     private List<Recipe> recipes;
 
+    private RecipeClickCallback callback;
+
+    public RecipesAdapter(@NonNull RecipeClickCallback callback) {
+        this.callback = callback;
+    }
+
     @NonNull
     @Override
-    public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BindingViewHolder<RvItemRecipeBinding> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        RcItemRecipeBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.rc_item_recipe, parent, false);
-        return new RecipeViewHolder(binding);
+        RvItemRecipeBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.rv_item_recipe, parent, false);
+        return new BindingViewHolder<>(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BindingViewHolder<RvItemRecipeBinding> holder, int position) {
         holder.binding.setRecipe(recipes.get(position));
+        holder.binding.setCallback(callback);
         holder.binding.executePendingBindings();
     }
 
@@ -46,17 +53,5 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeVi
             recipes = newRecipes;
             result.dispatchUpdatesTo(this);
         }
-    }
-
-    class RecipeViewHolder extends RecyclerView.ViewHolder {
-
-        private final RcItemRecipeBinding binding;
-
-        public RecipeViewHolder(RcItemRecipeBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
-        }
-
-
     }
 }

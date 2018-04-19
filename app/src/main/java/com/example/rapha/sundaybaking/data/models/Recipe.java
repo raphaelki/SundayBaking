@@ -60,28 +60,4 @@ public class Recipe {
     public String getImage() {
         return image;
     }
-
-//    public void setId(Integer id) {
-//        this.id = id;
-//    }
-
-//    public void setName(@NonNull String name) {
-//        this.name = name;
-//    }
-
-//    public void setIngredients(List<Ingredient> ingredients) {
-//        this.ingredients = ingredients;
-//    }
-
-//    public void setSteps(List<InstructionStep> steps) {
-//        this.steps = steps;
-//    }
-
-//    public void setServings(Integer servings) {
-//        this.servings = servings;
-//    }
-
-//    public void setImage(String image) {
-//        this.image = image;
-//    }
 }

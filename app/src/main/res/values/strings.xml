@@ -2,5 +2,7 @@
     <string name="app_name">Sunday Baking</string>
 
     <string name="no_picture_available">No picture available</string>
+    <string name="ingredients_label">Ingredients</string>
+    <string name="preperation_label">Preparation</string>
 
 </resources>

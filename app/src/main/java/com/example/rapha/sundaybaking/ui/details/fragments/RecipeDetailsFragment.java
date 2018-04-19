@@ -49,8 +49,10 @@ public class RecipeDetailsFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_recipe_details, container, false);
         ingredientAdapter = new IngredientAdapter();
         binding.ingredientsRv.setAdapter(ingredientAdapter);
+        binding.ingredientsRv.setNestedScrollingEnabled(false);
         stepAdapter = new InstructionStepAdapter(callback);
         binding.stepsRv.setAdapter(stepAdapter);
+        binding.stepsRv.setNestedScrollingEnabled(false);
         deviceIsTablet = getResources().getBoolean(R.bool.isTablet);
         return binding.getRoot();
     }

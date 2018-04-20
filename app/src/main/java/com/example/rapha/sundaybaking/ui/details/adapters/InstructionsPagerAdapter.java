@@ -46,8 +46,4 @@ public class InstructionsPagerAdapter extends PagerAdapter {
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view == object;
     }
-
-    public int getStepIdForPosition(int position) {
-        return steps.get(position).getDbId();
-    }
 }

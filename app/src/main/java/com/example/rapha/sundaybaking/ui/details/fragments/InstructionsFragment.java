@@ -17,6 +17,7 @@ import com.example.rapha.sundaybaking.databinding.FragmentInstructionsBinding;
 import com.example.rapha.sundaybaking.ui.details.InstructionsFragmentCallback;
 import com.example.rapha.sundaybaking.ui.details.adapters.InstructionsPagerAdapter;
 import com.example.rapha.sundaybaking.ui.details.viewmodels.RecipeDetailsViewModel;
+import com.example.rapha.sundaybaking.util.Constants;
 
 import timber.log.Timber;
 
@@ -25,6 +26,7 @@ public class InstructionsFragment extends Fragment {
     private InstructionsPagerAdapter pagerAdapter;
     private RecipeDetailsViewModel viewModel;
     private InstructionsFragmentCallback callback;
+    private FragmentInstructionsBinding binding;
 
     public InstructionsFragment() {
     }
@@ -39,17 +41,26 @@ public class InstructionsFragment extends Fragment {
         }
     }
 
+    public static InstructionsFragment forRecipe(String recipeName, int stepNo) {
+        InstructionsFragment instructionsFragment = new InstructionsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.RECIPE_NAME_KEY, recipeName);
+        bundle.putInt(Constants.RECIPE_STEP_NO_KEY, stepNo);
+        instructionsFragment.setArguments(bundle);
+        return instructionsFragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Timber.d("onCreateView");
-        FragmentInstructionsBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_instructions, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_instructions, container, false);
         pagerAdapter = new InstructionsPagerAdapter();
         binding.instructionsViewPager.setAdapter(pagerAdapter);
         binding.instructionsViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                callback.onStepChanged(pagerAdapter.getStepIdForPosition(position));
+                callback.onStepChanged(position);
                 Timber.d("Scrolled to page: %s", position);
             }
         });
@@ -62,6 +73,13 @@ public class InstructionsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         // use shared ViewModel created in RecipeDetailsFragment
         viewModel = ViewModelProviders.of(getActivity()).get(RecipeDetailsViewModel.class);
-        viewModel.getInstructionSteps().observe(this, steps -> pagerAdapter.setStepList(steps));
+        viewModel.getInstructionSteps().observe(this, steps -> {
+            pagerAdapter.setStepList(steps);
+            setStepPage(getArguments().getInt(Constants.RECIPE_STEP_NO_KEY));
+        });
+    }
+
+    public void setStepPage(int stepNo) {
+        binding.instructionsViewPager.setCurrentItem(stepNo);
     }
 }

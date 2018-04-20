@@ -1,5 +1,5 @@
 package com.example.rapha.sundaybaking.ui.details;
 
 public interface InstructionsFragmentCallback {
-    void onStepChanged(int stepId);
+    void onStepChanged(int stepNo);
 }

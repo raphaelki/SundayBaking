@@ -11,23 +11,29 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.rapha.sundaybaking.R;
+import com.example.rapha.sundaybaking.data.models.InstructionStep;
 import com.example.rapha.sundaybaking.databinding.FragmentPlayerBinding;
 import com.example.rapha.sundaybaking.ui.details.viewmodels.PlayerViewModel;
 import com.example.rapha.sundaybaking.ui.details.viewmodels.PlayerViewModelFactory;
 import com.example.rapha.sundaybaking.util.Constants;
 
+import java.util.List;
+
 public class PlayerFragment extends Fragment {
 
     private PlayerViewModel viewModel;
     private FragmentPlayerBinding binding;
+    private List<InstructionStep> steps;
+    private int initialStepNo;
 
     public PlayerFragment() {
     }
 
-    public static PlayerFragment forUrl(int stepId) {
+    public static PlayerFragment forRecipe(String recipeName, int stepNo) {
         PlayerFragment playerFragment = new PlayerFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(Constants.STEP_ID_KEY, stepId);
+        bundle.putString(Constants.RECIPE_NAME_KEY, recipeName);
+        bundle.putInt(Constants.RECIPE_STEP_NO_KEY, stepNo);
         playerFragment.setArguments(bundle);
         return playerFragment;
     }
@@ -42,15 +48,28 @@ public class PlayerFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initialStepNo = getArguments().getInt(Constants.RECIPE_STEP_NO_KEY);
         createViewModel();
+        viewModel.getSteps().observe(this, steps -> {
+            if (steps != null) {
+                this.steps = steps;
+                setSelectedStep(initialStepNo);
+            }
+        });
         binding.playerView.setPlayer(viewModel.getPlayerInstance());
     }
 
+    public void setSelectedStep(int stepNo) {
+        if (steps != null) {
+            String videoUrl = steps.get(stepNo).getVideoURL();
+            viewModel.startVideo(videoUrl);
+        }
+    }
+
     private void createViewModel() {
+        String recipeName = getArguments().getString(Constants.RECIPE_NAME_KEY);
         PlayerViewModelFactory viewModelFactory = new PlayerViewModelFactory(
-                getActivity().getApplication()
-                , getArguments().getInt(Constants.STEP_ID_KEY));
+                getActivity().getApplication(), recipeName);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PlayerViewModel.class);
-        viewModel.getInstrucionStep().observe(this, instructionStep -> viewModel.startVideo(instructionStep.getVideoURL()));
     }
 }

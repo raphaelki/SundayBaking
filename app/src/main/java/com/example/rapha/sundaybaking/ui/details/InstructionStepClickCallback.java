@@ -1,5 +1,5 @@
 package com.example.rapha.sundaybaking.ui.details;
 
 public interface InstructionStepClickCallback {
-    void onClick(int stepId);
+    void onClick(String recipeName, int stepNo);
 }

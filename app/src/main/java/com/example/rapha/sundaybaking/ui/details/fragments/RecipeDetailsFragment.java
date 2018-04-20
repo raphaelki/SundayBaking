@@ -67,10 +67,10 @@ public class RecipeDetailsFragment extends Fragment {
                 .get(RecipeDetailsViewModel.class);
         viewModel.getIngredients().observe(this, ingredients -> ingredientAdapter.setIngredientList(ingredients));
         viewModel.getInstructionSteps().observe(this, instructionSteps -> stepAdapter.setStepList(instructionSteps));
-        viewModel.getFirstStep().observe(this, instructionStep -> {
-            if (deviceIsTablet && instructionStep != null) {
-                callback.onClick(instructionStep.getDbId());
-            }
-        });
+//        viewModel.getFirstStep().observe(this, instructionStep -> {
+//            if (deviceIsTablet && instructionStep != null) {
+//                callback.onClick(instructionStep.getRecipeName(), 0);
+//            }
+//        });
     }
 }

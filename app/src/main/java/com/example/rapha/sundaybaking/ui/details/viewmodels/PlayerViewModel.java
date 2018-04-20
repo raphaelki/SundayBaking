@@ -19,6 +19,8 @@ import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import java.util.List;
+
 import timber.log.Timber;
 
 public class PlayerViewModel extends ViewModel {
@@ -26,19 +28,15 @@ public class PlayerViewModel extends ViewModel {
     @SuppressLint("StaticFieldLeak")
     private Context context;
     private SimpleExoPlayer player;
-    private String videoUrl;
-    private RecipeRepository recipeRepository;
-    private int stepId;
+    private RecipeRepository repository;
+    private String recipeName;
 
-    public PlayerViewModel(@NonNull Application application, RecipeRepository recipeRepository, int stepId) {
+    public PlayerViewModel(@NonNull Application application, RecipeRepository recipeRepository, String recipeName) {
+        Timber.d("Creating PlayerViewModel for recipe: %s", recipeName);
         context = application.getApplicationContext();
-        this.recipeRepository = recipeRepository;
-        this.stepId = stepId;
+        repository = recipeRepository;
+        this.recipeName = recipeName;
         preparePlayer();
-    }
-
-    public LiveData<InstructionStep> getInstrucionStep() {
-        return recipeRepository.getInstructionStep(stepId);
     }
 
     public void startVideo(String videoUrl) {
@@ -47,6 +45,7 @@ public class PlayerViewModel extends ViewModel {
 
     private void preparePlayer() {
         if (player == null) {
+            Timber.d("Create ExoPlayer instance");
             TrackSelector trackSelector = new DefaultTrackSelector();
             player = ExoPlayerFactory.newSimpleInstance(context, trackSelector);
         }
@@ -60,6 +59,7 @@ public class PlayerViewModel extends ViewModel {
     }
 
     public void setAndPlayMediaSource(Uri uri) {
+        Timber.d("Set and play media source: %s", uri.toString());
         String userAgent = Util.getUserAgent(context, "SundayBaking");
         DefaultDataSourceFactory defaultDataSourceFactory = new DefaultDataSourceFactory(context, userAgent);
         MediaSource mediaSource = new ExtractorMediaSource.Factory(defaultDataSourceFactory).createMediaSource(uri);
@@ -71,6 +71,10 @@ public class PlayerViewModel extends ViewModel {
     protected void onCleared() {
         super.onCleared();
         releasePlayer();
+    }
+
+    public LiveData<List<InstructionStep>> getSteps() {
+        return repository.getInstructionSteps(recipeName);
     }
 
     public SimpleExoPlayer getPlayerInstance() {

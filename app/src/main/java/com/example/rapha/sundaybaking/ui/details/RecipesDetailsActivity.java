@@ -13,7 +13,8 @@ import com.example.rapha.sundaybaking.util.Constants;
 
 import timber.log.Timber;
 
-public class RecipesDetailsActivity extends AppCompatActivity implements InstructionStepClickCallback, InstructionsFragmentCallback {
+public class RecipesDetailsActivity extends AppCompatActivity
+        implements InstructionStepClickCallback, InstructionsFragmentCallback {
 
     private RecipeDetailsFragment detailsFragment;
     private FrameLayout upperFragmentFrame;
@@ -44,32 +45,50 @@ public class RecipesDetailsActivity extends AppCompatActivity implements Instruc
                 getSupportFragmentManager()
                         .beginTransaction()
                         .add(R.id.left_fragment_frame, detailsFragment)
+                        .add(R.id.lower_fragment_frame, InstructionsFragment.forRecipe(recipeName, 0), Constants.INSTRUCTIONS_FRAGMENT_TAG)
+                        .add(R.id.upper_fragment_frame, PlayerFragment.forRecipe(recipeName, 0), Constants.PLAYER_FRAGMENT_TAG)
                         .commit();
             }
         }
     }
 
     @Override
-    public void onClick(int stepId) {
-        Timber.d("Instruction Step clicked: %s", stepId);
-        showStepDetails(stepId);
+    public void onClick(String recipeName, int stepNo) {
+        Timber.d("%s. instruction Step clicked", stepNo);
+        if (!deviceIsTablet) {
+            createInstructionsAndVideoFragments(recipeName, stepNo);
+        } else {
+            showStepDetails(stepNo);
+        }
+
     }
 
-    private void showStepDetails(int stepId) {
-        if (!deviceIsTablet) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .addToBackStack(null)
-                    .replace(R.id.lower_fragment_frame, new InstructionsFragment())
-                    .replace(R.id.upper_fragment_frame, PlayerFragment.forUrl(stepId))
-                    .commit();
-            upperFragmentFrame.setVisibility(View.VISIBLE);
-        } else {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.lower_fragment_frame, new InstructionsFragment())
-                    .replace(R.id.upper_fragment_frame, PlayerFragment.forUrl(stepId))
-                    .commit();
+    private void createInstructionsAndVideoFragments(String recipeName, int stepNo) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.lower_fragment_frame, InstructionsFragment.forRecipe(recipeName, stepNo), Constants.INSTRUCTIONS_FRAGMENT_TAG)
+                .replace(R.id.upper_fragment_frame, PlayerFragment.forRecipe(recipeName, stepNo), Constants.PLAYER_FRAGMENT_TAG)
+                .commit();
+        upperFragmentFrame.setVisibility(View.VISIBLE);
+    }
+
+    private void showStepDetails(int stepNo) {
+        changeStepNoForInstructions(stepNo);
+        changeStepNoForPlayer(stepNo);
+    }
+
+    private void changeStepNoForInstructions(int stepNo) {
+        InstructionsFragment instructionsFragment = (InstructionsFragment) getSupportFragmentManager().findFragmentByTag(Constants.INSTRUCTIONS_FRAGMENT_TAG);
+        if (instructionsFragment != null) {
+            instructionsFragment.setStepPage(stepNo);
+        }
+    }
+
+    private void changeStepNoForPlayer(int stepNo) {
+        PlayerFragment playerFragment = (PlayerFragment) getSupportFragmentManager().findFragmentByTag(Constants.PLAYER_FRAGMENT_TAG);
+        if (playerFragment != null) {
+            playerFragment.setSelectedStep(stepNo);
         }
     }
 
@@ -82,10 +101,7 @@ public class RecipesDetailsActivity extends AppCompatActivity implements Instruc
     }
 
     @Override
-    public void onStepChanged(int stepId) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.upper_fragment_frame, PlayerFragment.forUrl(stepId))
-                .commit();
+    public void onStepChanged(int stepNo) {
+        changeStepNoForPlayer(stepNo);
     }
 }

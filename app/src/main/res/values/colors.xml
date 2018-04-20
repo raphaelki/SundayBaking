@@ -6,4 +6,5 @@
 
     <color name="background_white">#afffffff</color>
     <color name="rv_cards_background">#ececec</color>
+    <color name="step_card_color">#fffada</color>
 </resources>

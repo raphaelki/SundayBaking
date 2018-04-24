@@ -6,14 +6,13 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/instructions_card_vertical_margin"
         android:layout_marginEnd="@dimen/instructions_card_horizontal_margin"
-        android:layout_marginLeft="@dimen/instructions_card_horizontal_margin"
-        android:layout_marginRight="@dimen/instructions_card_horizontal_margin"
         android:layout_marginStart="@dimen/instructions_card_horizontal_margin"
+        android:layout_marginBottom="@dimen/instructions_card_vertical_margin"
         android:layout_marginTop="@dimen/instructions_card_vertical_margin"
+        android:layout_marginLeft="@dimen/instructions_card_horizontal_margin"
         android:keepScreenOn="true"
-        android:orientation="horizontal">
+        android:layout_marginRight="@dimen/instructions_card_horizontal_margin">
 
         <View
             android:id="@+id/left_arrow"
@@ -28,10 +27,10 @@
             android:id="@+id/instructions_view_pager"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/left_arrow"
             app:layout_constraintRight_toLeftOf="@id/right_arrow"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:listitem="@layout/step_description" />
 
         <View
@@ -42,5 +41,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </android.support.constraint.ConstraintLayout>
 </layout>

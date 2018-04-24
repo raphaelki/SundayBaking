@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.details.RecipesDetailsActivity">
 
     <FrameLayout
-        android:id="@+id/left_fragment_frame"
+        android:id="@+id/details_fragment_frame"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,29 +23,20 @@
         app:layout_constraintGuide_percent="0.3" />
 
     <FrameLayout
-        android:id="@+id/upper_fragment_frame"
+        android:id="@+id/video_fragment_frame"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@id/details_horizontal_guideline"
+        app:layout_constraintDimensionRatio="16:9"
         app:layout_constraintLeft_toRightOf="@id/details_vertical_guideline"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/details_horizontal_guideline"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
-
     <FrameLayout
-        android:id="@+id/lower_fragment_frame"
+        android:id="@+id/instructions_fragment_frame"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/details_vertical_guideline"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/details_horizontal_guideline" />
-
+        app:layout_constraintTop_toBottomOf="@id/video_fragment_frame" />
 </android.support.constraint.ConstraintLayout>

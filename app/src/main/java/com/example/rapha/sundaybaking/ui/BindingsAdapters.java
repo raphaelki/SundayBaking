@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.example.rapha.sundaybaking.util.GlideApp;
@@ -23,5 +24,10 @@ public class BindingsAdapters {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(view.getContext(), ((LinearLayoutManager) view.getLayoutManager()).getOrientation());
         dividerItemDecoration.setDrawable(dividersDrawable);
         view.addItemDecoration(dividerItemDecoration);
+    }
+
+    @BindingAdapter(value = {"viewVisibility"})
+    public static void hideView(View view, boolean show) {
+        view.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 }

@@ -19,8 +19,6 @@ import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
-import java.util.List;
-
 import timber.log.Timber;
 
 public class PlayerViewModel extends ViewModel {
@@ -39,8 +37,12 @@ public class PlayerViewModel extends ViewModel {
         preparePlayer();
     }
 
-    public void startVideo(String videoUrl) {
-        setAndPlayMediaSource(Uri.parse(videoUrl));
+    public void startVideo(InstructionStep step) {
+        player.stop();
+        String url = "";
+        if (!step.getVideoURL().isEmpty()) url = step.getVideoURL();
+        else if (!step.getThumbnailURL().isEmpty()) url = step.getThumbnailURL();
+        if (!url.isEmpty()) setAndPlayMediaSource(Uri.parse(url));
     }
 
     private void preparePlayer() {
@@ -73,11 +75,11 @@ public class PlayerViewModel extends ViewModel {
         releasePlayer();
     }
 
-    public LiveData<List<InstructionStep>> getSteps() {
-        return repository.getInstructionSteps(recipeName);
-    }
-
     public SimpleExoPlayer getPlayerInstance() {
         return player;
+    }
+
+    public LiveData<InstructionStep> getSelectedStep(int stepNo) {
+        return repository.getInstructionStep(recipeName, stepNo);
     }
 }

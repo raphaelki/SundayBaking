@@ -8,4 +8,5 @@ public class Constants {
     public static final String RECIPE_STEP_NO_KEY = "step_no";
     public static final String INSTRUCTIONS_FRAGMENT_TAG = "instructions_fragment";
     public static final String PLAYER_FRAGMENT_TAG = "player_fragment";
+
 }

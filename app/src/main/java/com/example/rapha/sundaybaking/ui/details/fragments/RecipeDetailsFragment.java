@@ -20,13 +20,14 @@ import com.example.rapha.sundaybaking.ui.details.viewmodels.RecipeDetailsViewMod
 import com.example.rapha.sundaybaking.ui.details.viewmodels.RecipeDetailsViewModelFactory;
 import com.example.rapha.sundaybaking.util.Constants;
 
+import timber.log.Timber;
+
 public class RecipeDetailsFragment extends Fragment {
 
     private RecipeDetailsViewModel viewModel;
     private FragmentRecipeDetailsBinding binding;
     private IngredientAdapter ingredientAdapter;
     private InstructionStepAdapter stepAdapter;
-    private boolean deviceIsTablet;
 
     private InstructionStepClickCallback callback;
 
@@ -43,9 +44,18 @@ public class RecipeDetailsFragment extends Fragment {
         }
     }
 
+    public static RecipeDetailsFragment forRecipe(String recipeName) {
+        RecipeDetailsFragment detailsFragment = new RecipeDetailsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.RECIPE_NAME_KEY, recipeName);
+        detailsFragment.setArguments(bundle);
+        return detailsFragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Timber.d("RecipeDetailsFragment created");
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_recipe_details, container, false);
         ingredientAdapter = new IngredientAdapter();
         binding.ingredientsRv.setAdapter(ingredientAdapter);
@@ -53,7 +63,6 @@ public class RecipeDetailsFragment extends Fragment {
         stepAdapter = new InstructionStepAdapter(callback);
         binding.stepsRv.setAdapter(stepAdapter);
         binding.stepsRv.setNestedScrollingEnabled(false);
-        deviceIsTablet = getResources().getBoolean(R.bool.isTablet);
         return binding.getRoot();
     }
 
@@ -63,14 +72,15 @@ public class RecipeDetailsFragment extends Fragment {
         String recipeName = getArguments().getString(Constants.RECIPE_NAME_KEY);
         RecipeDetailsViewModelFactory factory = new RecipeDetailsViewModelFactory(getActivity().getApplication(), recipeName);
         viewModel = ViewModelProviders
-                .of(getActivity(), factory)
+                .of(this, factory)
                 .get(RecipeDetailsViewModel.class);
         viewModel.getIngredients().observe(this, ingredients -> ingredientAdapter.setIngredientList(ingredients));
         viewModel.getInstructionSteps().observe(this, instructionSteps -> stepAdapter.setStepList(instructionSteps));
-//        viewModel.getFirstStep().observe(this, instructionStep -> {
-//            if (deviceIsTablet && instructionStep != null) {
-//                callback.onClick(instructionStep.getRecipeName(), 0);
-//            }
-//        });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Timber.d("RecipeDetailsFragment destroyed");
     }
 }

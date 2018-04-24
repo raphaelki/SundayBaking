@@ -1,22 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/details_fragment_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.details.RecipesDetailsActivity">
-
-    <FrameLayout
-        android:id="@+id/upper_fragment_frame"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"
-        android:visibility="gone" />
-
-    <FrameLayout
-        android:id="@+id/lower_fragment_frame"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5" />
-
-</LinearLayout>
+    tools:context=".ui.details.RecipesDetailsActivity" />

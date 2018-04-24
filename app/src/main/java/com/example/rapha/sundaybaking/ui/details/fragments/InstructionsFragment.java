@@ -14,9 +14,9 @@ import android.view.ViewGroup;
 
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.databinding.FragmentInstructionsBinding;
-import com.example.rapha.sundaybaking.ui.details.InstructionsFragmentCallback;
+import com.example.rapha.sundaybaking.ui.details.InstructionStepClickCallback;
 import com.example.rapha.sundaybaking.ui.details.adapters.InstructionsPagerAdapter;
-import com.example.rapha.sundaybaking.ui.details.viewmodels.RecipeDetailsViewModel;
+import com.example.rapha.sundaybaking.ui.details.viewmodels.InstructionsViewModel;
 import com.example.rapha.sundaybaking.util.Constants;
 
 import timber.log.Timber;
@@ -24,9 +24,11 @@ import timber.log.Timber;
 public class InstructionsFragment extends Fragment {
 
     private InstructionsPagerAdapter pagerAdapter;
-    private RecipeDetailsViewModel viewModel;
-    private InstructionsFragmentCallback callback;
+    private InstructionsViewModel viewModel;
+    private InstructionStepClickCallback callback;
     private FragmentInstructionsBinding binding;
+    private int stepPage = -1;
+    private String recipeName;
 
     public InstructionsFragment() {
     }
@@ -35,9 +37,9 @@ public class InstructionsFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            callback = (InstructionsFragmentCallback) context;
+            callback = (InstructionStepClickCallback) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement InstructionsFragmentCallback");
+            throw new ClassCastException(context.toString() + " must implement InstructionStepClickCallback");
         }
     }
 
@@ -53,14 +55,16 @@ public class InstructionsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Timber.d("onCreateView");
+        Timber.d("InstructionsFragment created");
+        recipeName = getArguments().getString(Constants.RECIPE_NAME_KEY);
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_instructions, container, false);
         pagerAdapter = new InstructionsPagerAdapter();
         binding.instructionsViewPager.setAdapter(pagerAdapter);
         binding.instructionsViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                callback.onStepChanged(position);
+                callback.onStepSelected(recipeName, position);
+                stepPage = position;
                 Timber.d("Scrolled to page: %s", position);
             }
         });
@@ -69,17 +73,40 @@ public class InstructionsFragment extends Fragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Timber.d("onActivityCreated");
         super.onActivityCreated(savedInstanceState);
-        // use shared ViewModel created in RecipeDetailsFragment
-        viewModel = ViewModelProviders.of(getActivity()).get(RecipeDetailsViewModel.class);
+        createViewModel();
         viewModel.getInstructionSteps().observe(this, steps -> {
             pagerAdapter.setStepList(steps);
-            setStepPage(getArguments().getInt(Constants.RECIPE_STEP_NO_KEY));
+            if (savedInstanceState != null) {
+                setStepPage(savedInstanceState.getInt(Constants.RECIPE_STEP_NO_KEY));
+            } else {
+                setStepPage(getArguments().getInt(Constants.RECIPE_STEP_NO_KEY));
+            }
         });
     }
 
     public void setStepPage(int stepNo) {
-        binding.instructionsViewPager.setCurrentItem(stepNo);
+        if (stepPage != stepNo) {
+            Timber.d("Showing instructions page for step: %s", stepNo);
+            stepPage = stepNo;
+            binding.instructionsViewPager.setCurrentItem(stepNo);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(Constants.RECIPE_STEP_NO_KEY, stepPage);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Timber.d("InstructionsFragment destroyed");
+    }
+
+    private void createViewModel() {
+        InstructionsViewModel.Factory factory = new InstructionsViewModel.Factory(getActivity().getApplication(), recipeName);
+        viewModel = ViewModelProviders.of(this, factory).get(InstructionsViewModel.class);
     }
 }

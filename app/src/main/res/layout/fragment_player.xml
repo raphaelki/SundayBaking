@@ -1,8 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.google.android.exoplayer2.ui.PlayerView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/player_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+    <data>
+
+        <variable
+            name="step"
+            type="com.example.rapha.sundaybaking.data.models.InstructionStep" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/player_view"
+            viewVisibility='@{step == null || (step.videoURL.isEmpty() &amp;&amp; step.thumbnailURL.isEmpty()) ? false : true}'
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <!--/>-->
+        <ImageView
+            viewVisibility='@{step == null || (step.videoURL.isEmpty() &amp;&amp; step.thumbnailURL.isEmpty()) ? true : false}'
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_muffin" />
+    </FrameLayout>
 </layout>

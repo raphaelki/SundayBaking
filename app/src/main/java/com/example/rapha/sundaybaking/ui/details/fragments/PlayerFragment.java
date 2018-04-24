@@ -11,20 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.rapha.sundaybaking.R;
-import com.example.rapha.sundaybaking.data.models.InstructionStep;
 import com.example.rapha.sundaybaking.databinding.FragmentPlayerBinding;
 import com.example.rapha.sundaybaking.ui.details.viewmodels.PlayerViewModel;
 import com.example.rapha.sundaybaking.ui.details.viewmodels.PlayerViewModelFactory;
 import com.example.rapha.sundaybaking.util.Constants;
 
-import java.util.List;
+import timber.log.Timber;
 
 public class PlayerFragment extends Fragment {
 
     private PlayerViewModel viewModel;
     private FragmentPlayerBinding binding;
-    private List<InstructionStep> steps;
-    private int initialStepNo;
+    private int selectedStep = -1;
 
     public PlayerFragment() {
     }
@@ -41,6 +39,7 @@ public class PlayerFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Timber.d("PlayerFragment created");
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_player, container, false);
         return binding.getRoot();
     }
@@ -48,22 +47,11 @@ public class PlayerFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initialStepNo = getArguments().getInt(Constants.RECIPE_STEP_NO_KEY);
         createViewModel();
-        viewModel.getSteps().observe(this, steps -> {
-            if (steps != null) {
-                this.steps = steps;
-                setSelectedStep(initialStepNo);
-            }
-        });
+        if (savedInstanceState == null)
+            playVideoForStep(getArguments().getInt(Constants.RECIPE_STEP_NO_KEY));
+        else playVideoForStep(savedInstanceState.getInt(Constants.RECIPE_STEP_NO_KEY));
         binding.playerView.setPlayer(viewModel.getPlayerInstance());
-    }
-
-    public void setSelectedStep(int stepNo) {
-        if (steps != null) {
-            String videoUrl = steps.get(stepNo).getVideoURL();
-            viewModel.startVideo(videoUrl);
-        }
     }
 
     private void createViewModel() {
@@ -71,5 +59,29 @@ public class PlayerFragment extends Fragment {
         PlayerViewModelFactory viewModelFactory = new PlayerViewModelFactory(
                 getActivity().getApplication(), recipeName);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PlayerViewModel.class);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Timber.d("Player Fragment destroyed");
+    }
+
+    public void playVideoForStep(int stepNo) {
+        if (selectedStep != stepNo) {
+            Timber.d("Showing video for step: %s", stepNo);
+            selectedStep = stepNo;
+            viewModel.getSelectedStep(stepNo).removeObservers(this);
+            viewModel.getSelectedStep(stepNo).observe(this, step -> {
+                binding.setStep(step);
+                viewModel.startVideo(step);
+            });
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(Constants.RECIPE_STEP_NO_KEY, selectedStep);
     }
 }

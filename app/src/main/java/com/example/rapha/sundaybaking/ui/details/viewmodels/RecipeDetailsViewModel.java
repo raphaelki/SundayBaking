@@ -15,13 +15,11 @@ public class RecipeDetailsViewModel extends ViewModel {
     private final RecipeRepository recipeRepository;
     private LiveData<List<InstructionStep>> instructionSteps;
     private LiveData<List<Ingredient>> ingredients;
-    private LiveData<InstructionStep> firstStep;
 
     public RecipeDetailsViewModel(SundayBakingApp application, String recipeName) {
         this.recipeRepository = application.getRecipeRepository();
         instructionSteps = recipeRepository.getInstructionSteps(recipeName);
         ingredients = recipeRepository.getIngredients(recipeName);
-        firstStep = recipeRepository.getFirstInstructionStep(recipeName);
     }
 
     public LiveData<List<Ingredient>> getIngredients() {
@@ -31,10 +29,4 @@ public class RecipeDetailsViewModel extends ViewModel {
     public LiveData<List<InstructionStep>> getInstructionSteps() {
         return instructionSteps;
     }
-
-    public LiveData<InstructionStep> getFirstStep() {
-        return firstStep;
-    }
-
-
 }

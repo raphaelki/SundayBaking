@@ -70,6 +70,7 @@ public class RecipeDetailsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         String recipeName = getArguments().getString(Constants.RECIPE_NAME_KEY);
+        getActivity().setTitle(recipeName);
         RecipeDetailsViewModelFactory factory = new RecipeDetailsViewModelFactory(getActivity().getApplication(), recipeName);
         viewModel = ViewModelProviders
                 .of(this, factory)

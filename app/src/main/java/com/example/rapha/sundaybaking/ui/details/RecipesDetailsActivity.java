@@ -23,6 +23,8 @@ public class RecipesDetailsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes_details);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         deviceIsTablet = getResources().getBoolean(R.bool.isTablet);
         recipeName = getIntent().getStringExtra(Constants.RECIPE_NAME_KEY);
 

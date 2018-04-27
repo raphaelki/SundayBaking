@@ -6,5 +6,6 @@
     <string name="preperation_label">Preparation</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="widget_appbar_title">Select recipe</string>
 
 </resources>

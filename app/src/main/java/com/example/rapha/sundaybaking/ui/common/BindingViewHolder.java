@@ -1,4 +1,4 @@
-package com.example.rapha.sundaybaking.ui;
+package com.example.rapha.sundaybaking.ui.common;
 
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;

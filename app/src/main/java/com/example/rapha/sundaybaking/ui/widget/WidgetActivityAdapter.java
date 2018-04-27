@@ -8,29 +8,30 @@ import android.view.ViewGroup;
 
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.data.models.Recipe;
-import com.example.rapha.sundaybaking.databinding.WidgetConfigActivityItemBinding;
-import com.example.rapha.sundaybaking.ui.BindingViewHolder;
+import com.example.rapha.sundaybaking.databinding.RvItemWidgetRecipeConfigBinding;
+import com.example.rapha.sundaybaking.ui.common.BindingViewHolder;
+import com.example.rapha.sundaybaking.ui.common.RecipeClickCallback;
 
 import java.util.List;
 
-public class WidgetActivityAdapter extends RecyclerView.Adapter<BindingViewHolder<WidgetConfigActivityItemBinding>> {
+public class WidgetActivityAdapter extends RecyclerView.Adapter<BindingViewHolder<RvItemWidgetRecipeConfigBinding>> {
 
     private List<Recipe> recipes;
-    private WidgetConfigItemCallback callback;
+    private RecipeClickCallback callback;
 
-    public WidgetActivityAdapter(WidgetConfigItemCallback callback) {
+    public WidgetActivityAdapter(RecipeClickCallback callback) {
         this.callback = callback;
     }
 
     @NonNull
     @Override
-    public BindingViewHolder<WidgetConfigActivityItemBinding> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        WidgetConfigActivityItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.widget_config_activity_item, parent, false);
+    public BindingViewHolder<RvItemWidgetRecipeConfigBinding> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        RvItemWidgetRecipeConfigBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.rv_item_widget_recipe_config, parent, false);
         return new BindingViewHolder<>(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BindingViewHolder<WidgetConfigActivityItemBinding> holder, int position) {
+    public void onBindViewHolder(@NonNull BindingViewHolder<RvItemWidgetRecipeConfigBinding> holder, int position) {
         holder.binding.setRecipe(recipes.get(position));
         holder.binding.setCallback(callback);
         holder.binding.executePendingBindings();

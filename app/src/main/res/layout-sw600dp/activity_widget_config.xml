@@ -16,7 +16,7 @@
             android:orientation="vertical"
             app:layoutManager="android.support.v7.widget.GridLayoutManager"
             app:spanCount="5"
-            tools:listitem="@layout/widget_config_activity_item" />
+            tools:listitem="@layout/rv_item_widget_recipe_config" />
 
     </LinearLayout>
 </layout>

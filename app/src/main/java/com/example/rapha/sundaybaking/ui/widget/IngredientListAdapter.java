@@ -51,7 +51,7 @@ public class IngredientListAdapter implements RemoteViewsService.RemoteViewsFact
 
     @Override
     public RemoteViews getViewAt(int position) {
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_ingredient_item);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.lv_item_widget_ingredient);
         Ingredient ingredient = ingredients.get(position);
         views.setTextViewText(R.id.widget_ingredientitem_quantity, ingredient.getQuantity() + " " + ingredient.getMeasure());
         views.setTextViewText(R.id.widget_ingredientitem_ingredient, ingredient.getIngredient());

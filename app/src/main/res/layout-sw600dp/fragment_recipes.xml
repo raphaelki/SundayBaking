@@ -14,6 +14,10 @@
             android:orientation="vertical"
             app:layoutManager="android.support.v7.widget.GridLayoutManager"
             app:spanCount="3"
+            android:paddingBottom="4dp"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
+            android:paddingTop="4dp"
             android:background="@color/rv_cards_background"
             tools:listitem="@layout/rv_item_recipe" />
 

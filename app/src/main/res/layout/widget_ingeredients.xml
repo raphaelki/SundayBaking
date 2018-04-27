@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/widget_ingredient_title"
         android:background="#8bffffff"
-        tools:listitem="@layout/widget_ingredient_item" />
+        tools:listitem="@layout/lv_item_widget_ingredient" />
 
     <TextView
         android:id="@+id/widget_ingredients_emptyview"

@@ -19,6 +19,8 @@ public class StepsActivity extends AppCompatActivity implements InstructionStepC
         String recipeName = getIntent().getStringExtra(Constants.RECIPE_NAME_KEY);
         int stepNo = getIntent().getIntExtra(Constants.RECIPE_STEP_NO_KEY, 0);
 
+        setTitle(recipeName);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()

@@ -15,12 +15,13 @@ import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.SundayBakingApp;
 import com.example.rapha.sundaybaking.data.RecipeRepository;
 import com.example.rapha.sundaybaking.databinding.ActivityWidgetConfigBinding;
+import com.example.rapha.sundaybaking.ui.common.RecipeClickCallback;
 import com.example.rapha.sundaybaking.ui.details.RecipesDetailsActivity;
 import com.example.rapha.sundaybaking.util.Constants;
 
 import timber.log.Timber;
 
-public class WidgetConfigActivity extends AppCompatActivity implements WidgetConfigItemCallback {
+public class WidgetConfigActivity extends AppCompatActivity implements RecipeClickCallback {
 
     private int widgetId;
     private RecipeRepository repository;
@@ -63,7 +64,7 @@ public class WidgetConfigActivity extends AppCompatActivity implements WidgetCon
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
         } else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        setTitle("Select recipe");
+        setTitle(getString(R.string.widget_appbar_title));
 
         // if user backs out of activity don't create the widget
         setResult(RESULT_CANCELED);

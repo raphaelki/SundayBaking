@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.data.models.Ingredient;
 import com.example.rapha.sundaybaking.databinding.RvItemIngredientBinding;
-import com.example.rapha.sundaybaking.ui.BindingViewHolder;
+import com.example.rapha.sundaybaking.ui.common.BindingViewHolder;
 
 import java.util.List;
 

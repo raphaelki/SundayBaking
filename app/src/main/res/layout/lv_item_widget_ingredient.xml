@@ -12,6 +12,7 @@
         android:layout_gravity="center"
         android:gravity="end"
         android:padding="3dp"
+        android:textStyle="bold"
         tools:text="200 g" />
 
     <TextView

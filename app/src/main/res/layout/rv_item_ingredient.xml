@@ -17,10 +17,9 @@
             android:id="@+id/ingredient_quantity"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_gravity="center"
             android:gravity="end"
+            android:padding="1dp"
             android:text='@{String.valueOf(safeUnbox(ingredient.quantity)) + " " + ingredient.measure, default="1 K"}'
             android:textStyle="bold" />
 
@@ -28,7 +27,8 @@
             android:id="@+id/ingredient_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center"
+            android:padding="1dp"
             android:text='@{ingredient.ingredient, default="Nutella or other chocolate-hazelnut spread"}' />
 
     </LinearLayout>

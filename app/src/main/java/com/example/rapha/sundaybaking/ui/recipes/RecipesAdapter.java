@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.data.models.Recipe;
 import com.example.rapha.sundaybaking.databinding.RvItemRecipeBinding;
-import com.example.rapha.sundaybaking.ui.BindingViewHolder;
+import com.example.rapha.sundaybaking.ui.common.BindingViewHolder;
+import com.example.rapha.sundaybaking.ui.common.RecipeClickCallback;
 
 import java.util.List;
 

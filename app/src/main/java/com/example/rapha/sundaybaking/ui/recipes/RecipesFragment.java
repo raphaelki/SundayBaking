@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.databinding.FragmentRecipesBinding;
+import com.example.rapha.sundaybaking.ui.common.RecipeClickCallback;
 import com.example.rapha.sundaybaking.ui.details.RecipesDetailsActivity;
 import com.example.rapha.sundaybaking.util.Constants;
 
@@ -51,7 +52,7 @@ public class RecipesFragment extends Fragment implements RecipeClickCallback {
     }
 
     @Override
-    public void onClick(String recipeName) {
+    public void onRecipeSelected(String recipeName) {
         Intent intent = new Intent(getContext(), RecipesDetailsActivity.class);
         intent.putExtra(Constants.RECIPE_NAME_KEY, recipeName);
         startActivity(intent);

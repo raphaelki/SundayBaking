@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.data.models.InstructionStep;
 import com.example.rapha.sundaybaking.databinding.RvItemStepBinding;
-import com.example.rapha.sundaybaking.ui.BindingViewHolder;
+import com.example.rapha.sundaybaking.ui.common.BindingViewHolder;
 import com.example.rapha.sundaybaking.ui.details.InstructionStepClickCallback;
 
 import java.util.List;

@@ -31,7 +31,7 @@
             app:layout_constraintRight_toLeftOf="@id/right_arrow"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:listitem="@layout/step_description" />
+            tools:listitem="@layout/item_step_description" />
 
         <View
             android:id="@+id/right_arrow"

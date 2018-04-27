@@ -67,6 +67,12 @@ public class PlayerFragment extends Fragment {
         Timber.d("Player Fragment destroyed");
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        viewModel.stopPlayer();
+    }
+
     public void playVideoForStep(int stepNo) {
         if (selectedStep != stepNo) {
             Timber.d("Showing video for step: %s", stepNo);
@@ -78,6 +84,7 @@ public class PlayerFragment extends Fragment {
             });
         }
     }
+
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {

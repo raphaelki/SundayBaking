@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.data.models.InstructionStep;
-import com.example.rapha.sundaybaking.databinding.StepDescriptionBinding;
+import com.example.rapha.sundaybaking.databinding.ItemStepDescriptionBinding;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class InstructionsPagerAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        StepDescriptionBinding binding = DataBindingUtil.inflate(LayoutInflater.from(container.getContext()), R.layout.step_description, container, false);
+        ItemStepDescriptionBinding binding = DataBindingUtil.inflate(LayoutInflater.from(container.getContext()), R.layout.item_step_description, container, false);
         binding.setStep(steps.get(position));
         binding.executePendingBindings();
         container.addView(binding.getRoot());

@@ -71,8 +71,8 @@ public class RecipeRepository implements RecipeDataSource {
         return recipeDatabase.instructionStepsDao().getInstructionStep(recipeName, stepNo);
     }
 
-    public LiveData<InstructionStep> getFirstInstructionStep(String recipeName) {
-        return recipeDatabase.instructionStepsDao().getFirstInstructionStep(recipeName);
+    public List<Ingredient> getIngredientsSync(String recipeName) {
+        return recipeDatabase.ingredientsDao().getIngredientList(recipeName);
     }
 
     private void fetchRecipes() {

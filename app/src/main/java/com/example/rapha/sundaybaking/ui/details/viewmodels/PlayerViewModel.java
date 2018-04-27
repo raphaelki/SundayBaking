@@ -60,6 +60,12 @@ public class PlayerViewModel extends ViewModel {
         Timber.d("ExoPlayer released");
     }
 
+    public void stopPlayer() {
+        if (player != null) {
+            player.stop();
+        }
+    }
+
     public void setAndPlayMediaSource(Uri uri) {
         Timber.d("Set and play media source: %s", uri.toString());
         String userAgent = Util.getUserAgent(context, "SundayBaking");

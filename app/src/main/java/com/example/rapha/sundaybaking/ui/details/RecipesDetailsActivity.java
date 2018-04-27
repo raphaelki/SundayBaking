@@ -16,7 +16,6 @@ public class RecipesDetailsActivity extends AppCompatActivity
         implements InstructionStepClickCallback {
 
     private boolean deviceIsTablet;
-    private int selectedStep = -1;
     private String recipeName;
 
     @Override

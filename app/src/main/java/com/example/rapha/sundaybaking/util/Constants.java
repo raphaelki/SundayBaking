@@ -9,4 +9,5 @@ public class Constants {
     public static final String INSTRUCTIONS_FRAGMENT_TAG = "instructions_fragment";
     public static final String PLAYER_FRAGMENT_TAG = "player_fragment";
 
+    public static final String SHARED_PREFS_NAME = "com.example.rapha.sundaybaking.sharedprefs";
 }

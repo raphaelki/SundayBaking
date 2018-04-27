@@ -21,4 +21,7 @@ public interface IngredientsDao {
 
     @Query("SELECT * FROM ingredients WHERE id = :id")
     LiveData<Ingredient> getIngredient(int id);
+
+    @Query("SELECT * FROM ingredients WHERE recipe_name = :recipeName")
+    List<Ingredient> getIngredientList(String recipeName);
 }

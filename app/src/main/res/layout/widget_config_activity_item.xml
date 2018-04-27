@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="recipe"
+            type="com.example.rapha.sundaybaking.data.models.Recipe" />
+
+        <variable
+            name="callback"
+            type="com.example.rapha.sundaybaking.ui.widget.WidgetConfigItemCallback" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick='@{() -> callback.onRecipeSelected(recipe.name)}'
+        android:paddingBottom="1dp"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:paddingTop="1dp">
+
+        <ImageView
+            android:id="@+id/widget_config_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{recipe.image}"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:placeholder="@{@drawable/placeholder}"
+            tools:src="@drawable/placeholder" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="#7d000000"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp"
+            android:text='@{recipe.name, default="Nutella Pie"}'
+            android:textColor="@android:color/primary_text_dark"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

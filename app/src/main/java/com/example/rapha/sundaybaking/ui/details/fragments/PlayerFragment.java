@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.databinding.FragmentPlayerBinding;
+import com.example.rapha.sundaybaking.ui.details.PlayerComponent;
 import com.example.rapha.sundaybaking.ui.details.viewmodels.PlayerViewModel;
 import com.example.rapha.sundaybaking.ui.details.viewmodels.PlayerViewModelFactory;
 import com.example.rapha.sundaybaking.util.Constants;
@@ -29,6 +30,7 @@ public class PlayerFragment extends Fragment {
     private Handler handler;
     private Runnable hideSystemUIRunnable;
     private boolean isTablet;
+    private PlayerComponent playerComponent;
 
     public PlayerFragment() {
     }
@@ -47,6 +49,9 @@ public class PlayerFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Timber.d("PlayerFragment created");
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_player, container, false);
+
+        playerComponent = new PlayerComponent(getContext(), binding.playerView);
+        getLifecycle().addObserver(playerComponent);
 
         isTablet = getResources().getBoolean(R.bool.isTablet);
         handler = new Handler();
@@ -77,9 +82,11 @@ public class PlayerFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         createViewModel();
         if (savedInstanceState == null)
-            playVideoForStep(getArguments().getInt(Constants.RECIPE_STEP_NO_KEY));
-        else playVideoForStep(savedInstanceState.getInt(Constants.RECIPE_STEP_NO_KEY));
-        binding.playerView.setPlayer(viewModel.getPlayerInstance());
+            changeCurrentStep(getArguments().getInt(Constants.RECIPE_STEP_NO_KEY));
+        else changeCurrentStep(savedInstanceState.getInt(Constants.RECIPE_STEP_NO_KEY));
+
+        viewModel.getVideoUrl().observe(this, playerComponent::playVideo);
+        viewModel.getSelectedStep().observe(this, binding::setStep);
     }
 
     @Override
@@ -100,21 +107,14 @@ public class PlayerFragment extends Fragment {
     public void onPause() {
         super.onPause();
         handler.removeCallbacks(hideSystemUIRunnable);
-        viewModel.stopPlayer();
     }
 
-    public void playVideoForStep(int stepNo) {
+    public void changeCurrentStep(int stepNo) {
         if (selectedStep != stepNo) {
-            Timber.d("Showing video for step: %s", stepNo);
             selectedStep = stepNo;
-            viewModel.getSelectedStep(stepNo).removeObservers(this);
-            viewModel.getSelectedStep(stepNo).observe(this, step -> {
-                binding.setStep(step);
-                viewModel.startVideo(step);
-            });
+            viewModel.changeCurrentStep(stepNo);
         }
     }
-
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {

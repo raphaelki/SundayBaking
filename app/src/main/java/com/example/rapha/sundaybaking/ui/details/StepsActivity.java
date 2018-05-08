@@ -38,7 +38,7 @@ public class StepsActivity extends AppCompatActivity implements InstructionStepC
     private void showVideoFor(int stepNo) {
         PlayerFragment playerFragment = (PlayerFragment) getSupportFragmentManager().findFragmentByTag(Constants.PLAYER_FRAGMENT_TAG);
         if (playerFragment != null) {
-            playerFragment.playVideoForStep(stepNo);
+            playerFragment.changeCurrentStep(stepNo);
         }
     }
 }

@@ -75,7 +75,7 @@ public class RecipesDetailsActivity extends AppCompatActivity
     private void showVideoFor(int stepNo) {
         PlayerFragment playerFragment = (PlayerFragment) getSupportFragmentManager().findFragmentByTag(Constants.PLAYER_FRAGMENT_TAG);
         if (playerFragment != null) {
-            playerFragment.playVideoForStep(stepNo);
+            playerFragment.changeCurrentStep(stepNo);
         }
     }
 }

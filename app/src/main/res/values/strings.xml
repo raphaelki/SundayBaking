@@ -7,5 +7,9 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="widget_appbar_title">Select recipe</string>
+    <string name="recipe_rv_cd">Recipe overview</string>
+    <string name="ingredient_list_cd">Ingredient list</string>
+    <string name="instruction_steps_list_cd">List with direction steps</string>
+    <string name="recipe_name_cd">Name of the recipe</string>
 
 </resources>

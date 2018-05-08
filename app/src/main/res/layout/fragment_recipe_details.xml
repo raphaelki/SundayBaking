@@ -41,6 +41,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:orientation="vertical"
+                android:contentDescription="@string/ingredient_list_cd"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                 tools:listitem="@layout/rv_item_ingredient" />
 
@@ -70,6 +71,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:orientation="vertical"
+                android:contentDescription="@string/instruction_steps_list_cd"
                 app:dividersDrawable="@{@drawable/steps_custom_divider}"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"

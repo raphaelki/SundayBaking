@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.databinding.FragmentPlayerBinding;
-import com.example.rapha.sundaybaking.ui.details.PlayerComponent;
 import com.example.rapha.sundaybaking.ui.details.viewmodels.PlayerViewModel;
 import com.example.rapha.sundaybaking.ui.details.viewmodels.PlayerViewModelFactory;
 import com.example.rapha.sundaybaking.util.Constants;

@@ -1,4 +1,4 @@
-package com.example.rapha.sundaybaking.ui.details;
+package com.example.rapha.sundaybaking.ui.details.fragments;
 
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;

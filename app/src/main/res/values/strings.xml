@@ -11,5 +11,7 @@
     <string name="ingredient_list_cd">Ingredient list</string>
     <string name="instruction_steps_list_cd">List with direction steps</string>
     <string name="recipe_name_cd">Name of the recipe</string>
+    <string name="no_connection_message">No data connection available</string>
+    <string name="recipes_refreshed_message">Recipes refreshed</string>
 
 </resources>

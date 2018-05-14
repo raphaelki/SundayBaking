@@ -16,7 +16,7 @@ public abstract class RecipeDatabase extends RoomDatabase {
     public abstract IngredientsDao ingredientsDao();
 
     private static RecipeDatabase INSTANCE;
-    private static final String NAME = "recipes.db";
+    public static final String NAME = "recipes.db";
 
     public static RecipeDatabase getInstance(final Context context){
         if (INSTANCE == null){

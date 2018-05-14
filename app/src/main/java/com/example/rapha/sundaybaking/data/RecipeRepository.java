@@ -2,6 +2,7 @@ package com.example.rapha.sundaybaking.data;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.MutableLiveData;
 
 import com.example.rapha.sundaybaking.AppExecutors;
 import com.example.rapha.sundaybaking.data.local.RecipeDatabase;
@@ -23,6 +24,7 @@ public class RecipeRepository implements RecipeDataSource {
     private RecipeDatabase recipeDatabase;
 
     private final MediatorLiveData<List<Recipe>> observedRecipes = new MediatorLiveData<>();
+    private MutableLiveData<DataState> dataState = new MutableLiveData<>();
 
     private static RecipeRepository INSTANCE;
 
@@ -77,6 +79,7 @@ public class RecipeRepository implements RecipeDataSource {
 
     private void fetchRecipes() {
         Timber.d("Fetching recipes");
+        dataState.setValue(DataState.FETCHING);
         appExecutors.diskIO().execute(() -> {
             Response<List<Recipe>> response;
             try {
@@ -96,10 +99,20 @@ public class RecipeRepository implements RecipeDataSource {
                         }
                         recipeDatabase.instructionStepsDao().insertInstructionSteps(instructionSteps);
                     }
+                    dataState.postValue(DataState.SUCCESS);
                 }
             } catch (IOException e) {
                 Timber.e(e, "error fetching recipe data from remote source");
+                dataState.postValue(DataState.ERROR);
             }
         });
+    }
+
+    public void triggerFetch() {
+        fetchRecipes();
+    }
+
+    public LiveData<DataState> getDataState() {
+        return dataState;
     }
 }

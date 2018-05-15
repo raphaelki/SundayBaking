@@ -1,5 +1,6 @@
 package com.example.rapha.sundaybaking.ui.recipes;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.rapha.sundaybaking.R;
+import com.example.rapha.sundaybaking.ViewModelFactory;
 import com.example.rapha.sundaybaking.data.DataState;
 import com.example.rapha.sundaybaking.databinding.FragmentRecipesBinding;
 import com.example.rapha.sundaybaking.ui.common.RecipeClickCallback;
@@ -27,7 +30,10 @@ public class RecipesFragment extends Fragment implements RecipeClickCallback {
     public static final String TAG = "ProductListViewModel";
 
     private FragmentRecipesBinding binding;
-    private RecipesViewModel viewModel;
+    @VisibleForTesting
+    public RecipesViewModel viewModel;
+    @VisibleForTesting
+    public ViewModelProvider.Factory viewModelFactory;
     private RecipesAdapter recipesAdapter;
 
     public RecipesFragment() {
@@ -45,7 +51,7 @@ public class RecipesFragment extends Fragment implements RecipeClickCallback {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(RecipesViewModel.class);
+        createViewModel();
         binding.recipesSwipeRefresh.setOnRefreshListener(() -> viewModel.triggerUpdate());
         viewModel.getRecipes().observe(this, recipes -> {
             Timber.d("Observed recipes changed");
@@ -78,5 +84,15 @@ public class RecipesFragment extends Fragment implements RecipeClickCallback {
         Intent intent = new Intent(getContext(), RecipesDetailsActivity.class);
         intent.putExtra(Constants.RECIPE_NAME_KEY, recipeName);
         startActivity(intent);
+    }
+
+    /*
+     * Only create viewModelFactory if not running in test
+     */
+    private void createViewModel() {
+        if (viewModelFactory == null) {
+            viewModelFactory = ViewModelFactory.getInstance(getActivity().getApplication());
+        }
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(RecipesViewModel.class);
     }
 }

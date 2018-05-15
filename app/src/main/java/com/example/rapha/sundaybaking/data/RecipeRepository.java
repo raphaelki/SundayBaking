@@ -10,6 +10,7 @@ import com.example.rapha.sundaybaking.data.models.Ingredient;
 import com.example.rapha.sundaybaking.data.models.InstructionStep;
 import com.example.rapha.sundaybaking.data.models.Recipe;
 import com.example.rapha.sundaybaking.data.remote.RecipesRemoteAPI;
+import com.example.rapha.sundaybaking.util.EspressoIdlingResource;
 
 import java.io.IOException;
 import java.util.List;
@@ -81,6 +82,7 @@ public class RecipeRepository implements RecipeDataSource {
         Timber.d("Fetching recipes");
         dataState.setValue(DataState.FETCHING);
         appExecutors.diskIO().execute(() -> {
+            EspressoIdlingResource.increment();
             Response<List<Recipe>> response;
             try {
                 response = recipesRemoteAPI.getRecipes().execute();
@@ -105,6 +107,7 @@ public class RecipeRepository implements RecipeDataSource {
                 Timber.e(e, "error fetching recipe data from remote source");
                 dataState.postValue(DataState.ERROR);
             }
+            EspressoIdlingResource.decrement();
         });
     }
 

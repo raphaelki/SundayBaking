@@ -4,7 +4,6 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
-import com.example.rapha.sundaybaking.SundayBakingApp;
 import com.example.rapha.sundaybaking.data.DataState;
 import com.example.rapha.sundaybaking.data.RecipeRepository;
 import com.example.rapha.sundaybaking.data.models.Recipe;
@@ -15,9 +14,9 @@ public class RecipesViewModel extends AndroidViewModel {
 
     private final RecipeRepository recipeRepository;
 
-    public RecipesViewModel(Application application){
+    public RecipesViewModel(Application application, RecipeRepository repository) {
         super(application);
-        recipeRepository = ((SundayBakingApp) application).getRecipeRepository();
+        recipeRepository = repository;
     }
 
     public LiveData<List<Recipe>> getRecipes(){

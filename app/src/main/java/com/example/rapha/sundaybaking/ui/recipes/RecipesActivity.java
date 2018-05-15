@@ -1,6 +1,7 @@
 package com.example.rapha.sundaybaking.ui.recipes;
 
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.rapha.sundaybaking.R;
@@ -19,11 +20,15 @@ public class RecipesActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             RecipesFragment recipesFragment = new RecipesFragment();
 
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.fragment_frame, recipesFragment, RecipesFragment.TAG)
-                    .commit();
+            setRecipeFragment(recipesFragment);
         }
+    }
 
+    @VisibleForTesting
+    public void setRecipeFragment(RecipesFragment recipesFragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_frame, recipesFragment, RecipesFragment.TAG)
+                .commit();
     }
 }

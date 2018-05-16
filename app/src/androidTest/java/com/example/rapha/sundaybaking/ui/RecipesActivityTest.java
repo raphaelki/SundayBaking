@@ -1,14 +1,17 @@
-package com.example.rapha.sundaybaking.ui.recipes;
+package com.example.rapha.sundaybaking.ui;
 
+import android.support.annotation.StringRes;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.IdlingRegistry;
 import android.support.test.espresso.contrib.RecyclerViewActions;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 
-import com.example.rapha.sundaybaking.EspressoTestUtil;
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.data.local.RecipeDatabase;
+import com.example.rapha.sundaybaking.ui.recipes.RecipesActivity;
 import com.example.rapha.sundaybaking.util.EspressoIdlingResource;
+import com.example.rapha.sundaybaking.util.EspressoTestUtil;
 
 import org.junit.After;
 import org.junit.Before;
@@ -22,8 +25,13 @@ import static android.support.test.espresso.assertion.ViewAssertions.doesNotExis
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
+/*
+ * Integration and navigation tests for RecipesActivity
+ */
 public class RecipesActivityTest {
 
     @Rule
@@ -52,7 +60,7 @@ public class RecipesActivityTest {
     @Test
     public void swipeDownOnRecipesList_refreshesRecipes() {
         onView(withId(R.id.recipes_swipe_refresh)).perform(swipeDown());
-        onView(withContentDescription(R.string.recipe_rv_cd)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        checkSnackBarMessage(R.string.recipes_refreshed_message);
     }
 
     private void deleteRecipeDatabase() {
@@ -62,6 +70,10 @@ public class RecipesActivityTest {
     @After
     public void dismissIdlingResource() {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
+    }
+
+    private void checkSnackBarMessage(@StringRes int stringResId) {
+        onView(withText(stringResId)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
 }

@@ -6,9 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.ui.common.ActivityHelper;
-import com.example.rapha.sundaybaking.ui.details.fragments.InstructionsFragment;
-import com.example.rapha.sundaybaking.ui.details.fragments.PlayerFragment;
-import com.example.rapha.sundaybaking.ui.details.fragments.RecipeDetailsFragment;
+import com.example.rapha.sundaybaking.ui.instructions.InstructionsFragment;
+import com.example.rapha.sundaybaking.ui.player.PlayerFragment;
 import com.example.rapha.sundaybaking.util.Constants;
 
 import timber.log.Timber;
@@ -62,7 +61,7 @@ public class RecipesDetailsActivity extends AppCompatActivity
     }
 
     private void showStepActivity(String recipeName, int stepNo) {
-        Intent intent = new Intent(this, StepsActivity.class);
+        Intent intent = new Intent(this, PhoneStepsActivity.class);
         intent.putExtra(Constants.RECIPE_NAME_KEY, recipeName);
         intent.putExtra(Constants.RECIPE_STEP_NO_KEY, stepNo);
         startActivity(intent);

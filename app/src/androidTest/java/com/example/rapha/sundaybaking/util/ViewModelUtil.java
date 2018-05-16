@@ -1,4 +1,4 @@
-package com.example.rapha.sundaybaking;
+package com.example.rapha.sundaybaking.util;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;

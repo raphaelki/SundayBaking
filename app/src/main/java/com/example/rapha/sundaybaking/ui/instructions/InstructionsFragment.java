@@ -1,4 +1,4 @@
-package com.example.rapha.sundaybaking.ui.details.fragments;
+package com.example.rapha.sundaybaking.ui.instructions;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -14,9 +14,8 @@ import android.view.ViewGroup;
 
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.databinding.FragmentInstructionsBinding;
+import com.example.rapha.sundaybaking.ui.common.ViewModelFactory;
 import com.example.rapha.sundaybaking.ui.details.InstructionStepClickCallback;
-import com.example.rapha.sundaybaking.ui.details.adapters.InstructionsPagerAdapter;
-import com.example.rapha.sundaybaking.ui.details.viewmodels.InstructionsViewModel;
 import com.example.rapha.sundaybaking.util.Constants;
 
 import timber.log.Timber;
@@ -106,7 +105,9 @@ public class InstructionsFragment extends Fragment {
     }
 
     private void createViewModel() {
-        InstructionsViewModel.Factory factory = new InstructionsViewModel.Factory(getActivity().getApplication(), recipeName);
-        viewModel = ViewModelProviders.of(this, factory).get(InstructionsViewModel.class);
+        viewModel = ViewModelProviders.of(this,
+                ViewModelFactory.getInstance(getActivity().getApplication()))
+                .get(InstructionsViewModel.class);
+        viewModel.changeCurrentRecipe(recipeName);
     }
 }

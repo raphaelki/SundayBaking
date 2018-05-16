@@ -1,4 +1,4 @@
-package com.example.rapha.sundaybaking.ui.details.adapters;
+package com.example.rapha.sundaybaking.ui.details;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
@@ -10,7 +10,6 @@ import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.data.models.InstructionStep;
 import com.example.rapha.sundaybaking.databinding.RvItemStepBinding;
 import com.example.rapha.sundaybaking.ui.common.BindingViewHolder;
-import com.example.rapha.sundaybaking.ui.details.InstructionStepClickCallback;
 
 import java.util.List;
 

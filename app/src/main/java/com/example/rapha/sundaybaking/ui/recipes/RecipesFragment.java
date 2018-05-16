@@ -16,10 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.rapha.sundaybaking.R;
-import com.example.rapha.sundaybaking.ViewModelFactory;
 import com.example.rapha.sundaybaking.data.DataState;
 import com.example.rapha.sundaybaking.databinding.FragmentRecipesBinding;
-import com.example.rapha.sundaybaking.ui.common.RecipeClickCallback;
+import com.example.rapha.sundaybaking.ui.common.ViewModelFactory;
 import com.example.rapha.sundaybaking.ui.details.RecipesDetailsActivity;
 import com.example.rapha.sundaybaking.util.Constants;
 

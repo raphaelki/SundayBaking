@@ -10,7 +10,7 @@ import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.data.models.Recipe;
 import com.example.rapha.sundaybaking.databinding.RvItemWidgetRecipeConfigBinding;
 import com.example.rapha.sundaybaking.ui.common.BindingViewHolder;
-import com.example.rapha.sundaybaking.ui.common.RecipeClickCallback;
+import com.example.rapha.sundaybaking.ui.recipes.RecipeClickCallback;
 
 import java.util.List;
 

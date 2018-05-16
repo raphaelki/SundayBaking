@@ -1,4 +1,4 @@
-package com.example.rapha.sundaybaking.ui.common;
+package com.example.rapha.sundaybaking.ui.recipes;
 
 public interface RecipeClickCallback {
     void onRecipeSelected(String recipeName);

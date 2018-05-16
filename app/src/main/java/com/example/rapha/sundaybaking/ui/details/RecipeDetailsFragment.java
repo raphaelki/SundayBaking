@@ -1,4 +1,4 @@
-package com.example.rapha.sundaybaking.ui.details.fragments;
+package com.example.rapha.sundaybaking.ui.details;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -13,11 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.databinding.FragmentRecipeDetailsBinding;
-import com.example.rapha.sundaybaking.ui.details.InstructionStepClickCallback;
-import com.example.rapha.sundaybaking.ui.details.adapters.IngredientAdapter;
-import com.example.rapha.sundaybaking.ui.details.adapters.InstructionStepAdapter;
-import com.example.rapha.sundaybaking.ui.details.viewmodels.RecipeDetailsViewModel;
-import com.example.rapha.sundaybaking.ui.details.viewmodels.RecipeDetailsViewModelFactory;
+import com.example.rapha.sundaybaking.ui.common.ViewModelFactory;
 import com.example.rapha.sundaybaking.util.Constants;
 
 import timber.log.Timber;
@@ -71,10 +67,10 @@ public class RecipeDetailsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         String recipeName = getArguments().getString(Constants.RECIPE_NAME_KEY);
         getActivity().setTitle(recipeName);
-        RecipeDetailsViewModelFactory factory = new RecipeDetailsViewModelFactory(getActivity().getApplication(), recipeName);
         viewModel = ViewModelProviders
-                .of(this, factory)
+                .of(this, ViewModelFactory.getInstance(getActivity().getApplication()))
                 .get(RecipeDetailsViewModel.class);
+        viewModel.changeCurrentRecipe(recipeName);
         viewModel.getIngredients().observe(this, ingredients -> ingredientAdapter.setIngredientList(ingredients));
         viewModel.getInstructionSteps().observe(this, instructionSteps -> stepAdapter.setStepList(instructionSteps));
     }

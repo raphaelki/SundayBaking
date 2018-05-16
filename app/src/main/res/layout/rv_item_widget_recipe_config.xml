@@ -11,7 +11,7 @@
 
         <variable
             name="callback"
-            type="com.example.rapha.sundaybaking.ui.common.RecipeClickCallback" />
+            type="com.example.rapha.sundaybaking.ui.recipes.RecipeClickCallback" />
     </data>
 
     <android.support.constraint.ConstraintLayout

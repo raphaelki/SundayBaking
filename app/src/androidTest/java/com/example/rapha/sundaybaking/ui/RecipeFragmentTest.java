@@ -1,4 +1,4 @@
-package com.example.rapha.sundaybaking.ui.recipes;
+package com.example.rapha.sundaybaking.ui;
 
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -10,16 +10,18 @@ import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.example.rapha.sundaybaking.EspressoTestUtil;
 import com.example.rapha.sundaybaking.FragmentTestingActivity;
 import com.example.rapha.sundaybaking.R;
-import com.example.rapha.sundaybaking.TestUtil;
-import com.example.rapha.sundaybaking.ViewModelFactory;
-import com.example.rapha.sundaybaking.ViewModelUtil;
 import com.example.rapha.sundaybaking.data.DataState;
 import com.example.rapha.sundaybaking.data.models.Recipe;
+import com.example.rapha.sundaybaking.ui.common.ViewModelFactory;
 import com.example.rapha.sundaybaking.ui.details.RecipesDetailsActivity;
+import com.example.rapha.sundaybaking.ui.recipes.RecipesFragment;
+import com.example.rapha.sundaybaking.ui.recipes.RecipesViewModel;
 import com.example.rapha.sundaybaking.util.Constants;
+import com.example.rapha.sundaybaking.util.EspressoTestUtil;
+import com.example.rapha.sundaybaking.util.TestUtil;
+import com.example.rapha.sundaybaking.util.ViewModelUtil;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -43,7 +45,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withContentDesc
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.example.rapha.sundaybaking.SwipeRefreshLayoutMatchers.isRefreshing;
+import static com.example.rapha.sundaybaking.util.SwipeRefreshLayoutMatchers.isRefreshing;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.not;
 import static org.mockito.Mockito.verify;
@@ -51,9 +53,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
 public class RecipeFragmentTest {
-
-//    @Rule
-//    public ActivityTestRule<FragmentTestingActivity> activityTestRule = new ActivityTestRule<>(FragmentTestingActivity.class);
 
     @Rule
     public IntentsTestRule<FragmentTestingActivity> intentsTestRule = new IntentsTestRule<>(FragmentTestingActivity.class);

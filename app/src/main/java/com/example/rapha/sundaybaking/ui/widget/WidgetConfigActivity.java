@@ -15,8 +15,8 @@ import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.SundayBakingApp;
 import com.example.rapha.sundaybaking.data.RecipeRepository;
 import com.example.rapha.sundaybaking.databinding.ActivityWidgetConfigBinding;
-import com.example.rapha.sundaybaking.ui.common.RecipeClickCallback;
 import com.example.rapha.sundaybaking.ui.details.RecipesDetailsActivity;
+import com.example.rapha.sundaybaking.ui.recipes.RecipeClickCallback;
 import com.example.rapha.sundaybaking.util.Constants;
 
 import timber.log.Timber;

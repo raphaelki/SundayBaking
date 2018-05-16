@@ -5,11 +5,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.rapha.sundaybaking.R;
-import com.example.rapha.sundaybaking.ui.details.fragments.InstructionsFragment;
-import com.example.rapha.sundaybaking.ui.details.fragments.PlayerFragment;
+import com.example.rapha.sundaybaking.ui.instructions.InstructionsFragment;
+import com.example.rapha.sundaybaking.ui.player.PlayerFragment;
 import com.example.rapha.sundaybaking.util.Constants;
 
-public class StepsActivity extends AppCompatActivity implements InstructionStepClickCallback {
+/*
+ * Activity for displaying video fragment and recipe guidance on phone
+ */
+public class PhoneStepsActivity extends AppCompatActivity implements InstructionStepClickCallback {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

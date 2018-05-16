@@ -1,4 +1,4 @@
-package com.example.rapha.sundaybaking.ui.details.adapters;
+package com.example.rapha.sundaybaking.ui.details;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;

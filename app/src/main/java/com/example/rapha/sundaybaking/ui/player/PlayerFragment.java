@@ -1,4 +1,4 @@
-package com.example.rapha.sundaybaking.ui.details.fragments;
+package com.example.rapha.sundaybaking.ui.player;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.res.Configuration;
@@ -14,8 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.databinding.FragmentPlayerBinding;
-import com.example.rapha.sundaybaking.ui.details.viewmodels.PlayerViewModel;
-import com.example.rapha.sundaybaking.ui.details.viewmodels.PlayerViewModelFactory;
+import com.example.rapha.sundaybaking.ui.common.ViewModelFactory;
 import com.example.rapha.sundaybaking.util.Constants;
 
 import timber.log.Timber;
@@ -97,9 +96,12 @@ public class PlayerFragment extends Fragment {
 
     private void createViewModel() {
         String recipeName = getArguments().getString(Constants.RECIPE_NAME_KEY);
-        PlayerViewModelFactory viewModelFactory = new PlayerViewModelFactory(
-                getActivity().getApplication(), recipeName);
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(PlayerViewModel.class);
+//        PlayerViewModelFactory viewModelFactory = new PlayerViewModelFactory(
+//                getActivity().getApplication(), recipeName);
+        viewModel = ViewModelProviders.of(this,
+                ViewModelFactory.getInstance(
+                        getActivity().getApplication())).get(PlayerViewModel.class);
+        viewModel.changeCurrentRecipe(recipeName);
     }
 
     @Override

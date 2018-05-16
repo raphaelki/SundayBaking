@@ -1,11 +1,13 @@
 package com.example.rapha.sundaybaking.ui.recipes;
 
+import android.app.Activity;
+import android.app.Instrumentation;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.StringRes;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.contrib.RecyclerViewActions;
+import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.espresso.matcher.ViewMatchers;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.example.rapha.sundaybaking.EspressoTestUtil;
@@ -16,6 +18,8 @@ import com.example.rapha.sundaybaking.ViewModelFactory;
 import com.example.rapha.sundaybaking.ViewModelUtil;
 import com.example.rapha.sundaybaking.data.DataState;
 import com.example.rapha.sundaybaking.data.models.Recipe;
+import com.example.rapha.sundaybaking.ui.details.RecipesDetailsActivity;
+import com.example.rapha.sundaybaking.util.Constants;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -27,13 +31,20 @@ import org.mockito.MockitoAnnotations;
 import java.util.List;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.Intents.intending;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtraWithKey;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.isInternal;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.example.rapha.sundaybaking.SwipeRefreshLayoutMatchers.isRefreshing;
+import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.not;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,8 +52,11 @@ import static org.mockito.Mockito.when;
 @RunWith(AndroidJUnit4.class)
 public class RecipeFragmentTest {
 
+//    @Rule
+//    public ActivityTestRule<FragmentTestingActivity> activityTestRule = new ActivityTestRule<>(FragmentTestingActivity.class);
+
     @Rule
-    public ActivityTestRule<FragmentTestingActivity> activityTestRule = new ActivityTestRule<>(FragmentTestingActivity.class);
+    public IntentsTestRule<FragmentTestingActivity> intentsTestRule = new IntentsTestRule<>(FragmentTestingActivity.class);
 
     private MutableLiveData<DataState> dataState = new MutableLiveData<>();
     private MutableLiveData<List<Recipe>> recipes = new MutableLiveData<>();
@@ -53,14 +67,14 @@ public class RecipeFragmentTest {
     @Before
     public void initialization() {
         MockitoAnnotations.initMocks(this);
-        EspressoTestUtil.disableAnimations(activityTestRule);
+        EspressoTestUtil.disableAnimations(intentsTestRule);
 
         RecipesFragment fragment = new RecipesFragment();
         when(viewModel.getRecipes()).thenReturn(recipes);
         when(viewModel.getDataState()).thenReturn(dataState);
 
         fragment.viewModelFactory = ViewModelUtil.createFor(viewModel);
-        activityTestRule.getActivity().setFragment(fragment);
+        intentsTestRule.getActivity().setFragment(fragment);
         ViewModelFactory.destroyInstance();
     }
 
@@ -112,6 +126,14 @@ public class RecipeFragmentTest {
     public void swipeDownOnLayout_triggersUpdate() {
         onView(withId(R.id.recipes_swipe_refresh)).perform(ViewActions.swipeDown());
         verify(viewModel).triggerUpdate();
+    }
+
+    @Test
+    public void clickOnRecipe_startDetailsActivityWithRecipeNameAsExtra() {
+        intending(isInternal()).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, null));
+        recipes.postValue(TestUtil.createRecipes("Apple pie"));
+        onView(withId(R.id.recipes_rc)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        intended(allOf(hasComponent(RecipesDetailsActivity.class.getName()), hasExtraWithKey(Constants.RECIPE_NAME_KEY)));
     }
 
     private void checkSnackBarMessage(@StringRes int stringResId) {

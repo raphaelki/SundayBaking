@@ -30,8 +30,9 @@ public class RecipesActivityTest {
     public ActivityTestRule<RecipesActivity> activityTestRule = new ActivityTestRule<>(RecipesActivity.class);
 
     @Before
-    public void disableRecyclerViewAnimations() {
+    public void initialization() {
         EspressoTestUtil.disableAnimations(activityTestRule);
+        // Register idling resource to halt testing while fetching new data from the network
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 

@@ -3,24 +3,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="recipes"
+            type="java.util.List" />
+    </data>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/recipes_swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recipes_rc"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layoutManager="android.support.v7.widget.GridLayoutManager"
-            app:spanCount="3"
-            android:paddingBottom="4dp"
-            android:paddingEnd="4dp"
-            android:paddingStart="4dp"
-            android:paddingTop="4dp"
-            android:background="@color/rv_cards_background"
-            tools:listitem="@layout/rv_item_recipe" />
+            android:layout_height="match_parent">
 
-    </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recipes_rc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/rv_cards_background"
+                android:contentDescription="@string/recipe_rv_cd"
+                android:orientation="vertical"
+                android:paddingStart="4dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="4dp"
+                android:paddingBottom="4dp"
+                app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                app:spanCount="3"
+                tools:listitem="@layout/rv_item_recipe" />
+
+            <TextView
+                android:id="@+id/no_recipes_available_tv"
+                viewVisibility="@{recipes.size() == 0 ? true : false}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="No recipes available. Please swipe down to refresh."
+                android:textSize="18sp" />
+
+        </FrameLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </layout>

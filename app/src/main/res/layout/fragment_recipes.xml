@@ -4,13 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <import type="com.example.rapha.sundaybaking.data.DataState" />
-
-        <variable
-            name="dataState"
-            type="com.example.rapha.sundaybaking.data.DataState" />
-
         <variable
             name="recipes"
             type="java.util.List" />
@@ -40,6 +33,7 @@
                 tools:listitem="@layout/rv_item_recipe" />
 
             <TextView
+                android:id="@+id/no_recipes_available_tv"
                 viewVisibility="@{recipes.size() == 0 ? true : false}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

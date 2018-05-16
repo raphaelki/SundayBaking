@@ -47,6 +47,7 @@ ext{
     testRunnerVersion = "1.0.2"
     testRulesVersion = "1.0.2"
     espressoVersion = "3.0.2"
+    mockitoVersion = "2.18.3"
 }
 
 dependencies {
@@ -98,4 +99,6 @@ dependencies {
     androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$espressoVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-intents:$espressoVersion"
     implementation "com.android.support.test.espresso:espresso-idling-resource:$espressoVersion"
+
+    androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
 }

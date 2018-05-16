@@ -6,6 +6,9 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.example.rapha.sundaybaking.EspressoTestUtil;
+import com.example.rapha.sundaybaking.FragmentTestingActivity;
+import com.example.rapha.sundaybaking.TestUtil;
+import com.example.rapha.sundaybaking.ViewModelFactory;
 import com.example.rapha.sundaybaking.ViewModelUtil;
 import com.example.rapha.sundaybaking.data.DataState;
 import com.example.rapha.sundaybaking.data.models.Recipe;
@@ -19,6 +22,10 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -26,7 +33,7 @@ import static org.mockito.Mockito.when;
 public class RecipeFragmentTest {
 
     @Rule
-    public ActivityTestRule<RecipesActivity> activityTestRule = new ActivityTestRule<>(RecipesActivity.class);
+    public ActivityTestRule<FragmentTestingActivity> activityTestRule = new ActivityTestRule<>(FragmentTestingActivity.class);
 
     private MutableLiveData<DataState> dataState = new MutableLiveData<>();
     private MutableLiveData<List<Recipe>> recipes = new MutableLiveData<>();
@@ -42,12 +49,14 @@ public class RecipeFragmentTest {
         when(viewModel.getRecipes()).thenReturn(recipes);
         when(viewModel.getDataState()).thenReturn(dataState);
         fragment.viewModelFactory = ViewModelUtil.createFor(viewModel);
-        activityTestRule.getActivity().setRecipeFragment(fragment);
+        activityTestRule.getActivity().setFragment(fragment);
+        ViewModelFactory.destroyInstance();
     }
 
     @Test
     public void firstTest() {
-
+        recipes.postValue(TestUtil.createRecipes());
+        onView(withText("Kiwi cake")).check(matches(isDisplayed()));
     }
 
     @After

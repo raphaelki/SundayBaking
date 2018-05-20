@@ -1,15 +1,15 @@
-package com.example.rapha.sundaybaking.ui;
+package com.example.rapha.sundaybaking.ui.recipes;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.StringRes;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.IdlingRegistry;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 
 import com.example.rapha.sundaybaking.R;
-import com.example.rapha.sundaybaking.data.local.RecipeDatabase;
-import com.example.rapha.sundaybaking.ui.recipes.RecipesActivity;
 import com.example.rapha.sundaybaking.util.EspressoIdlingResource;
 import com.example.rapha.sundaybaking.util.EspressoTestUtil;
 
@@ -30,9 +30,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /*
- * Integration and navigation tests for RecipesActivity
+ * Integration tests using an IdlingResource
  */
-public class RecipesActivityTest {
+public class RecipesActivityOnlineTest {
 
     @Rule
     public ActivityTestRule<RecipesActivity> activityTestRule = new ActivityTestRule<>(RecipesActivity.class);
@@ -40,13 +40,13 @@ public class RecipesActivityTest {
     @Before
     public void initialization() {
         EspressoTestUtil.disableAnimations(activityTestRule);
-        // Register idling resource to halt testing while fetching new data from the network
+        // Register idling resource to halt Espresso while fetching new data from the network
         IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
     @Test
     public void activityOpens_showsRecyclerViewInItsFragment() {
-        onView(withId(R.id.recipes_rc)).check(matches(isDisplayed()));
+        onView(withId(R.id.recipes_rv)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -60,15 +60,12 @@ public class RecipesActivityTest {
     @Test
     public void swipeDownOnRecipesList_refreshesRecipes() {
         onView(withId(R.id.recipes_swipe_refresh)).perform(swipeDown());
-        checkSnackBarMessage(R.string.recipes_refreshed_message);
-    }
-
-    private void deleteRecipeDatabase() {
-        InstrumentationRegistry.getTargetContext().deleteDatabase(RecipeDatabase.NAME);
+        if (deviceIsOnline()) checkSnackBarMessage(R.string.recipes_refreshed_message);
+        else checkSnackBarMessage(R.string.no_connection_message);
     }
 
     @After
-    public void dismissIdlingResource() {
+    public void unregisterIdlingResource() {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
     }
 
@@ -76,4 +73,11 @@ public class RecipesActivityTest {
         onView(withText(stringResId)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
+    private boolean deviceIsOnline() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) activityTestRule
+                .getActivity().getApplicationContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
+    }
 }

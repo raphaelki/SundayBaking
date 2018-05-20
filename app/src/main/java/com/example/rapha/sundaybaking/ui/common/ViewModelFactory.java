@@ -9,12 +9,10 @@ import android.support.annotation.VisibleForTesting;
 import com.example.rapha.sundaybaking.SundayBakingApp;
 import com.example.rapha.sundaybaking.data.RecipeRepository;
 import com.example.rapha.sundaybaking.ui.details.RecipeDetailsViewModel;
-import com.example.rapha.sundaybaking.ui.instructions.InstructionsViewModel;
-import com.example.rapha.sundaybaking.ui.player.PlayerViewModel;
 import com.example.rapha.sundaybaking.ui.recipes.RecipesViewModel;
 
 /**
- *
+ * Common factory for providing the repository to all ViewModels
  */
 public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
@@ -53,11 +51,8 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
         if (modelClass.isAssignableFrom(RecipeDetailsViewModel.class)) {
             return (T) new RecipeDetailsViewModel(application, repository);
         }
-        if (modelClass.isAssignableFrom(PlayerViewModel.class)) {
-            return (T) new PlayerViewModel(application, repository);
-        }
-        if (modelClass.isAssignableFrom(InstructionsViewModel.class)) {
-            return (T) new InstructionsViewModel(application, repository);
+        if (modelClass.isAssignableFrom(SharedViewModel.class)) {
+            return (T) new SharedViewModel(application, repository);
         }
         return super.create(modelClass);
     }

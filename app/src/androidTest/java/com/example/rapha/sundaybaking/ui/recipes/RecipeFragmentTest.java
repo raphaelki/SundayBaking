@@ -1,4 +1,4 @@
-package com.example.rapha.sundaybaking.ui;
+package com.example.rapha.sundaybaking.ui.recipes;
 
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -10,17 +10,14 @@ import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.example.rapha.sundaybaking.FragmentTestingActivity;
 import com.example.rapha.sundaybaking.R;
+import com.example.rapha.sundaybaking.SingleFragmentTestingActivity;
 import com.example.rapha.sundaybaking.data.DataState;
 import com.example.rapha.sundaybaking.data.models.Recipe;
-import com.example.rapha.sundaybaking.ui.common.ViewModelFactory;
 import com.example.rapha.sundaybaking.ui.details.RecipesDetailsActivity;
-import com.example.rapha.sundaybaking.ui.recipes.RecipesFragment;
-import com.example.rapha.sundaybaking.ui.recipes.RecipesViewModel;
 import com.example.rapha.sundaybaking.util.Constants;
+import com.example.rapha.sundaybaking.util.DataUtil;
 import com.example.rapha.sundaybaking.util.EspressoTestUtil;
-import com.example.rapha.sundaybaking.util.TestUtil;
 import com.example.rapha.sundaybaking.util.ViewModelUtil;
 
 import org.junit.Before;
@@ -55,7 +52,7 @@ import static org.mockito.Mockito.when;
 public class RecipeFragmentTest {
 
     @Rule
-    public IntentsTestRule<FragmentTestingActivity> intentsTestRule = new IntentsTestRule<>(FragmentTestingActivity.class);
+    public IntentsTestRule<SingleFragmentTestingActivity> intentsTestRule = new IntentsTestRule<>(SingleFragmentTestingActivity.class);
 
     private MutableLiveData<DataState> dataState = new MutableLiveData<>();
     private MutableLiveData<List<Recipe>> recipes = new MutableLiveData<>();
@@ -74,13 +71,12 @@ public class RecipeFragmentTest {
 
         fragment.viewModelFactory = ViewModelUtil.createFor(viewModel);
         intentsTestRule.getActivity().setFragment(fragment);
-        ViewModelFactory.destroyInstance();
     }
 
     @Test
     public void insertRecipesInViewModel_recipesAreDisplayedInRecyclerView() {
         String[] cakes = {"Kiwi cake", "Banana cake", "Sweet sweet sugar cake", "Brownies", "Chocolate cake", "Nougat pie", "Apple Pie"};
-        List<Recipe> recipesList = TestUtil.createRecipes(cakes);
+        List<Recipe> recipesList = DataUtil.createRecipes(cakes);
         recipes.postValue(recipesList);
         int position = 0;
         for (Recipe recipe : recipesList) {
@@ -111,13 +107,13 @@ public class RecipeFragmentTest {
     @Test
     public void noRecipesAvailable_showTextViewMessage() {
         // set empty list
-        recipes.postValue(TestUtil.createRecipes());
+        recipes.postValue(DataUtil.createRecipes());
         onView(withId(R.id.no_recipes_available_tv)).check(matches(isDisplayed()));
     }
 
     @Test
     public void recipesAvailable_hideNoRecipesAvailableMessage() {
-        recipes.postValue(TestUtil.createRecipes("Apple pie"));
+        recipes.postValue(DataUtil.createRecipes("Apple pie"));
         onView(withId(R.id.no_recipes_available_tv)).check(matches(not(isDisplayed())));
     }
 
@@ -130,8 +126,8 @@ public class RecipeFragmentTest {
     @Test
     public void clickOnRecipe_startDetailsActivityWithRecipeNameAsExtra() {
         intending(isInternal()).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, null));
-        recipes.postValue(TestUtil.createRecipes("Apple pie"));
-        onView(withId(R.id.recipes_rc)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        recipes.postValue(DataUtil.createRecipes("Apple pie"));
+        onView(withId(R.id.recipes_rv)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         intended(allOf(hasComponent(RecipesDetailsActivity.class.getName()), hasExtraWithKey(Constants.RECIPE_NAME_KEY)));
     }
 

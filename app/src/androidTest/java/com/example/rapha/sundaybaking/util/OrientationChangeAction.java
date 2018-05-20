@@ -1,3 +1,5 @@
+package com.example.rapha.sundaybaking.util;
+
 /*
  * The MIT License (MIT)
  *
@@ -22,24 +24,24 @@
  * SOFTWARE.
  *
  */
-package com.example.rapha.sundaybaking.util;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.pm.ActivityInfo;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
-import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
-import android.support.test.runner.lifecycle.Stage;
 import android.view.View;
+import android.view.ViewGroup;
 
 import org.hamcrest.Matcher;
-
-import java.util.Collection;
 
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 
 /**
- * An Espresso ViewAction that changes the orientation of the screen
+ * An Espresso ViewAction that changes the orientation of the screen. Use like this:
+ * <code>onView(isRoot()).perform(orientationPortrait());</code> or this: <code>onView(isRoot()).perform(orientationLandscape());</code>
+ * Found on: https://gist.github.com/Scaronthesky/3856efb7b3748adebe6d
  */
 public class OrientationChangeAction implements ViewAction {
     private final int orientation;
@@ -66,15 +68,28 @@ public class OrientationChangeAction implements ViewAction {
         return "change orientation to " + orientation;
     }
 
+
     @Override
     public void perform(UiController uiController, View view) {
         uiController.loopMainThreadUntilIdle();
-        final Activity activity = (Activity) view.getContext();
-        activity.setRequestedOrientation(orientation);
-
-        Collection<Activity> resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
-        if (resumedActivities.isEmpty()) {
-            throw new RuntimeException("Could not change orientation");
+        Activity activity = getActivity(view.getContext());
+        if (activity == null && view instanceof ViewGroup) {
+            ViewGroup v = (ViewGroup) view;
+            int c = v.getChildCount();
+            for (int i = 0; i < c && activity == null; ++i) {
+                activity = getActivity(v.getChildAt(i).getContext());
+            }
         }
+        activity.setRequestedOrientation(orientation);
+    }
+
+    public Activity getActivity(Context context) {
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) {
+                return (Activity) context;
+            }
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+        return null;
     }
 }

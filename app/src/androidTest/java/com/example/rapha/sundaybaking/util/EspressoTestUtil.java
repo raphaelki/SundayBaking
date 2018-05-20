@@ -1,5 +1,8 @@
 package com.example.rapha.sundaybaking.util;
 
+import android.app.Activity;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -69,5 +72,23 @@ public class EspressoTestUtil {
      */
     private static void disableProgressBarAnimation(ProgressBar progressBar) {
         progressBar.setIndeterminateDrawable(new ColorDrawable(Color.BLUE));
+    }
+
+    public static void changeOrientation(Activity activity) {
+        int currentOrientation = activity.getResources().getConfiguration().orientation;
+
+        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setOrientationToPortraitMode(activity);
+        } else if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
+            setOrientationToLandscapeMode(activity);
+        }
+    }
+
+    public static void setOrientationToPortraitMode(Activity activity) {
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    private static void setOrientationToLandscapeMode(Activity activity) {
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 }

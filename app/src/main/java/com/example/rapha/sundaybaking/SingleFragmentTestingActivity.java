@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-public class FragmentTestingActivity extends AppCompatActivity {
+public class SingleFragmentTestingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

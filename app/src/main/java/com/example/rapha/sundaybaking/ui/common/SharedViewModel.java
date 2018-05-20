@@ -1,30 +1,38 @@
-package com.example.rapha.sundaybaking.ui.player;
+package com.example.rapha.sundaybaking.ui.common;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
-import android.support.annotation.NonNull;
 
 import com.example.rapha.sundaybaking.data.RecipeRepository;
 import com.example.rapha.sundaybaking.data.models.InstructionStep;
 
-public class PlayerViewModel extends ViewModel {
+import java.util.List;
+
+import timber.log.Timber;
+
+/**
+ * Shared ViewModel for PlayerFragment and InstructionsFragment
+ */
+public class SharedViewModel extends ViewModel {
 
     final private RecipeRepository repository;
     final private MutableLiveData<String> recipeName = new MutableLiveData<>();
     final private MutableLiveData<Integer> currentStepNo = new MutableLiveData<>();
 
-    public PlayerViewModel(@NonNull Application application, RecipeRepository recipeRepository) {
-        repository = recipeRepository;
+    public SharedViewModel(Application application, RecipeRepository repository) {
+        this.repository = repository;
     }
 
     public void changeCurrentStep(int stepNo) {
+        Timber.d("Changing step to %s", stepNo);
         currentStepNo.setValue(stepNo);
     }
 
     public void changeCurrentRecipe(String name) {
+        Timber.d("Changing recipe to %s", name);
         recipeName.setValue(name);
     }
 
@@ -47,5 +55,10 @@ public class PlayerViewModel extends ViewModel {
         return Transformations.switchMap(recipeName, name ->
                 Transformations.switchMap(currentStepNo, step ->
                         repository.getInstructionStep(name, step)));
+    }
+
+    public LiveData<List<InstructionStep>> getInstructionSteps() {
+        return Transformations.switchMap(recipeName,
+                repository::getInstructionSteps);
     }
 }

@@ -4,6 +4,7 @@
     package="com.example.rapha.sundaybaking">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".SundayBakingApp"
@@ -28,7 +29,7 @@
             android:launchMode="singleTop"
             android:parentActivityName=".ui.recipes.RecipesActivity" />
         <activity
-            android:name=".ui.details.PhoneStepsActivity"
+            android:name=".ui.instructions.PhoneStepsActivity"
             android:launchMode="singleTop"
 
             android:parentActivityName=".ui.details.RecipesDetailsActivity" />
@@ -58,7 +59,8 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
-        <activity android:name=".FragmentTestingActivity" />
+        <activity android:name=".SingleFragmentTestingActivity" />
+        <activity android:name=".TwoFrameFragmentTestingActivity" />
     </application>
 
 </manifest>

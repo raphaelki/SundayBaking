@@ -1,5 +1,6 @@
-package com.example.rapha.sundaybaking.ui.player;
+package com.example.rapha.sundaybaking.ui.instructions;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.databinding.FragmentPlayerBinding;
+import com.example.rapha.sundaybaking.ui.common.SharedViewModel;
 import com.example.rapha.sundaybaking.ui.common.ViewModelFactory;
 import com.example.rapha.sundaybaking.util.Constants;
 
@@ -21,7 +23,7 @@ import timber.log.Timber;
 
 public class PlayerFragment extends Fragment {
 
-    private PlayerViewModel viewModel;
+    ViewModelProvider.Factory viewModelFactory;
     private FragmentPlayerBinding binding;
     private int selectedStep = -1;
     private int orientation;
@@ -29,15 +31,15 @@ public class PlayerFragment extends Fragment {
     private Runnable hideSystemUIRunnable;
     private boolean isTablet;
     private PlayerComponent playerComponent;
+    private SharedViewModel viewModel;
 
     public PlayerFragment() {
     }
 
-    public static PlayerFragment forRecipe(String recipeName, int stepNo) {
+    public static PlayerFragment forRecipe(String recipeName) {
         PlayerFragment playerFragment = new PlayerFragment();
         Bundle bundle = new Bundle();
         bundle.putString(Constants.RECIPE_NAME_KEY, recipeName);
-        bundle.putInt(Constants.RECIPE_STEP_NO_KEY, stepNo);
         playerFragment.setArguments(bundle);
         return playerFragment;
     }
@@ -59,12 +61,8 @@ public class PlayerFragment extends Fragment {
                 (visibility -> {
                     if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
                         hideSystemBarsInLandscapeMode(2);
-                        // TODO: show player controls for desired time
-                    } else {
-                        // TODO: hide player controls
                     }
                 });
-
         return binding.getRoot();
     }
 
@@ -79,11 +77,11 @@ public class PlayerFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         createViewModel();
-        if (savedInstanceState == null)
-            changeCurrentStep(getArguments().getInt(Constants.RECIPE_STEP_NO_KEY));
-        else changeCurrentStep(savedInstanceState.getInt(Constants.RECIPE_STEP_NO_KEY));
-
-        viewModel.getVideoUrl().observe(this, playerComponent::playVideo);
+        viewModel.getVideoUrl().observe(this, videoUrl -> {
+            if (videoUrl != null && !videoUrl.isEmpty()) {
+                playerComponent.playVideo(videoUrl);
+            }
+        });
         viewModel.getSelectedStep().observe(this, binding::setStep);
     }
 
@@ -95,26 +93,20 @@ public class PlayerFragment extends Fragment {
     }
 
     private void createViewModel() {
+        if (viewModelFactory == null) {
+            viewModelFactory = ViewModelFactory.getInstance(
+                    getActivity().getApplication());
+        }
+        viewModel = ViewModelProviders.of(getActivity(), viewModelFactory)
+                .get(SharedViewModel.class);
         String recipeName = getArguments().getString(Constants.RECIPE_NAME_KEY);
-//        PlayerViewModelFactory viewModelFactory = new PlayerViewModelFactory(
-//                getActivity().getApplication(), recipeName);
-        viewModel = ViewModelProviders.of(this,
-                ViewModelFactory.getInstance(
-                        getActivity().getApplication())).get(PlayerViewModel.class);
         viewModel.changeCurrentRecipe(recipeName);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        handler.removeCallbacks(hideSystemUIRunnable);
-    }
-
-    public void changeCurrentStep(int stepNo) {
-        if (selectedStep != stepNo) {
-            selectedStep = stepNo;
-            viewModel.changeCurrentStep(stepNo);
-        }
+        handler.removeCallbacksAndMessages(null);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.example.rapha.sundaybaking.ui.instructions;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.databinding.FragmentInstructionsBinding;
+import com.example.rapha.sundaybaking.ui.common.SharedViewModel;
 import com.example.rapha.sundaybaking.ui.common.ViewModelFactory;
-import com.example.rapha.sundaybaking.ui.details.InstructionStepClickCallback;
 import com.example.rapha.sundaybaking.util.Constants;
 
 import timber.log.Timber;
@@ -23,24 +23,10 @@ import timber.log.Timber;
 public class InstructionsFragment extends Fragment {
 
     private InstructionsPagerAdapter pagerAdapter;
-    private InstructionsViewModel viewModel;
-    private InstructionStepClickCallback callback;
+    ViewModelProvider.Factory viewModelFactory;
     private FragmentInstructionsBinding binding;
     private int stepPage = -1;
-    private String recipeName;
-
-    public InstructionsFragment() {
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            callback = (InstructionStepClickCallback) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement InstructionStepClickCallback");
-        }
-    }
+    private SharedViewModel viewModel;
 
     public static InstructionsFragment forRecipe(String recipeName, int stepNo) {
         InstructionsFragment instructionsFragment = new InstructionsFragment();
@@ -53,20 +39,24 @@ public class InstructionsFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         Timber.d("InstructionsFragment created");
-        recipeName = getArguments().getString(Constants.RECIPE_NAME_KEY);
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_instructions, container, false);
+        binding = DataBindingUtil.inflate(inflater,
+                R.layout.fragment_instructions, container,
+                false);
         pagerAdapter = new InstructionsPagerAdapter();
         binding.instructionsViewPager.setAdapter(pagerAdapter);
-        binding.instructionsViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                callback.onStepSelected(recipeName, position);
-                stepPage = position;
-                Timber.d("Scrolled to page: %s", position);
-            }
-        });
+        binding.instructionsViewPager.addOnPageChangeListener(
+                new ViewPager.SimpleOnPageChangeListener() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        // update step no. in ViewModel to notify the PlayerFragment of the change
+                        viewModel.changeCurrentStep(position);
+                        stepPage = position;
+                        Timber.d("Changed step no. on view pager to %s", position);
+                    }
+                });
         return binding.getRoot();
     }
 
@@ -76,38 +66,37 @@ public class InstructionsFragment extends Fragment {
         createViewModel();
         viewModel.getInstructionSteps().observe(this, steps -> {
             pagerAdapter.setStepList(steps);
-            if (savedInstanceState != null) {
-                setStepPage(savedInstanceState.getInt(Constants.RECIPE_STEP_NO_KEY));
-            } else {
+            // when data is loaded from database set the requested step page
+            if (savedInstanceState == null) {
                 setStepPage(getArguments().getInt(Constants.RECIPE_STEP_NO_KEY));
+            } else {
+                viewModel.getSelectedStep().observe(this, step -> {
+                    setStepPage(step.getStepNo());
+                });
             }
         });
     }
 
+    /**
+     * Accessed by the DetailsFragment on tablet
+     *
+     * @param stepNo Index of the desired page in ViewPager
+     */
     public void setStepPage(int stepNo) {
         if (stepPage != stepNo) {
+            binding.instructionsViewPager.setCurrentItem(stepNo);
             Timber.d("Showing instructions page for step: %s", stepNo);
             stepPage = stepNo;
-            binding.instructionsViewPager.setCurrentItem(stepNo);
         }
     }
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(Constants.RECIPE_STEP_NO_KEY, stepPage);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Timber.d("InstructionsFragment destroyed");
-    }
-
     private void createViewModel() {
-        viewModel = ViewModelProviders.of(this,
-                ViewModelFactory.getInstance(getActivity().getApplication()))
-                .get(InstructionsViewModel.class);
+        if (viewModelFactory == null) {
+            viewModelFactory = ViewModelFactory.getInstance(getActivity().getApplication());
+        }
+        viewModel = ViewModelProviders.of(getActivity(), viewModelFactory)
+                .get(SharedViewModel.class);
+        String recipeName = getArguments().getString(Constants.RECIPE_NAME_KEY);
         viewModel.changeCurrentRecipe(recipeName);
     }
 }

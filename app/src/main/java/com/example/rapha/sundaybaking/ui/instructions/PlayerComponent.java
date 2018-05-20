@@ -1,4 +1,4 @@
-package com.example.rapha.sundaybaking.ui.player;
+package com.example.rapha.sundaybaking.ui.instructions;
 
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
@@ -34,6 +34,7 @@ public class PlayerComponent implements LifecycleObserver {
     private SimpleExoPlayer player;
     private Context context;
     private PlayerView playerView;
+    private MediaSource mediaSource;
 
     public PlayerComponent(Context context, PlayerView playerView) {
         this.context = context;
@@ -102,7 +103,11 @@ public class PlayerComponent implements LifecycleObserver {
 
     private void releasePlayer() {
         player.stop();
+        if (mediaSource != null) {
+            mediaSource.releaseSource();
+        }
         player.release();
+        mediaSource = null;
         player = null;
         Timber.d("ExoPlayer released");
     }
@@ -112,7 +117,7 @@ public class PlayerComponent implements LifecycleObserver {
         String userAgent = Util.getUserAgent(context, "SundayBaking");
         DefaultHttpDataSourceFactory defaultHttpDataSourceFactory =
                 new DefaultHttpDataSourceFactory(userAgent);
-        MediaSource mediaSource = new ExtractorMediaSource.Factory(
+        mediaSource = new ExtractorMediaSource.Factory(
                 defaultHttpDataSourceFactory)
                 .createMediaSource(uri);
         player.prepare(mediaSource, true, false);

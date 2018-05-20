@@ -3,6 +3,7 @@
 
     <data>
 
+        <import type="com.example.rapha.sundaybaking.util.StringUtil" />
         <variable
             name="ingredient"
             type="com.example.rapha.sundaybaking.data.models.Ingredient" />
@@ -20,7 +21,9 @@
             android:layout_gravity="center"
             android:gravity="end"
             android:padding="1dp"
-            android:text='@{String.valueOf(safeUnbox(ingredient.quantity)) + " " + ingredient.measure, default="1 K"}'
+            android:paddingStart="3dp"
+            android:paddingEnd="3dp"
+            android:text='@{StringUtil.formatIngredientQuantity(ingredient), default="1 g"}'
             android:textStyle="bold" />
 
         <TextView

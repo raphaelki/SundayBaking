@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="com.example.rapha.sundaybaking.util.StringUtil" />
         <variable
             name="step"
             type="com.example.rapha.sundaybaking.data.models.InstructionStep" />
@@ -31,7 +33,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text='@{step.stepNo  + ". " + step.shortDescription}'
+                android:text='@{StringUtil.prepareShortDescription(step)}'
                 android:textColor="@android:color/primary_text_light"
                 android:textSize="20sp"
                 tools:text="5. Finish filling prep" />
@@ -51,7 +53,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:text='@{step.description.substring(3,step.description.length()), default="Beat the cream cheese and 50 grams (1/4 cup) of sugar on medium speed in a stand mixer or high speed with a hand mixer for 3 minutes. Decrease the speed to medium-low and gradually add in the cold cream. Add in 2 teaspoons of vanilla and beat until stiff peaks form."}'
+                    android:text='@{StringUtil.cutStepNoFromDescription(step.getDescription()), default="Beat the cream cheese and 50 grams (1/4 cup) of sugar on medium speed in a stand mixer or high speed with a hand mixer for 3 minutes. Decrease the speed to medium-low and gradually add in the cold cream. Add in 2 teaspoons of vanilla and beat until stiff peaks form."}'
                     android:textColor="@android:color/primary_text_light"
                     android:textSize="18sp" />
             </android.support.v4.widget.NestedScrollView>

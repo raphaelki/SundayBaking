@@ -7,6 +7,7 @@
 
         <import type="android.view.View" />
 
+        <import type="com.example.rapha.sundaybaking.util.StringUtil" />
         <variable
             name="step"
             type="com.example.rapha.sundaybaking.data.models.InstructionStep" />
@@ -46,7 +47,7 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:paddingStart="8dp"
-            android:text='@{step.stepNo + ". " + step.shortDescription, default="5. Add sugars to wet mixture."}'
+            android:text='@{StringUtil.prepareShortDescription(step), default="5. Add sugars to wet mixture."}'
             android:textSize="18sp"
             app:layout_constraintTop_toTopOf="parent" />
 

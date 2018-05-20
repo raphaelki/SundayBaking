@@ -51,9 +51,7 @@ public class InstructionsFragment extends Fragment {
                 new ViewPager.SimpleOnPageChangeListener() {
                     @Override
                     public void onPageSelected(int position) {
-                        // update step no. in ViewModel to notify the PlayerFragment of the change
-                        viewModel.changeCurrentStep(position);
-                        stepPage = position;
+                        setStepPage(position);
                         Timber.d("Changed step no. on view pager to %s", position);
                     }
                 });
@@ -69,11 +67,10 @@ public class InstructionsFragment extends Fragment {
             // when data is loaded from database set the requested step page
             if (savedInstanceState == null) {
                 setStepPage(getArguments().getInt(Constants.RECIPE_STEP_NO_KEY));
-            } else {
-                viewModel.getSelectedStep().observe(this, step -> {
-                    setStepPage(step.getStepNo());
-                });
             }
+            viewModel.getSelectedStep().observe(this, step -> {
+                binding.instructionsViewPager.setCurrentItem(step.getStepNo());
+            });
         });
     }
 
@@ -84,7 +81,7 @@ public class InstructionsFragment extends Fragment {
      */
     public void setStepPage(int stepNo) {
         if (stepPage != stepNo) {
-            binding.instructionsViewPager.setCurrentItem(stepNo);
+            viewModel.changeCurrentStep(stepNo);
             Timber.d("Showing instructions page for step: %s", stepNo);
             stepPage = stepNo;
         }

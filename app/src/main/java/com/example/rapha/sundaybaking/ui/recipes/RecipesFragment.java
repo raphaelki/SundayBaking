@@ -26,6 +26,8 @@ import timber.log.Timber;
 
 public class RecipesFragment extends Fragment implements RecipeClickCallback {
 
+    public static final String TAG = "RecipesFragment";
+
     private FragmentRecipesBinding binding;
     @VisibleForTesting
     private RecipesViewModel viewModel;

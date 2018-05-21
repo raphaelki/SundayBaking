@@ -7,7 +7,7 @@ public class EspressoIdlingResource {
 
     private static final String RESOURCE_NAME = "GLOBAL";
 
-    private static CountingIdlingResource idlingResource = new CountingIdlingResource(RESOURCE_NAME);
+    private static final CountingIdlingResource idlingResource = new CountingIdlingResource(RESOURCE_NAME);
 
     public static void increment() {
         idlingResource.increment();

@@ -21,13 +21,13 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 public class Ingredient {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private final int id;
     @SerializedName("quantity")
-    private Double quantity;
+    private final Double quantity;
     @SerializedName("measure")
-    private String measure;
+    private final String measure;
     @SerializedName("ingredient")
-    private String ingredient;
+    private final String ingredient;
     @ColumnInfo(name = "recipe_name")
     private String recipeName;
 

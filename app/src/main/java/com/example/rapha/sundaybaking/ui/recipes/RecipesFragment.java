@@ -30,7 +30,7 @@ public class RecipesFragment extends Fragment implements RecipeClickCallback {
 
     private FragmentRecipesBinding binding;
     @VisibleForTesting
-    public RecipesViewModel viewModel;
+    private RecipesViewModel viewModel;
     @VisibleForTesting
     public ViewModelProvider.Factory viewModelFactory;
     private RecipesAdapter recipesAdapter;

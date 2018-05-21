@@ -1,6 +1,5 @@
 package com.example.rapha.sundaybaking.ui.recipes;
 
-import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
@@ -14,8 +13,7 @@ public class RecipesViewModel extends ViewModel {
 
     private final RecipeRepository recipeRepository;
 
-    public RecipesViewModel(Application application, RecipeRepository repository) {
-//        super(application);
+    public RecipesViewModel(RecipeRepository repository) {
         recipeRepository = repository;
     }
 

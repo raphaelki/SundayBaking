@@ -29,7 +29,8 @@
         app:layout_constraintDimensionRatio="16:9"
         app:layout_constraintLeft_toRightOf="@id/details_vertical_guideline"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="InconsistentLayout" />
 
     <FrameLayout
         android:id="@+id/instructions_fragment_frame"
@@ -38,5 +39,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/details_vertical_guideline"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/video_fragment_frame" />
+        app:layout_constraintTop_toBottomOf="@id/video_fragment_frame"
+        tools:ignore="InconsistentLayout" />
 </android.support.constraint.ConstraintLayout>

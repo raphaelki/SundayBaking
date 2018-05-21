@@ -1,6 +1,5 @@
 package com.example.rapha.sundaybaking.ui.details;
 
-import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
@@ -16,9 +15,9 @@ import java.util.List;
 public class RecipeDetailsViewModel extends ViewModel {
 
     private final RecipeRepository recipeRepository;
-    private MutableLiveData<String> recipeName = new MutableLiveData<>();
+    private final MutableLiveData<String> recipeName = new MutableLiveData<>();
 
-    public RecipeDetailsViewModel(Application application, RecipeRepository repository) {
+    public RecipeDetailsViewModel(RecipeRepository repository) {
         this.recipeRepository = repository;
     }
 

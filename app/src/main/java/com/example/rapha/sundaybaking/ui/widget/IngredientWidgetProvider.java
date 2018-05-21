@@ -12,8 +12,8 @@ import timber.log.Timber;
 
 public class IngredientWidgetProvider extends AppWidgetProvider {
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+    private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                        int appWidgetId) {
 
         SharedPreferences sharedPref = context.getSharedPreferences(Constants.SHARED_PREFS_NAME, Context.MODE_PRIVATE);
         String recipeName = sharedPref.getString(Constants.RECIPE_NAME_KEY, "");

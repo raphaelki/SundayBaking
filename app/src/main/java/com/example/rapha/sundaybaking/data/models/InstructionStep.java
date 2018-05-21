@@ -21,21 +21,21 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 public class InstructionStep {
 
     @PrimaryKey(autoGenerate = true)
-    private Integer dbId;
+    private final Integer dbId;
     @SerializedName("id")
     @ColumnInfo(name = "step_no")
-    private Integer stepNo;
+    private final Integer stepNo;
     @SerializedName("shortDescription")
     @ColumnInfo(name = "short_description")
-    private String shortDescription;
+    private final String shortDescription;
     @SerializedName("description")
-    private String description;
+    private final String description;
     @SerializedName("videoURL")
     @ColumnInfo(name = "video_url")
-    private String videoURL;
+    private final String videoURL;
     @SerializedName("thumbnailURL")
     @ColumnInfo(name = "thumbnail_url")
-    private String thumbnailURL;
+    private final String thumbnailURL;
     @ColumnInfo(name = "recipe_name")
     private String recipeName;
 

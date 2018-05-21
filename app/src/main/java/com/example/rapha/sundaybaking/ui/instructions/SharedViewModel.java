@@ -23,7 +23,7 @@ public class SharedViewModel extends ViewModel {
     final private MutableLiveData<String> recipeName = new MutableLiveData<>();
     final private MutableLiveData<Integer> currentStepNo = new MutableLiveData<>();
     final private MutableLiveData<Boolean> deviceIsOnline = new MutableLiveData<>();
-    private Application application;
+    private final Application application;
 
     public SharedViewModel(Application application, RecipeRepository repository) {
         this.repository = repository;

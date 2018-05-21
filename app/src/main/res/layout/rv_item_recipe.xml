@@ -39,6 +39,7 @@
                 android:adjustViewBounds="true"
                 app:imageUrl="@{recipe.image}"
                 app:placeholder="@{@drawable/placeholder}"
+                android:contentDescription="@string/picture_of_recipe_cd"
                 tools:src="@drawable/placeholder" />
 
             <TextView

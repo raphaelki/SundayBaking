@@ -83,7 +83,7 @@ public class OrientationChangeAction implements ViewAction {
         activity.setRequestedOrientation(orientation);
     }
 
-    public Activity getActivity(Context context) {
+    private Activity getActivity(Context context) {
         while (context instanceof ContextWrapper) {
             if (context instanceof Activity) {
                 return (Activity) context;

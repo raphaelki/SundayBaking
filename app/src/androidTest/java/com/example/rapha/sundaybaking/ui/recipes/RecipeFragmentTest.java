@@ -52,10 +52,10 @@ import static org.mockito.Mockito.when;
 public class RecipeFragmentTest {
 
     @Rule
-    public IntentsTestRule<SingleFragmentTestingActivity> intentsTestRule = new IntentsTestRule<>(SingleFragmentTestingActivity.class);
+    public final IntentsTestRule<SingleFragmentTestingActivity> intentsTestRule = new IntentsTestRule<>(SingleFragmentTestingActivity.class);
 
-    private MutableLiveData<DataState> dataState = new MutableLiveData<>();
-    private MutableLiveData<List<Recipe>> recipes = new MutableLiveData<>();
+    private final MutableLiveData<DataState> dataState = new MutableLiveData<>();
+    private final MutableLiveData<List<Recipe>> recipes = new MutableLiveData<>();
 
     @Mock
     private RecipesViewModel viewModel;

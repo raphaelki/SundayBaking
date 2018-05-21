@@ -11,6 +11,7 @@ public class ViewModelUtil {
     private ViewModelUtil() {
     }
 
+    @SuppressWarnings("unchecked")
     public static <T extends ViewModel> ViewModelProvider.Factory createFor(T model) {
         return new ViewModelProvider.Factory() {
             @Override

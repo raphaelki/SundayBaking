@@ -51,10 +51,6 @@ public class SundayBakingApp extends Application {
                 .create(RecipesRemoteAPI.class);
     }
 
-    public RefWatcher getRefWatcher() {
-        return refWatcher;
-    }
-
     public boolean deviceIsOnline() {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) this.getApplicationContext()

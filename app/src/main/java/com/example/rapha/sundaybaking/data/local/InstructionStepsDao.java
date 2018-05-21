@@ -21,7 +21,4 @@ public interface InstructionStepsDao {
 
     @Query("SELECT * FROM instruction_steps WHERE recipe_name = :recipeName AND step_no = :stepNo")
     LiveData<InstructionStep> getInstructionStep(String recipeName, int stepNo);
-
-    @Query("SELECT * FROM instruction_steps WHERE recipe_name = :recipeName AND step_no = 0")
-    LiveData<InstructionStep> getFirstInstructionStep(String recipeName);
 }

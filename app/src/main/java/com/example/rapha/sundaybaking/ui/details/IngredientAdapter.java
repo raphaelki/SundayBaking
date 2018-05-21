@@ -13,7 +13,7 @@ import com.example.rapha.sundaybaking.ui.common.BindingViewHolder;
 
 import java.util.List;
 
-public class IngredientAdapter extends RecyclerView.Adapter<BindingViewHolder<RvItemIngredientBinding>> {
+class IngredientAdapter extends RecyclerView.Adapter<BindingViewHolder<RvItemIngredientBinding>> {
 
     private List<Ingredient> ingredients;
 

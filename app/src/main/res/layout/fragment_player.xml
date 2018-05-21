@@ -20,12 +20,12 @@
 
         <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/player_view"
-            viewVisibility='@{step == null || (step.videoURL.isEmpty() &amp;&amp; step.thumbnailURL.isEmpty()) || !isDataConnectionAvailable ? false : true}'
+            viewVisibility='@{step == null || (step.videoURL.isEmpty() &amp;&amp; step.thumbnailURL.isEmpty()) || !safeUnbox(isDataConnectionAvailable) ? false : true}'
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <LinearLayout
-            viewVisibility='@{step == null || (step.videoURL.isEmpty() &amp;&amp; step.thumbnailURL.isEmpty()) || !isDataConnectionAvailable ? true : false}'
+            viewVisibility='@{step == null || (step.videoURL.isEmpty() &amp;&amp; step.thumbnailURL.isEmpty()) || !safeUnbox(isDataConnectionAvailable) ? true : false}'
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -37,23 +37,24 @@
                 android:layout_height="150dp"
                 android:layout_gravity="center_horizontal"
                 android:adjustViewBounds="true"
+                android:contentDescription="@string/video_placeholder_cd"
                 android:src="@drawable/ic_muffin" />
 
             <TextView
-                viewVisibility="@{isDataConnectionAvailable ? true : false}"
+                viewVisibility="@{safeUnbox(isDataConnectionAvailable) ? true : false}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="No video available"
+                android:text="@string/no_video_available"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
-                viewVisibility="@{isDataConnectionAvailable ? false : true}"
+                viewVisibility="@{safeUnbox(isDataConnectionAvailable) ? false : true}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="No data connection"
+                android:text="@string/no_data_connection"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 

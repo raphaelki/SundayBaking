@@ -39,12 +39,12 @@ public class RecipeDetailsFragmentTest {
 
     private final String RECIPE_NAME = "Apple pie";
     @Rule
-    public ActivityTestRule<SingleFragmentTestingActivity> activityTestRule =
+    public final ActivityTestRule<SingleFragmentTestingActivity> activityTestRule =
             new ActivityTestRule<>(SingleFragmentTestingActivity.class);
     @Mock
     private RecipeDetailsViewModel viewModel;
-    private MutableLiveData<List<Ingredient>> ingredients = new MutableLiveData<>();
-    private MutableLiveData<List<InstructionStep>> steps = new MutableLiveData<>();
+    private final MutableLiveData<List<Ingredient>> ingredients = new MutableLiveData<>();
+    private final MutableLiveData<List<InstructionStep>> steps = new MutableLiveData<>();
     @Captor
     private ArgumentCaptor<String> stringCaptor;
 

@@ -32,6 +32,7 @@
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintTop_toTopOf="parent"
             app:placeholder="@{@drawable/placeholder}"
+            android:contentDescription="@string/picture_of_recipe_cd"
             tools:src="@drawable/placeholder" />
 
         <TextView
@@ -45,7 +46,7 @@
             android:paddingTop="16dp"
             android:text='@{recipe.name, default="Nutella Pie"}'
             android:textColor="@android:color/primary_text_dark"
-            android:textSize="16dp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent" />
 
 

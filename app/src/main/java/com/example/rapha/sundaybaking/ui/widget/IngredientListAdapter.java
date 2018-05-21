@@ -8,17 +8,18 @@ import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.SundayBakingApp;
 import com.example.rapha.sundaybaking.data.RecipeRepository;
 import com.example.rapha.sundaybaking.data.models.Ingredient;
+import com.example.rapha.sundaybaking.util.StringUtil;
 
 import java.util.List;
 
 import timber.log.Timber;
 
-public class IngredientListAdapter implements RemoteViewsService.RemoteViewsFactory {
+class IngredientListAdapter implements RemoteViewsService.RemoteViewsFactory {
 
     private List<Ingredient> ingredients;
     private RecipeRepository repository;
     private Context context;
-    private String recipeName;
+    private final String recipeName;
 
     public IngredientListAdapter(Context context, String recipeName) {
         Timber.d("Widget adapter created");
@@ -53,7 +54,7 @@ public class IngredientListAdapter implements RemoteViewsService.RemoteViewsFact
     public RemoteViews getViewAt(int position) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.lv_item_widget_ingredient);
         Ingredient ingredient = ingredients.get(position);
-        views.setTextViewText(R.id.widget_ingredientitem_quantity, ingredient.getQuantity() + " " + ingredient.getMeasure());
+        views.setTextViewText(R.id.widget_ingredientitem_quantity, StringUtil.formatIngredientQuantity(ingredient));
         views.setTextViewText(R.id.widget_ingredientitem_ingredient, ingredient.getIngredient());
         return views;
     }

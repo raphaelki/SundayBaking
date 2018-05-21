@@ -6,7 +6,7 @@ import com.example.rapha.sundaybaking.data.models.Recipe;
 
 import java.util.List;
 
-public class RecipeDiffCallback extends DiffUtil.Callback {
+class RecipeDiffCallback extends DiffUtil.Callback {
 
     private final List<Recipe> oldRecipes;
     private final List<Recipe> newRecipes;

@@ -29,7 +29,7 @@ public class RecipeDetailsFragment extends Fragment {
     ViewModelProvider.Factory viewModelFactory;
     private boolean deviceIsTablet;
 
-    private InstructionStepClickCallback callback = (recipeName, stepNo) -> {
+    private final InstructionStepClickCallback callback = (recipeName, stepNo) -> {
         if (deviceIsTablet) {
             showStepDetailsFor(stepNo);
         } else {

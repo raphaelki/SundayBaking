@@ -4,8 +4,6 @@
     <string name="no_picture_available">No picture available</string>
     <string name="ingredients_label">Ingredients</string>
     <string name="preperation_label">Preparation</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
     <string name="widget_appbar_title">Select recipe</string>
     <string name="recipe_rv_cd">Recipe overview</string>
     <string name="ingredient_list_cd">Ingredient list</string>
@@ -13,5 +11,16 @@
     <string name="recipe_name_cd">Name of the recipe</string>
     <string name="no_connection_message">No data connection available</string>
     <string name="recipes_refreshed_message">Recipes refreshed</string>
+    <string name="video_placeholder_cd">Placeholder when there is no video or data connection avaialble</string>
+    <string name="no_video_available">No video available</string>
+    <string name="no_data_connection">No data connection</string>
+    <string name="no_recipes_available_message">No recipes available. Please swipe down to refresh.</string>
+    <string name="picture_of_recipe_cd">Picture of the recipe</string>
+    <string name="picture_directions_step_cd">Picture of the directions step</string>
+    <string name="background_image_cd">Background image</string>
+    <string name="widget_show_recipe_button_label">Show recipe</string>
+    <string name="widget_select_recipe_button_label">Select recipe</string>
+    <string name="widget_shopping_list_header">Shopping list</string>
+    <string name="widget_no_recipe_selected_message">No recipe selected</string>
 
 </resources>

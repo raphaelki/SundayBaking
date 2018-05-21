@@ -18,7 +18,4 @@ public interface RecipesDao {
 
     @Query("SELECT * FROM recipes")
     LiveData<List<Recipe>> getRecipes();
-
-    @Query("SELECT * FROM recipes WHERE name = :recipeName")
-    LiveData<Recipe> getRecipe(String recipeName);
 }

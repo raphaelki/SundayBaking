@@ -28,12 +28,12 @@ import timber.log.Timber;
  * The setup is based on the ExoPlayer codelab:
  * https://codelabs.developers.google.com/codelabs/exoplayer-intro/
  */
-public class PlayerComponent implements LifecycleObserver {
+class PlayerComponent implements LifecycleObserver {
 
     private static final DefaultBandwidthMeter BANDWIDTH_METER = new DefaultBandwidthMeter();
     private SimpleExoPlayer player;
-    private Context context;
-    private PlayerView playerView;
+    private final Context context;
+    private final PlayerView playerView;
     private MediaSource mediaSource;
 
     public PlayerComponent(Context context, PlayerView playerView) {

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:configure="com.example.rapha.sundaybaking.ui.widget.WidgetConfigActivity"
-    android:initialKeyguardLayout="@layout/widget_ingeredients"
     android:initialLayout="@layout/widget_ingeredients"
     android:minHeight="200dp"
     android:minWidth="250dp"
     android:previewImage="@drawable/widget_preview"
     android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="0"
-    android:widgetCategory="home_screen" />
+    android:updatePeriodMillis="0" />

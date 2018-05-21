@@ -20,12 +20,12 @@ import timber.log.Timber;
 
 public class RecipeRepository implements RecipeDataSource {
 
-    private RecipesRemoteAPI recipesRemoteAPI;
-    private AppExecutors appExecutors;
-    private RecipeDatabase recipeDatabase;
+    private final RecipesRemoteAPI recipesRemoteAPI;
+    private final AppExecutors appExecutors;
+    private final RecipeDatabase recipeDatabase;
 
     private final MediatorLiveData<List<Recipe>> observedRecipes = new MediatorLiveData<>();
-    private MutableLiveData<DataState> dataState = new MutableLiveData<>();
+    private final MutableLiveData<DataState> dataState = new MutableLiveData<>();
 
     private static RecipeRepository INSTANCE;
 

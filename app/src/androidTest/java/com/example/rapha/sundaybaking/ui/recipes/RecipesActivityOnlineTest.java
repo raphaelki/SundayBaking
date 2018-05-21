@@ -35,7 +35,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class RecipesActivityOnlineTest {
 
     @Rule
-    public ActivityTestRule<RecipesActivity> activityTestRule = new ActivityTestRule<>(RecipesActivity.class);
+    public final ActivityTestRule<RecipesActivity> activityTestRule = new ActivityTestRule<>(RecipesActivity.class);
 
     @Before
     public void initialization() {

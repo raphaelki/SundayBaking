@@ -13,21 +13,21 @@ import java.util.List;
 public class Recipe {
 
     @SerializedName("id")
-    private Integer id;
+    private final Integer id;
     @SerializedName("name")
     @PrimaryKey
     @NonNull
-    private String name;
+    private final String name;
     @SerializedName("ingredients")
     @Ignore
-    private List<Ingredient> ingredients = null;
+    private final List<Ingredient> ingredients = null;
     @SerializedName("steps")
     @Ignore
-    private List<InstructionStep> steps = null;
+    private final List<InstructionStep> steps = null;
     @SerializedName("servings")
-    private Integer servings;
+    private final Integer servings;
     @SerializedName("image")
-    private String image;
+    private final String image;
 
     public Recipe(Integer id, @NonNull String name, Integer servings, String image) {
         this.id = id;

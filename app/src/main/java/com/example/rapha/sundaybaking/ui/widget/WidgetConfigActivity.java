@@ -24,7 +24,6 @@ import timber.log.Timber;
 public class WidgetConfigActivity extends AppCompatActivity implements RecipeClickCallback {
 
     private int widgetId;
-    private RecipeRepository repository;
 
     public static RemoteViews setupWidget(Context context, String recipeName, int widgetId) {
         Timber.d("Updating widget for recipe: %s", recipeName);
@@ -73,7 +72,7 @@ public class WidgetConfigActivity extends AppCompatActivity implements RecipeCli
         WidgetActivityAdapter adapter = new WidgetActivityAdapter(this);
         binding.widgetConfigActivityRv.setAdapter(adapter);
 
-        repository = ((SundayBakingApp) getApplication()).getRecipeRepository();
+        RecipeRepository repository = ((SundayBakingApp) getApplication()).getRecipeRepository();
         repository.getRecipes().observe(this, adapter::setRecipes);
 
         Intent intent = getIntent();

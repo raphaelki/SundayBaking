@@ -13,11 +13,11 @@ import com.example.rapha.sundaybaking.ui.common.BindingViewHolder;
 
 import java.util.List;
 
-public class InstructionStepAdapter extends RecyclerView.Adapter<BindingViewHolder<RvItemStepBinding>> {
+class InstructionStepAdapter extends RecyclerView.Adapter<BindingViewHolder<RvItemStepBinding>> {
 
     private List<InstructionStep> steps;
 
-    private InstructionStepClickCallback callback;
+    private final InstructionStepClickCallback callback;
 
     public InstructionStepAdapter(InstructionStepClickCallback callback) {
         this.callback = callback;
@@ -50,7 +50,4 @@ public class InstructionStepAdapter extends RecyclerView.Adapter<BindingViewHold
         notifyDataSetChanged();
     }
 
-    public int getStepIdForPosition(int position) {
-        return steps.get(position).getDbId();
-    }
 }

@@ -24,10 +24,8 @@ public class PlayerFragment extends Fragment {
 
     ViewModelProvider.Factory viewModelFactory;
     private FragmentPlayerBinding binding;
-    private int selectedStep = -1;
     private int orientation;
     private Handler handler;
-    private Runnable hideSystemUIRunnable;
     private boolean isTablet;
     private PlayerComponent playerComponent;
     private SharedViewModel viewModel;
@@ -67,7 +65,7 @@ public class PlayerFragment extends Fragment {
 
     private void hideSystemBarsInLandscapeMode(int delayInSec) {
         if (orientation == Configuration.ORIENTATION_LANDSCAPE && !isTablet) {
-            hideSystemUIRunnable = this::hideSystemUI;
+            Runnable hideSystemUIRunnable = this::hideSystemUI;
             handler.postDelayed(hideSystemUIRunnable, delayInSec * 1000);
         }
     }
@@ -107,12 +105,6 @@ public class PlayerFragment extends Fragment {
     public void onPause() {
         super.onPause();
         handler.removeCallbacksAndMessages(null);
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(Constants.RECIPE_STEP_NO_KEY, selectedStep);
     }
 
     private void configureFullScreenModeForLandscapeMode() {

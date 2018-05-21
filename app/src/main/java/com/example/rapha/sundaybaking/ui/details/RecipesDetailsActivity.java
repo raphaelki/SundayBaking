@@ -1,5 +1,6 @@
 package com.example.rapha.sundaybaking.ui.details;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -11,9 +12,6 @@ import com.example.rapha.sundaybaking.util.Constants;
 
 public class RecipesDetailsActivity extends AppCompatActivity {
 
-    private boolean deviceIsTablet;
-    private String recipeName;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,26 +19,41 @@ public class RecipesDetailsActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        deviceIsTablet = getResources().getBoolean(R.bool.isTablet);
-        recipeName = getIntent().getStringExtra(Constants.RECIPE_NAME_KEY);
-
-        RecipeDetailsFragment detailsFragment = RecipeDetailsFragment.forRecipe(recipeName);
+        String recipeName = getIntent().getStringExtra(Constants.RECIPE_NAME_KEY);
 
         if (savedInstanceState == null) {
-            if (deviceIsTablet) {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.details_fragment_frame, detailsFragment)
-                        .add(R.id.instructions_fragment_frame, InstructionsFragment.forRecipe(recipeName, 0), Constants.INSTRUCTIONS_FRAGMENT_TAG)
-                        .add(R.id.video_fragment_frame, PlayerFragment.forRecipe(recipeName), Constants.PLAYER_FRAGMENT_TAG)
-                        .commit();
-            } else {
-                ActivityHelper.setOrientationToPortraitMode(this);
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.details_fragment_frame, detailsFragment)
-                        .commit();
-            }
+            replaceFragments(recipeName);
         }
+    }
+
+    private void replaceFragments(String recipeName) {
+        RecipeDetailsFragment detailsFragment = RecipeDetailsFragment.forRecipe(recipeName);
+        boolean deviceIsTablet = getResources().getBoolean(R.bool.isTablet);
+        if (deviceIsTablet) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.details_fragment_frame, detailsFragment)
+                    .replace(R.id.instructions_fragment_frame, InstructionsFragment.forRecipe(recipeName, 0), Constants.INSTRUCTIONS_FRAGMENT_TAG)
+                    .replace(R.id.video_fragment_frame, PlayerFragment.forRecipe(recipeName), Constants.PLAYER_FRAGMENT_TAG)
+                    .commit();
+        } else {
+            ActivityHelper.setOrientationToPortraitMode(this);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.details_fragment_frame, detailsFragment)
+                    .commit();
+        }
+    }
+
+    /**
+     * Called by widget when "Show recipe" button is clicked
+     *
+     * @param intent PendingIntent that is created in the widget
+     */
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String recipeName = intent.getStringExtra(Constants.RECIPE_NAME_KEY);
+        replaceFragments(recipeName);
     }
 }

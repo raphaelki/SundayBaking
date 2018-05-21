@@ -54,14 +54,13 @@ public class InstructionsFragmentTest {
     private final String VIDEO_TEST_URL =
             "https://d17h27t6h515a5.cloudfront.net/topher/2017/April/58ffd9a6_2-mix-sugar-crackers-creampie/2-mix-sugar-crackers-creampie.mp4";
     private final String RECIPE_NAME = "Apple pie";
-    private int requestedStepOnStartup = 0;
-
     @Rule
-    public ActivityTestRule<TwoFrameFragmentTestingActivity> activityTestRule =
+    public final ActivityTestRule<TwoFrameFragmentTestingActivity> activityTestRule =
             new ActivityTestRule<>(TwoFrameFragmentTestingActivity.class);
-    private MutableLiveData<InstructionStep> step = new MutableLiveData<>();
-    private MutableLiveData<String> videoURL = new MutableLiveData<>();
-    private MutableLiveData<List<InstructionStep>> steps = new MutableLiveData<>();
+    private final int requestedStepOnStartup = 0;
+    private final MutableLiveData<InstructionStep> step = new MutableLiveData<>();
+    private final MutableLiveData<String> videoURL = new MutableLiveData<>();
+    private final MutableLiveData<List<InstructionStep>> steps = new MutableLiveData<>();
     @Mock
     private SharedViewModel viewModel;
 
@@ -93,7 +92,7 @@ public class InstructionsFragmentTest {
 
     @Test
     public void openPlayerWithVideoURL_displaysVidePlayer() {
-        InstructionStep stepData = DataUtil.createDirectionStepWithVideoUrl(RECIPE_NAME, VIDEO_TEST_URL);
+        InstructionStep stepData = DataUtil.createDirectionStepWithVideoUrl(VIDEO_TEST_URL);
         step.postValue(stepData);
         videoURL.postValue(VIDEO_TEST_URL);
         onView(withId(R.id.player_view)).check(matches(isDisplayed()));
@@ -123,7 +122,7 @@ public class InstructionsFragmentTest {
 
     @Test
     public void changeOrientation_checkPlayerVisibility() {
-        InstructionStep stepData = DataUtil.createDirectionStepWithVideoUrl(RECIPE_NAME, VIDEO_TEST_URL);
+        InstructionStep stepData = DataUtil.createDirectionStepWithVideoUrl(VIDEO_TEST_URL);
         // switch orientation
         changeOrientationAndCheckPlayerVisibility(stepData, orientationLandscape());
         // switch back orientation

@@ -10,7 +10,7 @@
         android:layout_alignTop="@+id/widget_recipe_name"
         android:scaleType="centerCrop"
         android:src="@drawable/placeholder"
-        tools:src="@drawable/placeholder" />
+        android:contentDescription="@string/background_image_cd" />
 
     <Button
         android:id="@+id/widget_showrecipe_button"
@@ -18,9 +18,10 @@
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/widget_ingredient_title"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@id/widget_recipe_name"
-        android:text="Show recipe"
+        android:text="@string/widget_show_recipe_button_label"
         android:textColor="@android:color/secondary_text_light" />
 
     <Button
@@ -30,9 +31,10 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/widget_ingredient_title"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignTop="@id/widget_recipe_name"
         android:gravity="center"
-        android:text="Select recipe"
+        android:text="@string/widget_select_recipe_button_label"
         android:textColor="@android:color/secondary_text_light" />
 
     <TextView
@@ -45,7 +47,7 @@
         android:paddingEnd="@dimen/widget_title_horizontal_padding"
         android:paddingStart="@dimen/widget_title_horizontal_padding"
         android:paddingTop="6dp"
-        android:text="Shopping list"
+        android:text="@string/widget_shopping_list_header"
         android:textAllCaps="true" />
 
     <TextView
@@ -76,7 +78,7 @@
         android:layout_below="@id/widget_ingredient_title"
         android:background="#8bffffff"
         android:gravity="center"
-        android:text="No recipe selected"
+        android:text="@string/widget_no_recipe_selected_message"
         android:textSize="20sp" />
 
 </RelativeLayout>

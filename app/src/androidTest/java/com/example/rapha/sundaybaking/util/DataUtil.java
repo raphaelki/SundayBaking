@@ -33,12 +33,6 @@ public class DataUtil {
         return steps;
     }
 
-    /**
-     * Create direction steps with empty videoUrls
-     *
-     * @param stepCount
-     * @return
-     */
     public static List<InstructionStep> createDirectionSteps(int stepCount) {
         List<InstructionStep> steps = new ArrayList<>();
         for (int index = 0; index < stepCount; index++) {
@@ -53,7 +47,7 @@ public class DataUtil {
         return steps;
     }
 
-    public static InstructionStep createDirectionStepWithVideoUrl(String name, String videoUrl) {
+    public static InstructionStep createDirectionStepWithVideoUrl(String videoUrl) {
         return new InstructionStep(0, 0, "Short description",
                 "Detailed description", videoUrl, "", "Pie");
     }

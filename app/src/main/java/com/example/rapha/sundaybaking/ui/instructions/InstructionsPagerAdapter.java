@@ -13,7 +13,7 @@ import com.example.rapha.sundaybaking.databinding.VpItemStepDescriptionBinding;
 
 import java.util.List;
 
-public class InstructionsPagerAdapter extends PagerAdapter {
+class InstructionsPagerAdapter extends PagerAdapter {
 
     private List<InstructionStep> steps;
 

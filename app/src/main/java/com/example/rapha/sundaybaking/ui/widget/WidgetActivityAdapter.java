@@ -14,10 +14,10 @@ import com.example.rapha.sundaybaking.ui.recipes.RecipeClickCallback;
 
 import java.util.List;
 
-public class WidgetActivityAdapter extends RecyclerView.Adapter<BindingViewHolder<RvItemWidgetRecipeConfigBinding>> {
+class WidgetActivityAdapter extends RecyclerView.Adapter<BindingViewHolder<RvItemWidgetRecipeConfigBinding>> {
 
     private List<Recipe> recipes;
-    private RecipeClickCallback callback;
+    private final RecipeClickCallback callback;
 
     public WidgetActivityAdapter(RecipeClickCallback callback) {
         this.callback = callback;

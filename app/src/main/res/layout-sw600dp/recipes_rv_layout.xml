@@ -10,10 +10,10 @@
         android:background="@color/rv_cards_background"
         android:contentDescription="@string/recipe_rv_cd"
         android:orientation="vertical"
+        android:paddingBottom="@dimen/recipes_padding"
+        android:paddingEnd="@dimen/recipes_padding"
         android:paddingStart="@dimen/recipes_padding"
         android:paddingTop="@dimen/recipes_padding"
-        android:paddingEnd="@dimen/recipes_padding"
-        android:paddingBottom="@dimen/recipes_padding"
         app:layoutManager="android.support.v7.widget.GridLayoutManager"
         app:spanCount="3"
         tools:listitem="@layout/rv_item_recipe" />

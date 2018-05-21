@@ -1,7 +1,6 @@
 package com.example.rapha.sundaybaking.ui.details;
 
 import android.arch.lifecycle.MutableLiveData;
-import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -75,12 +74,13 @@ public class RecipeDetailsFragmentTest {
     @Test
     public void insertDirections_showsDirectionsSteps() {
         String[] shortDescriptions = {"Wake up", "Drink coffee", "Brush teeth", "Drink coffee",
-                "Go to work", "Drink coffee", "Go to sleep", "Wake up", "Drink coffee",
-                "Brush teeth", "Drink coffee", "Go to work", "Drink coffee", "Go to sleep"};
+                "Go to work"};
         List<InstructionStep> shortDescriptionsList = DataUtil.createDirectionSteps(shortDescriptions);
         steps.postValue(shortDescriptionsList);
         for (InstructionStep step : shortDescriptionsList) {
-            onView(withId(R.id.steps_rv)).perform(RecyclerViewActions.scrollToPosition(step.getStepNo()));
+//            onView(withId(R.id.details_scrollview)).perform(ViewActions.swipeUp());
+//            onView(withText(StringUtil.prepareShortDescription(step))).perform(scrollTo());
+//            onView(withContentDescription(R.string.recipe_rv_cd)).perform(RecyclerViewActions.scrollToPosition(step.getStepNo()));
             onView(withText(StringUtil.prepareShortDescription(step))).check(matches(isDisplayed()));
         }
     }

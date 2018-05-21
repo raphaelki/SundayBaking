@@ -46,7 +46,7 @@ public class RecipesActivityOnlineTest {
 
     @Test
     public void activityOpens_showsRecyclerViewInItsFragment() {
-        onView(withId(R.id.recipes_rv)).check(matches(isDisplayed()));
+        onView(withContentDescription(R.string.recipe_rv_cd)).check(matches(isDisplayed()));
     }
 
     @Test

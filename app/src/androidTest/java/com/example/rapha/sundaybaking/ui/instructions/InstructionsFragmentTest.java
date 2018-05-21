@@ -61,6 +61,8 @@ public class InstructionsFragmentTest {
     private final MutableLiveData<InstructionStep> step = new MutableLiveData<>();
     private final MutableLiveData<String> videoURL = new MutableLiveData<>();
     private final MutableLiveData<List<InstructionStep>> steps = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> deviceIsConnected = new MutableLiveData<>();
+
     @Mock
     private SharedViewModel viewModel;
 
@@ -76,6 +78,8 @@ public class InstructionsFragmentTest {
         when(viewModel.getSelectedStep()).thenReturn(step);
         when(viewModel.getVideoUrl()).thenReturn(videoURL);
         when(viewModel.getInstructionSteps()).thenReturn(steps);
+        when(viewModel.getConnectionAvailability()).thenReturn(deviceIsConnected);
+        deviceIsConnected.postValue(true);
 
         PlayerFragment playerFragment = PlayerFragment.forRecipe(RECIPE_NAME);
         playerFragment.viewModelFactory = ViewModelUtil.createFor(viewModel);

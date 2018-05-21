@@ -18,7 +18,7 @@
 
             <include
                 android:id="@+id/recipes_included_rv"
-                layout="@layout/recipes_rv" />
+                layout="@layout/recipes_rv_layout" />
 
             <TextView
                 android:id="@+id/no_recipes_available_tv"

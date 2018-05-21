@@ -127,7 +127,7 @@ public class RecipeFragmentTest {
     public void clickOnRecipe_startDetailsActivityWithRecipeNameAsExtra() {
         intending(isInternal()).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, null));
         recipes.postValue(DataUtil.createRecipes("Apple pie"));
-        onView(withId(R.id.recipes_rv)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withContentDescription(R.string.recipe_rv_cd)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         intended(allOf(hasComponent(RecipesDetailsActivity.class.getName()), hasExtraWithKey(Constants.RECIPE_NAME_KEY)));
     }
 

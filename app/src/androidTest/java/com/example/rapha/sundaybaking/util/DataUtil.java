@@ -34,7 +34,7 @@ public class DataUtil {
     }
 
     /**
-     * Create direction steps with every other holding an empty url
+     * Create direction steps with empty videoUrls
      *
      * @param stepCount
      * @return
@@ -42,15 +42,11 @@ public class DataUtil {
     public static List<InstructionStep> createDirectionSteps(int stepCount) {
         List<InstructionStep> steps = new ArrayList<>();
         for (int index = 0; index < stepCount; index++) {
-            String url = "";
-            if (index % 2 == 0) {
-                url = "video url";
-            }
             steps.add(new InstructionStep(index,
                     index,
                     "step " + index,
                     "step " + index + " detailed",
-                    url,
+                    "",
                     "",
                     "Pie"));
         }

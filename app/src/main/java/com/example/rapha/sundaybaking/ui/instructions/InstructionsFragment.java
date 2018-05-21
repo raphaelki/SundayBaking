@@ -75,7 +75,7 @@ public class InstructionsFragment extends Fragment {
     }
 
     /**
-     * Accessed by the DetailsFragment on tablet
+     * Accessed by the RecipeDetailsFragment on tablet
      *
      * @param stepNo Index of the desired page in ViewPager
      */

@@ -11,6 +11,7 @@ import com.example.rapha.sundaybaking.data.models.Ingredient;
 import com.example.rapha.sundaybaking.data.models.InstructionStep;
 import com.example.rapha.sundaybaking.util.DataUtil;
 import com.example.rapha.sundaybaking.util.EspressoTestUtil;
+import com.example.rapha.sundaybaking.util.StringUtil;
 import com.example.rapha.sundaybaking.util.ViewModelUtil;
 
 import org.junit.Before;
@@ -61,7 +62,9 @@ public class RecipeDetailsFragmentTest {
 
     @Test
     public void insertIngredients_showIngredientsList() {
-        String[] ingredientArray = {"Banana", "Banunu", "Banini", "Banono", "Banene"};
+        String[] ingredientArray = {
+                "Banana", "Banunu", "Banini", "Banono", "Banene",
+                "Sugar", "Sugir", "Suger", "Sugor", "Sugur"};
         List<Ingredient> ingredientsList = DataUtil.createIngredients(ingredientArray);
         ingredients.postValue(ingredientsList);
         for (Ingredient ingredient : ingredientsList) {
@@ -78,7 +81,7 @@ public class RecipeDetailsFragmentTest {
         steps.postValue(shortDescriptionsList);
         for (InstructionStep step : shortDescriptionsList) {
             onView(withId(R.id.steps_rv)).perform(RecyclerViewActions.scrollToPosition(step.getStepNo()));
-            onView(withText(step.getStepNo() + ". " + step.getShortDescription())).check(matches(isDisplayed()));
+            onView(withText(StringUtil.prepareShortDescription(step))).check(matches(isDisplayed()));
         }
     }
 

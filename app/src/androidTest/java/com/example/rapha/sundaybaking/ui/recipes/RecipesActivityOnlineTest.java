@@ -30,7 +30,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /*
- * Integration tests using an IdlingResource
+ * Integration tests using an IdlingResource to wait for fetch
  */
 public class RecipesActivityOnlineTest {
 

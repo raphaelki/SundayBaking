@@ -19,16 +19,16 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginBottom="1dp"
-        android:layout_marginTop="3dp"
+        android:layout_height="@dimen/details_steps_height"
+        android:layout_marginTop="@dimen/details_steps_margin_small"
+        android:layout_marginBottom="@dimen/details_steps_margin_small"
         android:onClick='@{()->callback.onStepSelected(step.recipeName, step.stepNo)}'>
 
         <ImageView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="2dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="@dimen/details_steps_margin_small"
+            android:layout_marginBottom="@dimen/details_steps_margin_small"
             android:scaleType="centerCrop"
             app:imageUrl="@{step.thumbnailURL.isEmpty() ? step.videoURL : step.thumbnailURL}"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -44,18 +44,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background_white"
-            android:paddingEnd="8dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingStart="8dp"
+            android:paddingStart="@dimen/details_steps_margin_large"
+            android:paddingLeft="@dimen/details_steps_margin_large"
+            android:paddingEnd="@dimen/details_steps_margin_large"
+            android:paddingRight="@dimen/details_steps_margin_large"
             android:text='@{StringUtil.prepareShortDescription(step), default="5. Add sugars to wet mixture."}'
-            android:textSize="18sp"
+            android:textSize="@dimen/heading_text_size"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/step_play_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/details_steps_playicon_size"
+            android:layout_height="@dimen/details_steps_playicon_size"
             android:background="@drawable/ic_play_circle_filled"
             android:foregroundGravity="center_vertical"
             android:visibility="@{(step.thumbnailURL.isEmpty() &amp;&amp; step.videoURL.isEmpty()) ? View.GONE : View.VISIBLE}"

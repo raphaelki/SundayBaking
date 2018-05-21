@@ -18,10 +18,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick='@{() -> callback.onRecipeSelected(recipe.name)}'
-        android:paddingBottom="1dp"
-        android:paddingLeft="1dp"
-        android:paddingRight="1dp"
-        android:paddingTop="1dp">
+        android:paddingLeft="@dimen/widget_rv_padding"
+        android:paddingTop="@dimen/widget_rv_padding"
+        android:paddingRight="@dimen/widget_rv_padding"
+        android:paddingBottom="@dimen/widget_rv_padding">
 
         <ImageView
             android:id="@+id/widget_config_image_view"
@@ -40,15 +40,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="#7d000000"
-            android:paddingBottom="16dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="16dp"
+            android:paddingLeft="@dimen/widget_rv_label_padding"
+            android:paddingTop="@dimen/widget_rv_label_padding"
+            android:paddingRight="@dimen/widget_rv_label_padding"
+            android:paddingBottom="@dimen/widget_rv_label_padding"
             android:text='@{recipe.name, default="Nutella Pie"}'
             android:textColor="@android:color/primary_text_dark"
-            android:textSize="16sp"
+            android:textSize="@dimen/widget_rv_medium_text_size"
             app:layout_constraintBottom_toBottomOf="parent" />
-
 
     </android.support.constraint.ConstraintLayout>
 

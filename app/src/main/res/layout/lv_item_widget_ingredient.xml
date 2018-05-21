@@ -7,11 +7,11 @@
 
     <TextView
         android:id="@+id/widget_ingredientitem_quantity"
-        android:layout_width="100dp"
+        android:layout_width="@dimen/ingredients_quantity_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="end"
-        android:padding="3dp"
+        android:padding="@dimen/widget_ingredients_padding"
         android:textStyle="bold"
         tools:text="200 g" />
 
@@ -20,6 +20,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="3dp"
+        android:padding="@dimen/widget_ingredients_padding"
         tools:text="Ananas" />
 </LinearLayout>

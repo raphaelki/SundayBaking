@@ -26,8 +26,6 @@ import timber.log.Timber;
 
 public class RecipesFragment extends Fragment implements RecipeClickCallback {
 
-    public static final String TAG = "ProductListViewModel";
-
     private FragmentRecipesBinding binding;
     @VisibleForTesting
     private RecipesViewModel viewModel;
@@ -43,7 +41,7 @@ public class RecipesFragment extends Fragment implements RecipeClickCallback {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_recipes, container, false);
         recipesAdapter = new RecipesAdapter(this);
-        binding.recipesRv.setAdapter(recipesAdapter);
+        binding.recipesIncludedRv.recipesRv.setAdapter(recipesAdapter);
         return binding.getRoot();
     }
 

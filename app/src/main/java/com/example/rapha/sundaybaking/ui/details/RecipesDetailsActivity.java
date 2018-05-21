@@ -54,6 +54,6 @@ public class RecipesDetailsActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         String recipeName = intent.getStringExtra(Constants.RECIPE_NAME_KEY);
-        replaceFragments(recipeName);
+        if (recipeName != null) replaceFragments(recipeName);
     }
 }

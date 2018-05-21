@@ -16,13 +16,13 @@
 
         <TextView
             android:id="@+id/ingredient_quantity"
-            android:layout_width="100dp"
+            android:layout_width="@dimen/ingredients_quantity_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="end"
-            android:padding="1dp"
-            android:paddingStart="3dp"
-            android:paddingEnd="3dp"
+            android:padding="@dimen/ingredients_padding"
+            android:paddingStart="@dimen/ingredients_quantity_horizontal_padding"
+            android:paddingEnd="@dimen/ingredients_quantity_horizontal_padding"
             android:text='@{StringUtil.formatIngredientQuantity(ingredient), default="1 g"}'
             android:textStyle="bold" />
 
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="1dp"
+            android:padding="@dimen/ingredients_padding"
             android:text='@{ingredient.ingredient, default="Nutella or other chocolate-hazelnut spread"}' />
 
     </LinearLayout>

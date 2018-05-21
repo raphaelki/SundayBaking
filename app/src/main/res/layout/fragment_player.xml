@@ -33,12 +33,12 @@
 
             <ImageView
                 android:id="@+id/no_video_placeholder_iv"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="@dimen/player_placeholder_size"
+                android:layout_height="@dimen/player_placeholder_size"
                 android:layout_gravity="center_horizontal"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/video_placeholder_cd"
-                android:src="@drawable/ic_muffin" />
+                android:background="@drawable/ic_muffin" />
 
             <TextView
                 viewVisibility="@{safeUnbox(isDataConnectionAvailable) ? true : false}"
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/no_video_available"
-                android:textSize="20sp"
+                android:textSize="@dimen/player_placeholder_text_size"
                 android:textStyle="bold" />
 
             <TextView
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/no_data_connection"
-                android:textSize="20sp"
+                android:textSize="@dimen/player_placeholder_text_size"
                 android:textStyle="bold" />
 
         </LinearLayout>

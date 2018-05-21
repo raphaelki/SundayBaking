@@ -7,4 +7,5 @@
     <color name="background_white">#afffffff</color>
     <color name="rv_cards_background">#ececec</color>
     <color name="step_card_color">#fffada</color>
+    <color name="widget_white_transparent_bg">#8bffffff</color>
 </resources>

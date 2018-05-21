@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
         <variable
@@ -18,19 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recipes_rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/rv_cards_background"
-                android:contentDescription="@string/recipe_rv_cd"
-                android:orientation="vertical"
-                android:paddingStart="4dp"
-                android:paddingTop="4dp"
-                android:paddingEnd="4dp"
-                android:paddingBottom="4dp"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                tools:listitem="@layout/rv_item_recipe" />
+            <include
+                android:id="@+id/recipes_included_rv"
+                layout="@layout/recipes_rv" />
 
             <TextView
                 android:id="@+id/no_recipes_available_tv"
@@ -38,8 +26,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:padding="@dimen/recipes_padding"
                 android:text="@string/no_recipes_available_message"
-                android:textSize="18sp" />
+                android:textSize="@dimen/heading_text_size" />
 
         </FrameLayout>
 

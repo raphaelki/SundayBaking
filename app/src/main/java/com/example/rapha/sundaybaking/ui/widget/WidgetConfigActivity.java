@@ -27,7 +27,7 @@ public class WidgetConfigActivity extends AppCompatActivity implements RecipeCli
 
     public static RemoteViews setupWidget(Context context, String recipeName, int widgetId) {
         Timber.d("Updating widget for recipe: %s", recipeName);
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_ingeredients);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_ingredients);
 
         // setup RemoteViewsService for ingredient ListView
         Intent serviceIntent = new Intent(context, WidgetRemoteViewsService.class);

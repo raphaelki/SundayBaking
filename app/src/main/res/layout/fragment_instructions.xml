@@ -16,8 +16,8 @@
 
         <View
             android:id="@+id/left_arrow"
-            android:layout_width="24dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/instructions_arrow_width"
+            android:layout_height="@dimen/instructions_arrow_height"
             android:background="@drawable/ic_keyboard_arrow_left"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -35,8 +35,8 @@
 
         <View
             android:id="@+id/right_arrow"
-            android:layout_width="24dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/instructions_arrow_width"
+            android:layout_height="@dimen/instructions_arrow_height"
             android:background="@drawable/ic_keyboard_arrow_right"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"

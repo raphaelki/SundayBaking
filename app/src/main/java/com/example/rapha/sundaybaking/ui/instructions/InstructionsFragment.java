@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.databinding.FragmentInstructionsBinding;
-import com.example.rapha.sundaybaking.ui.common.SharedViewModel;
 import com.example.rapha.sundaybaking.ui.common.ViewModelFactory;
 import com.example.rapha.sundaybaking.util.Constants;
 

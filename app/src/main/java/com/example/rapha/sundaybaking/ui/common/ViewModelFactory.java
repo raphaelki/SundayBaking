@@ -9,6 +9,7 @@ import android.support.annotation.VisibleForTesting;
 import com.example.rapha.sundaybaking.SundayBakingApp;
 import com.example.rapha.sundaybaking.data.RecipeRepository;
 import com.example.rapha.sundaybaking.ui.details.RecipeDetailsViewModel;
+import com.example.rapha.sundaybaking.ui.instructions.SharedViewModel;
 import com.example.rapha.sundaybaking.ui.recipes.RecipesViewModel;
 
 /**

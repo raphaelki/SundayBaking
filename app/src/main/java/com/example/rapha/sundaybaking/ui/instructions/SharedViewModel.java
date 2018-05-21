@@ -1,4 +1,4 @@
-package com.example.rapha.sundaybaking.ui.common;
+package com.example.rapha.sundaybaking.ui.instructions;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
@@ -6,6 +6,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 
+import com.example.rapha.sundaybaking.SundayBakingApp;
 import com.example.rapha.sundaybaking.data.RecipeRepository;
 import com.example.rapha.sundaybaking.data.models.InstructionStep;
 
@@ -21,9 +22,12 @@ public class SharedViewModel extends ViewModel {
     final private RecipeRepository repository;
     final private MutableLiveData<String> recipeName = new MutableLiveData<>();
     final private MutableLiveData<Integer> currentStepNo = new MutableLiveData<>();
+    final private MutableLiveData<Boolean> deviceIsOnline = new MutableLiveData<>();
+    private Application application;
 
     public SharedViewModel(Application application, RecipeRepository repository) {
         this.repository = repository;
+        this.application = application;
     }
 
     public void changeCurrentStep(int stepNo) {
@@ -46,9 +50,18 @@ public class SharedViewModel extends ViewModel {
     public LiveData<String> getVideoUrl() {
         return Transformations.switchMap(recipeName, name ->
                 Transformations.switchMap(currentStepNo, stepNo -> {
+                    checkDataConnection();
                     LiveData<InstructionStep> step = repository.getInstructionStep(name, stepNo);
                     return Transformations.map(step, this::checkVideoAvailabilityAndSetVideoUrl);
                 }));
+    }
+
+    public LiveData<Boolean> getConnectionAvailability() {
+        return deviceIsOnline;
+    }
+
+    private void checkDataConnection() {
+        deviceIsOnline.setValue(((SundayBakingApp) application).deviceIsOnline());
     }
 
     public LiveData<InstructionStep> getSelectedStep() {

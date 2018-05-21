@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.databinding.FragmentPlayerBinding;
-import com.example.rapha.sundaybaking.ui.common.SharedViewModel;
 import com.example.rapha.sundaybaking.ui.common.ViewModelFactory;
 import com.example.rapha.sundaybaking.util.Constants;
 
@@ -83,6 +82,7 @@ public class PlayerFragment extends Fragment {
             }
         });
         viewModel.getSelectedStep().observe(this, binding::setStep);
+        viewModel.getConnectionAvailability().observe(this, binding::setIsDataConnectionAvailable);
     }
 
     @Override

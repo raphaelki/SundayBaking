@@ -1,6 +1,9 @@
 package com.example.rapha.sundaybaking;
 
 import android.app.Application;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import com.example.rapha.sundaybaking.data.RecipeRepository;
 import com.example.rapha.sundaybaking.data.local.RecipeDatabase;
@@ -50,5 +53,13 @@ public class SundayBakingApp extends Application {
 
     public RefWatcher getRefWatcher() {
         return refWatcher;
+    }
+
+    public boolean deviceIsOnline() {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) this.getApplicationContext()
+                        .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
     }
 }

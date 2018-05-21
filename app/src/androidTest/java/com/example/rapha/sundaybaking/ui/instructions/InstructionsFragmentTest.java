@@ -10,7 +10,6 @@ import android.support.test.runner.AndroidJUnit4;
 import com.example.rapha.sundaybaking.R;
 import com.example.rapha.sundaybaking.TwoFrameFragmentTestingActivity;
 import com.example.rapha.sundaybaking.data.models.InstructionStep;
-import com.example.rapha.sundaybaking.ui.common.SharedViewModel;
 import com.example.rapha.sundaybaking.util.DataUtil;
 import com.example.rapha.sundaybaking.util.EspressoTestUtil;
 import com.example.rapha.sundaybaking.util.StringUtil;

@@ -12,7 +12,7 @@
     <string name="no_connection_message">No data connection available</string>
     <string name="recipes_refreshed_message">Recipes refreshed</string>
     <string name="video_placeholder_cd">Placeholder when there is no video or data connection avaialble</string>
-    <string name="no_video_available">No video available</string>
+    <string name="no_video_available">No video or image available</string>
     <string name="no_data_connection">No data connection</string>
     <string name="no_recipes_available_message">No recipes available. Please swipe down to refresh.</string>
     <string name="picture_of_recipe_cd">Picture of the recipe</string>

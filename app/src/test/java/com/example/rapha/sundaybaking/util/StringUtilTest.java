@@ -73,4 +73,22 @@ public class StringUtilTest {
     private Ingredient createIngredient(double quantity, String measure) {
         return new Ingredient(0, quantity, measure, "Ingredient", "");
     }
+
+    @Test
+    public void urlContainsVideoSource() {
+        assertThat(StringUtil.urlContainsVideoSource("pic"), is(false));
+        assertThat(StringUtil.urlContainsVideoSource("pic.mp4"), is(true));
+        assertThat(StringUtil.urlContainsVideoSource("pic.jpg"), is(false));
+        assertThat(StringUtil.urlContainsVideoSource(""), is(false));
+    }
+
+    @Test
+    public void urlContainsImageSource() {
+        assertThat(StringUtil.urlContainsImageSource("pic"), is(false));
+        assertThat(StringUtil.urlContainsImageSource("pic.mp4"), is(false));
+        assertThat(StringUtil.urlContainsImageSource("pic.jpg"), is(true));
+        assertThat(StringUtil.urlContainsImageSource("pic.jpeg"), is(true));
+        assertThat(StringUtil.urlContainsImageSource("pic.png"), is(true));
+        assertThat(StringUtil.urlContainsImageSource(""), is(false));
+    }
 }

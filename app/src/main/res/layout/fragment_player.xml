@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <import type="com.example.rapha.sundaybaking.util.StringUtil" />
         <variable
             name="step"
             type="com.example.rapha.sundaybaking.data.models.InstructionStep" />
@@ -20,12 +23,23 @@
 
         <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/player_view"
-            viewVisibility='@{step == null || (step.videoURL.isEmpty() &amp;&amp; step.thumbnailURL.isEmpty()) || !safeUnbox(isDataConnectionAvailable) ? false : true}'
+            viewVisibility='@{step == null || step.videoURL.isEmpty() || !safeUnbox(isDataConnectionAvailable) ? false : true}'
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <ImageView
+            android:id="@+id/thumbnail_iv"
+            viewVisibility='@{step == null || step.thumbnailURL.isEmpty() || !safeUnbox(isDataConnectionAvailable) || !StringUtil.urlContainsImageSource(step.thumbnailURL) ? false : true}'
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/picture_of_recipe_cd"
+            app:imageUrl="@{step.thumbnailURL}"
+            app:placeholder="@{@drawable/ic_muffin_placeholder}"
+            tools:src="@drawable/placeholder" />
+
         <LinearLayout
-            viewVisibility='@{step == null || (step.videoURL.isEmpty() &amp;&amp; step.thumbnailURL.isEmpty()) || !safeUnbox(isDataConnectionAvailable) ? true : false}'
+            viewVisibility='@{step == null || (step.videoURL.isEmpty() &amp;&amp; step.thumbnailURL.isEmpty()) || !safeUnbox(isDataConnectionAvailable) || !StringUtil.urlContainsImageSource(step.thumbnailURL) ? true : false}'
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -47,6 +61,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="@string/no_video_available"
                 android:textSize="@dimen/player_placeholder_text_size"
+                android:id="@+id/no_media_available_tv"
                 android:textStyle="bold" />
 
             <TextView
@@ -56,6 +71,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="@string/no_data_connection"
                 android:textSize="@dimen/player_placeholder_text_size"
+                android:id="@+id/no_connection_tv"
                 android:textStyle="bold" />
 
         </LinearLayout>

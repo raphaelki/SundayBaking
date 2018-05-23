@@ -42,13 +42,6 @@ public class SharedViewModel extends ViewModel {
         recipeName.setValue(name);
     }
 
-    private String checkVideoAvailabilityAndSetVideoUrl(InstructionStep step) {
-        String url = "";
-        if (!step.getVideoURL().isEmpty()) url = step.getVideoURL();
-        else if (!step.getThumbnailURL().isEmpty()) url = step.getThumbnailURL();
-        return url;
-    }
-
     public LiveData<String> getVideoUrl() {
         return Transformations.switchMap(recipeName, name ->
                 Transformations.switchMap(currentStepNo, stepNo -> {
@@ -59,7 +52,7 @@ public class SharedViewModel extends ViewModel {
                     }
                     currentStep = stepNo;
                     LiveData<InstructionStep> step = repository.getInstructionStep(name, stepNo);
-                    return Transformations.map(step, this::checkVideoAvailabilityAndSetVideoUrl);
+                    return Transformations.map(step, InstructionStep::getVideoURL);
                 }));
     }
 

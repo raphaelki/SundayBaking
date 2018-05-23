@@ -33,4 +33,12 @@ public class StringUtil {
         measure = measure.replace("unit", "");
         return (quantity + " " + measure).trim();
     }
+
+    public static boolean urlContainsVideoSource(String url) {
+        return url.endsWith("mp4");
+    }
+
+    public static boolean urlContainsImageSource(String url) {
+        return url.endsWith("png") || url.endsWith("jpg") || url.endsWith("jpeg");
+    }
 }

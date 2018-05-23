@@ -62,6 +62,7 @@ public class InstructionsFragmentTest {
     private final MutableLiveData<String> videoURL = new MutableLiveData<>();
     private final MutableLiveData<List<InstructionStep>> steps = new MutableLiveData<>();
     private final MutableLiveData<Boolean> deviceIsConnected = new MutableLiveData<>();
+    private final MutableLiveData<PlayerState> playerState = new MutableLiveData<>();
 
     @Mock
     private SharedViewModel viewModel;
@@ -79,6 +80,9 @@ public class InstructionsFragmentTest {
         when(viewModel.getVideoUrl()).thenReturn(videoURL);
         when(viewModel.getInstructionSteps()).thenReturn(steps);
         when(viewModel.getConnectionAvailability()).thenReturn(deviceIsConnected);
+        when(viewModel.getPlayerState()).thenReturn(playerState);
+        // always start player with empty state
+        playerState.postValue(null);
         deviceIsConnected.postValue(true);
 
         PlayerFragment playerFragment = PlayerFragment.forRecipe(RECIPE_NAME);
@@ -95,7 +99,37 @@ public class InstructionsFragmentTest {
     }
 
     @Test
-    public void openPlayerWithVideoURL_displaysVidePlayer() {
+    public void loadStepWithoutVideoButWithThumbnail_displaysThumbnail() {
+        InstructionStep step = new InstructionStep(
+                0,
+                0,
+                "",
+                "",
+                "",
+                "https://cdn.pixabay.com/photo/2015/03/26/09/39/cupcakes-690040_960_720.jpg",
+                "");
+        this.step.postValue(step);
+        SystemClock.sleep(2000);
+        onView(withId(R.id.thumbnail_iv)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void loadStepWithoutVideoAndWithInvalidThumbnailUrl_displaysPlaceholder() {
+        InstructionStep step = new InstructionStep(
+                0,
+                0,
+                "",
+                "",
+                "",
+                "https://cdn.pixabay.com/photo/2015/03/26/09/39/cupcakes-690040_960_720.mp4",
+                "");
+        this.step.postValue(step);
+        SystemClock.sleep(2000);
+        onView(withId(R.id.no_media_available_tv)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void openPlayerWithVideoURL_displaysVideoPlayer() {
         InstructionStep stepData = DataUtil.createDirectionStepWithVideoUrl(VIDEO_TEST_URL);
         step.postValue(stepData);
         videoURL.postValue(VIDEO_TEST_URL);

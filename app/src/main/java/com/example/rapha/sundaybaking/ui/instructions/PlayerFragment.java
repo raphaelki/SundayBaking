@@ -113,6 +113,12 @@ public class PlayerFragment extends Fragment {
         handler.removeCallbacksAndMessages(null);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        playerListener = null;
+    }
+
     private void configureFullScreenModeForLandscapeMode() {
         if (orientation == Configuration.ORIENTATION_LANDSCAPE && !isTablet) {
             View decorView = getActivity().getWindow().getDecorView();

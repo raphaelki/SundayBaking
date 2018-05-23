@@ -39,7 +39,7 @@
             tools:src="@drawable/placeholder" />
 
         <LinearLayout
-            viewVisibility='@{step == null || (step.videoURL.isEmpty() &amp;&amp; step.thumbnailURL.isEmpty()) || !safeUnbox(isDataConnectionAvailable) || !StringUtil.urlContainsImageSource(step.thumbnailURL) ? true : false}'
+            viewVisibility='@{step == null || (step.videoURL.isEmpty() &amp;&amp; (step.thumbnailURL.isEmpty() || !StringUtil.urlContainsImageSource(step.thumbnailURL))) || !safeUnbox(isDataConnectionAvailable) ? true : false}'
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

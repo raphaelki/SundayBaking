@@ -35,10 +35,13 @@ class PlayerComponent implements LifecycleObserver {
     private final Context context;
     private final PlayerView playerView;
     private MediaSource mediaSource;
+    private PlayerPositionListener positionListener;
+    private long playerPosition;
 
-    public PlayerComponent(Context context, PlayerView playerView) {
+    public PlayerComponent(Context context, PlayerView playerView, PlayerPositionListener positionListener) {
         this.context = context;
         this.playerView = playerView;
+        this.positionListener = positionListener;
     }
 
     public void playVideo(String url) {
@@ -99,9 +102,11 @@ class PlayerComponent implements LifecycleObserver {
                 new DefaultTrackSelector(adaptiveTrackSelectionFactory),
                 new DefaultLoadControl());
         playerView.setPlayer(player);
+
     }
 
     private void releasePlayer() {
+        positionListener.savePosition(player.getCurrentPosition());
         player.stop();
         if (mediaSource != null) {
             mediaSource.releaseSource();
@@ -121,7 +126,13 @@ class PlayerComponent implements LifecycleObserver {
                 defaultHttpDataSourceFactory)
                 .createMediaSource(uri);
         player.prepare(mediaSource, true, false);
+        if (playerPosition != 0) player.seekTo(playerPosition);
         player.setPlayWhenReady(true);
     }
+
+    public void seekToPosition(long position) {
+        playerPosition = position;
+    }
+
 
 }

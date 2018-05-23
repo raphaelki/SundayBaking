@@ -23,7 +23,9 @@ public class SharedViewModel extends ViewModel {
     final private MutableLiveData<String> recipeName = new MutableLiveData<>();
     final private MutableLiveData<Integer> currentStepNo = new MutableLiveData<>();
     final private MutableLiveData<Boolean> deviceIsOnline = new MutableLiveData<>();
+    final private MutableLiveData<Long> playerPosition = new MutableLiveData<>();
     private final Application application;
+    private int currentStep = -1;
 
     public SharedViewModel(Application application, RecipeRepository repository) {
         this.repository = repository;
@@ -51,6 +53,11 @@ public class SharedViewModel extends ViewModel {
         return Transformations.switchMap(recipeName, name ->
                 Transformations.switchMap(currentStepNo, stepNo -> {
                     checkDataConnection();
+                    // reset player position if the step has changed
+                    if (stepNo != currentStep) {
+                        playerPosition.setValue(0L);
+                    }
+                    currentStep = stepNo;
                     LiveData<InstructionStep> step = repository.getInstructionStep(name, stepNo);
                     return Transformations.map(step, this::checkVideoAvailabilityAndSetVideoUrl);
                 }));
@@ -66,12 +73,21 @@ public class SharedViewModel extends ViewModel {
 
     public LiveData<InstructionStep> getSelectedStep() {
         return Transformations.switchMap(recipeName, name ->
-                Transformations.switchMap(currentStepNo, step ->
-                        repository.getInstructionStep(name, step)));
+                Transformations.switchMap(currentStepNo, step -> {
+                    return repository.getInstructionStep(name, step);
+                }));
     }
 
     public LiveData<List<InstructionStep>> getInstructionSteps() {
         return Transformations.switchMap(recipeName,
                 repository::getInstructionSteps);
+    }
+
+    public LiveData<Long> getPlayerPosition() {
+        return playerPosition;
+    }
+
+    public void setPlayerPosition(long playerPosition) {
+        this.playerPosition.setValue(playerPosition);
     }
 }

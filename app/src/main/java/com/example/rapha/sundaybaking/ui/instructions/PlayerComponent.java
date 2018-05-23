@@ -35,13 +35,13 @@ class PlayerComponent implements LifecycleObserver {
     private final Context context;
     private final PlayerView playerView;
     private MediaSource mediaSource;
-    private PlayerPositionListener positionListener;
-    private long playerPosition;
+    private PlayerListener playerListener;
+    private PlayerState playerState;
 
-    public PlayerComponent(Context context, PlayerView playerView, PlayerPositionListener positionListener) {
+    public PlayerComponent(Context context, PlayerView playerView, PlayerListener playerListener) {
         this.context = context;
         this.playerView = playerView;
-        this.positionListener = positionListener;
+        this.playerListener = playerListener;
     }
 
     public void playVideo(String url) {
@@ -54,7 +54,6 @@ class PlayerComponent implements LifecycleObserver {
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     private void onStart() {
-        Timber.d("onStart");
         if (Util.SDK_INT > 23) {
             initializePlayer();
         }
@@ -65,7 +64,6 @@ class PlayerComponent implements LifecycleObserver {
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     private void onResume() {
-        Timber.d("onResume");
         if ((Util.SDK_INT <= 23 || player == null)) {
             initializePlayer();
         }
@@ -76,7 +74,6 @@ class PlayerComponent implements LifecycleObserver {
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     private void onPause() {
-        Timber.d("onPause");
         if (Util.SDK_INT <= 23) {
             releasePlayer();
         }
@@ -87,7 +84,6 @@ class PlayerComponent implements LifecycleObserver {
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     private void onStop() {
-        Timber.d("onStop");
         if (Util.SDK_INT > 23) {
             releasePlayer();
         }
@@ -102,11 +98,10 @@ class PlayerComponent implements LifecycleObserver {
                 new DefaultTrackSelector(adaptiveTrackSelectionFactory),
                 new DefaultLoadControl());
         playerView.setPlayer(player);
-
     }
 
     private void releasePlayer() {
-        positionListener.savePosition(player.getCurrentPosition());
+        playerListener.savePlayerState(new PlayerState(player.getCurrentPosition(), player.getPlayWhenReady()));
         player.stop();
         if (mediaSource != null) {
             mediaSource.releaseSource();
@@ -126,13 +121,17 @@ class PlayerComponent implements LifecycleObserver {
                 defaultHttpDataSourceFactory)
                 .createMediaSource(uri);
         player.prepare(mediaSource, true, false);
-        if (playerPosition != 0) player.seekTo(playerPosition);
-        player.setPlayWhenReady(true);
+        // restore player state if existing
+        if (playerState != null) {
+            player.setPlayWhenReady(playerState.isPlaying());
+            player.seekTo(playerState.getPlayerPosition());
+        } else {
+            player.setPlayWhenReady(true);
+        }
+
     }
 
-    public void seekToPosition(long position) {
-        playerPosition = position;
+    public void setPlayerState(PlayerState playerState) {
+        this.playerState = playerState;
     }
-
-
 }

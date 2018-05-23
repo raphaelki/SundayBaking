@@ -29,7 +29,7 @@ public class PlayerFragment extends Fragment {
     private boolean isTablet;
     private PlayerComponent playerComponent;
     private SharedViewModel viewModel;
-    private PlayerPositionListener positionListener;
+    private PlayerListener playerListener;
 
     public PlayerFragment() {
     }
@@ -48,11 +48,11 @@ public class PlayerFragment extends Fragment {
         Timber.d("PlayerFragment created");
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_player, container, false);
 
-        positionListener = position -> {
-            if (viewModel != null) viewModel.setPlayerPosition(position);
+        playerListener = playerState -> {
+            if (viewModel != null) viewModel.setPlayerState(playerState);
         };
 
-        playerComponent = new PlayerComponent(getContext(), binding.playerView, positionListener);
+        playerComponent = new PlayerComponent(getContext(), binding.playerView, playerListener);
         getLifecycle().addObserver(playerComponent);
 
         isTablet = getResources().getBoolean(R.bool.isTablet);
@@ -86,7 +86,7 @@ public class PlayerFragment extends Fragment {
         });
         viewModel.getSelectedStep().observe(this, binding::setStep);
         viewModel.getConnectionAvailability().observe(this, binding::setIsDataConnectionAvailable);
-        viewModel.getPlayerPosition().observe(this, playerComponent::seekToPosition);
+        viewModel.getPlayerState().observe(this, playerComponent::setPlayerState);
     }
 
     @Override

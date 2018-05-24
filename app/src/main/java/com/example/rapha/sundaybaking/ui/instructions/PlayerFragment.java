@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,10 +23,8 @@ public class PlayerFragment extends Fragment {
 
     ViewModelProvider.Factory viewModelFactory;
     private FragmentPlayerBinding binding;
-    private int orientation;
-    private Handler handler;
-    private boolean isTablet;
     private PlayerComponent playerComponent;
+    private PlayerToolbarComponent playerToolbarComponent;
     private SharedViewModel viewModel;
     private PlayerListener playerListener;
 
@@ -55,24 +52,14 @@ public class PlayerFragment extends Fragment {
         playerComponent = new PlayerComponent(getContext(), binding.playerView, playerListener);
         getLifecycle().addObserver(playerComponent);
 
-        isTablet = getResources().getBoolean(R.bool.isTablet);
-        handler = new Handler();
-        orientation = getResources().getConfiguration().orientation;
-        View decorView = getActivity().getWindow().getDecorView();
-        decorView.setOnSystemUiVisibilityChangeListener
-                (visibility -> {
-                    if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
-                        hideSystemBarsInLandscapeMode(2);
-                    }
-                });
-        return binding.getRoot();
-    }
+        boolean isTablet = getResources().getBoolean(R.bool.isTablet);
+        int orientation = getResources().getConfiguration().orientation;
 
-    private void hideSystemBarsInLandscapeMode(int delayInSec) {
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE && !isTablet) {
-            Runnable hideSystemUIRunnable = this::hideSystemUI;
-            handler.postDelayed(hideSystemUIRunnable, delayInSec * 1000);
-        }
+        View decorView = getActivity().getWindow().getDecorView();
+        playerToolbarComponent = new PlayerToolbarComponent(decorView, isTablet, orientation);
+        getLifecycle().addObserver(playerToolbarComponent);
+
+        return binding.getRoot();
     }
 
     @Override
@@ -89,13 +76,6 @@ public class PlayerFragment extends Fragment {
         viewModel.getPlayerState().observe(this, playerComponent::setPlayerState);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        configureFullScreenModeForLandscapeMode();
-        hideSystemBarsInLandscapeMode(1);
-    }
-
     private void createViewModel() {
         if (viewModelFactory == null) {
             viewModelFactory = ViewModelFactory.getInstance(
@@ -108,40 +88,14 @@ public class PlayerFragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        handler.removeCallbacksAndMessages(null);
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         playerListener = null;
     }
 
-    private void configureFullScreenModeForLandscapeMode() {
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE && !isTablet) {
-            View decorView = getActivity().getWindow().getDecorView();
-            decorView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            );
-        }
-    }
-
-    private void hideSystemUI() {
-        View decorView = getActivity().getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
-    }
-
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        orientation = newConfig.orientation;
+        playerToolbarComponent.setOrientation(newConfig.orientation);
     }
 }

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.rapha.sundaybaking.R;
-import com.example.rapha.sundaybaking.ui.common.ActivityHelper;
 import com.example.rapha.sundaybaking.ui.instructions.InstructionsFragment;
 import com.example.rapha.sundaybaking.ui.instructions.PlayerFragment;
 import com.example.rapha.sundaybaking.util.Constants;
@@ -37,7 +36,6 @@ public class RecipesDetailsActivity extends AppCompatActivity {
                     .replace(R.id.video_fragment_frame, PlayerFragment.forRecipe(recipeName), Constants.PLAYER_FRAGMENT_TAG)
                     .commit();
         } else {
-            ActivityHelper.setOrientationToPortraitMode(this);
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.details_fragment_frame, detailsFragment)

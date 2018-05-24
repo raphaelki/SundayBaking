@@ -5,9 +5,11 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,8 @@ public class RecipeDetailsFragment extends Fragment {
     private InstructionStepAdapter stepAdapter;
     ViewModelProvider.Factory viewModelFactory;
     private boolean deviceIsTablet;
+    private LinearLayoutManager stepsLayoutManager;
+    private Parcelable stepsLayoutManagerState;
 
     private final InstructionStepClickCallback callback = (recipeName, stepNo) -> {
         if (deviceIsTablet) {
@@ -64,7 +68,15 @@ public class RecipeDetailsFragment extends Fragment {
         stepAdapter = new InstructionStepAdapter(callback);
         binding.stepsRv.setAdapter(stepAdapter);
         binding.stepsRv.setNestedScrollingEnabled(false);
+        stepsLayoutManager = (LinearLayoutManager) binding.stepsRv.getLayoutManager();
+        if (savedInstanceState != null) {
+            stepsLayoutManagerState = savedInstanceState.getParcelable(Constants.STEPS_LAYOUT_MANAGER_STATE);
+        }
         return binding.getRoot();
+    }
+
+    private void restoreRecyclerViewState() {
+        stepsLayoutManager.onRestoreInstanceState(stepsLayoutManagerState);
     }
 
     @Override
@@ -75,7 +87,10 @@ public class RecipeDetailsFragment extends Fragment {
         getActivity().setTitle(recipeName);
         viewModel.changeCurrentRecipe(recipeName);
         viewModel.getIngredients().observe(this, ingredients -> ingredientAdapter.setIngredientList(ingredients));
-        viewModel.getInstructionSteps().observe(this, instructionSteps -> stepAdapter.setStepList(instructionSteps));
+        viewModel.getInstructionSteps().observe(this, instructionSteps -> {
+            stepAdapter.setStepList(instructionSteps);
+            restoreRecyclerViewState();
+        });
     }
 
     private void createViewModel() {
@@ -92,5 +107,11 @@ public class RecipeDetailsFragment extends Fragment {
         if (instructionsFragment != null) {
             instructionsFragment.setStepPage(stepNo);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(Constants.STEPS_LAYOUT_MANAGER_STATE, stepsLayoutManager.onSaveInstanceState());
     }
 }

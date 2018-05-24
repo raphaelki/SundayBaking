@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/recipes_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/rv_cards_background"
+        android:contentDescription="@string/recipe_rv_cd"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/recipes_padding"
+        android:paddingEnd="@dimen/recipes_padding"
+        android:paddingStart="@dimen/recipes_padding"
+        android:paddingTop="@dimen/recipes_padding"
+        app:layoutManager="android.support.v7.widget.GridLayoutManager"
+        app:spanCount="2"
+        tools:listitem="@layout/rv_item_recipe" />
+</layout>

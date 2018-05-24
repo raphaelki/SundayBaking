@@ -13,4 +13,6 @@ public class Constants {
     public static final String PLAYER_FRAGMENT_TAG = "player_fragment";
 
     public static final String SHARED_PREFS_NAME = "com.example.rapha.sundaybaking.sharedprefs";
+    public static final String STEPS_LAYOUT_MANAGER_STATE = "steps_layout_manager_state";
+    public static final String RECIPES_LAYOUT_MANAGER_STATE = "recipes_layout_manager_state";
 }

@@ -5,7 +5,7 @@
 Android sample app that retrieves bake recipes from a [provided source](http://go.udacity.com/android-baking-app-json) and displays baking guidance and instruction videos.\
 This is the 3rd project of the [Android Developer Nanodegree Program](https://www.udacity.com/course/android-developer-nanodegree-by-google--nd801).
 
-I also took the chance to get familiar with some of the Android Architecture Components as there were no restrictions from Udacity on which database to use or how to forward the data from the database to the UI. Some parts of the code are "stolen" from the sample apps of the [Android Architecture Components](https://github.com/googlesamples/android-architecture-components) and the [Android Architecture Blueprints](https://github.com/googlesamples/android-architecture).
+I also took the chance to get familiar with some of the Android Architecture Components as there were no restrictions from Udacity on which database to use or how to forward the data from the database to the UI. Some parts of the code are "stolen" from the sample apps of the [Android Architecture Components](https://github.com/googlesamples/android-architecture-components) and the [Android Architecture Blueprints](https://github.com/googlesamples/android-architecture). Espresso and Mockito are used to test some parts of the UI and the ViewModel interaction with the fragments.
 
 ## Android concepts used
 
@@ -22,6 +22,8 @@ I also took the chance to get familiar with some of the Android Architecture Com
 - **[ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel.html)**
 - **[Room](https://developer.android.com/topic/libraries/architecture/room.html)**
 - **[Timber](https://github.com/JakeWharton/timber)**
+- **[Mockito](http://site.mockito.org/)**
+- **[Espresso](https://developer.android.com/training/testing/espresso/)**
 
 ## Building
 
